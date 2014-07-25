@@ -10,59 +10,44 @@ Search = {}
 Player.Controller = function(view) {
   this.view = view
   this.searchQuery = new Player.SearchQuery(this)
+  this.searchPresenter = new Player.SearchPresenter(this)
 
   var widgetIframe = this.view.getWidget()
   widget = SC.Widget(widgetIframe);
 };
 
 
-
-
-// CODE WE DIDNT WRITE
-//   widget.bind(SC.Widget.Events.READY, function() {
-//     console.log('the player is ready')
-//     getForm: function() {
-//       return $('#new-content')
-//     }
-//     widget.bind(SC.Widget.Events.PLAY, function() {
-//       console.log('this should fire off when we press play')
-//         widget.getCurrentSound(function(currentSound) {
-//         });
-//       });
-//       widget.getVolume(function(volume) {
-//         console.log('current volume value is ' + volume);
-//       });
-//       widget.setVolume(50);
-
-// };
-
   Player.Controller.prototype = {
+
     bindListeners: function() {
       var form = this.view.getForm()
       form.on('submit', this.displaySearchQuery.bind(this))
-      // debugger
       widget.bind(SC.Widget.Events.FINISH, this.view.renderNextSong.bind(this.view))
       },
-      // widget.bind(SC.Widget.Events.PLAY_PROGRESS, this.view.renderNextSong.bind(this.view))
-      // },
+
     displaySearchQuery: function(event) {
       event.preventDefault()
       searchParameter = this.view.getInput()
       this.searchQuery.getTracks(searchParameter)
-      // debugger
-      // send searchParameter to Player.SearchQuery object to hit soundcloud api
-      // returns arry of song objects with artwork urls and song urls
-      // create a gallery of thumnails with song titles and artists
-
     },
 
     doSomethingWithTracks: function(tracks) {
-      console.log(tracks)
+      console.log(tracks);
+      this.searchPresenter.formatSearchResults(tracks);
     },
 
-    queueSong: function() {
+    queueSong: function(event) {
+      event.preventDefault()
+      var url = $(event.target).closest('li').attr('data-url')
+      var title = $(event.target).closest('h1').text()
       this.view.queue.push(url)
-      this.view.clearInput(url)
+      $('#search-result-container ul').fadeOut(1000)
+      // $('#search-result-container ul').html("")
+      this.view.clearInput(url, title)
+    },
+
+    bindSearchResults: function() {
+    $('#search-result-container li').on('click', this.queueSong.bind(this))
     }
   }
 
@@ -90,9 +75,9 @@ Player.View.prototype = {
   getInput: function() {
     return $('#new-content').find('input').val()
   },
-  clearInput: function(url) {
+  clearInput: function(url, title) {
     $('#new-content').find('input').first().val('')
-    $('#flash-message').text("" + url + " Was Just Added")
+    $('#flash-message').text("" + title + " Was Just Added")
     $('#flash-message').fadeIn(1000)
     $('#flash-message').fadeOut(3000)
   },
@@ -100,7 +85,7 @@ Player.View.prototype = {
   renderNextSong: function() {
     // debugger
     var url = this.queue.splice(0,1)[0]
-    var html = '<iframe id="sc-widget" src="https://w.soundcloud.com/player/?url=' + url + '&sharing=false&download=false&buying=false&liking=false&show_comments=false&show_playcount=true&show_user=false&show_artwork=true&visual=true" width="100%" height="465" scrolling="no" frameborder="no"></iframe>'
+    var html = '<iframe id="sc-widget" src="https://w.soundcloud.com/player/?url=' + url + '&sharing=false&download=false&buying=false&liking=false&show_comments=false&show_playcount=true&show_user=false&show_artwork=true&visual=true&auto_play=true" width="100%" height="465" scrolling="no" frameborder="no"></iframe>'
     $('#frame-holder').html(html)
   }
 
@@ -110,16 +95,42 @@ Player.View.prototype = {
 
 Player.SearchQuery = function(controller){
   this.controller = controller
+
   this.getTracks = function(searchParameter) {
     var done = function(tracks) {
       this.controller.doSomethingWithTracks(tracks)
+      this.allTracks = tracks
+      return tracks
     }
     SC.initialize({
       client_id: 'd8eb7a8be0cc38d451a51d4d223ee84b'
     });
-    SC.get('http://api.soundcloud.com/tracks', { q: 'zedd' }, done.bind(this));
+    SC.get('http://api.soundcloud.com/tracks', { q: searchParameter }, done.bind(this));
+    }
+
+}
+
+Player.SearchPresenter = function(controller) {
+  var formattedResults = []
+  this.controller = controller
+
+  this.formatSearchResults = function(trackArray) {
+    var source = $('#search-result-template').html()
+    var template = Handlebars.compile(source)
+    $('#search-result-container ul').html("")
+    // $('#search-result-container ul').fadeOut(1)
+    // debugger
+    for (i=0; i < trackArray.length; i++) {
+      $('#search-result-container ul').append(template(trackArray[i]));
+    $('#search-result-container ul').fadeIn(5000)
+    }
+    this.controller.bindSearchResults()
   }
 }
+
+
+
+
 
 
 //////////////////////======================================

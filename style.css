@@ -1,6 +1,7 @@
 body {
   max-width: 100%;
   margin: auto;
+  font-family: sans-serif;
 }
 
 /**{
@@ -15,15 +16,17 @@ body {
 }
 
 #new-content {
-  width: 40%;
+  width: 75%;
   margin: auto;
 }
 
-#new-content input {
+/*#new-content input {
   width: 100%;
   margin: auto;
-  text-align: center
-}
+  text-align: center;
+  font-size: 1.3em;
+
+}*/
 
 #flash-message {
   display: hidden;
@@ -31,3 +34,72 @@ body {
   font-size: 1.5em;
   text-align: center;
 }
+
+#submit-button {
+  color: rgba(0,0,0,0.5);
+  padding: 10px;
+  margin-bottom: 16px;
+  width: 100%;
+  text-align: center;
+  font-size: 1.1em;
+  border: none;
+  background-color: rgba(0,0,0,0.2);
+}
+
+#search-field {
+  color: rgba(0,0,0,0.8);
+  padding: 10px;
+  margin: 0px;
+  width: 100%;
+  font-size: 1.1em;
+  border: none;
+  background-color: rgba(0,0,0,0.1);
+}
+
+
+.track-container {
+  width: 100%;
+  max-width: 350px;
+  list-style: none;
+  max-height: 100px;
+  min-height: 100px;
+  margin: auto;
+}
+
+
+ul {
+  list-style: none;
+  margin: auto;
+}
+
+li:nth-child(2n) {
+  background-color: rgba(0,0,0,0.05);
+}
+
+.thumbnail {}
+
+.search-result-container{
+  width: 100%;
+  padding: 0px 10px;
+  margin: auto;
+  opacity: 0;
+}
+
+.track-info {
+  display: inline-block;
+  width: 200px;
+  position: relative;
+  bottom: 30px;
+  padding-left: 27px;
+}
+
+.track-container a {
+  text-decoration: none;
+  color: black;
+}
+
+.title {
+  font-size: 1rem;
+  font-family: sans-serif;
+}
+
