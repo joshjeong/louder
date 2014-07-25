@@ -5,7 +5,6 @@ module.exports = function (grunt) {
     require('time-grunt')(grunt);
     // load all grunt tasks
     require('load-grunt-tasks')(grunt);
-
     grunt.initConfig({
 
         // Watch Config
@@ -249,6 +248,11 @@ module.exports = function (grunt) {
                 'htmlmin'
             ]
         },
+        nodemon: {
+          dev: {
+            script: 'app.js'
+          }
+        }
     });
 
     // Register Tasks
@@ -268,7 +272,7 @@ module.exports = function (grunt) {
         'express:dev',
         'watch'
     ]);
-    
+
 
     // Build
     grunt.registerTask('build', 'Build production ready assets and views.', [

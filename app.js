@@ -6,7 +6,7 @@
 var express = require('express');
 var app = express();
 var port = 3000;
-
+var io = require("socket.io");
 /*
  * Use Handlebars for templating
  */
@@ -15,6 +15,8 @@ var hbs;
 
 // For gzip compression
 app.use(express.compress());
+
+
 
 /*
  * Config for Production and Development
@@ -57,10 +59,13 @@ app.set('view engine', 'handlebars');
  * Routes
  */
 // Index Page
+
 app.get('/', function(request, response, next) {
     response.render('index');
 });
-
+app.get('/hello', function(request, response, next) {
+    response.render('hello');
+});
 
 /*
  * Start it up
