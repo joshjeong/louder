@@ -7,7 +7,9 @@
         widget       = SC.Widget(widgetIframe);
     widget.bind(SC.Widget.Events.READY, function() {
       widget.bind(SC.Widget.Events.PLAY, function() {
-        widget.seekTo(<%= @fakeHostProgress %> + (new Date().getTime() - <%= @fakeHostTime %>) + 1000)
+        console.log(new Date().getTime()*1)
+        console.log(<%= @fakeHostTime %>)
+        widget.seekTo(<%= @fakeHostProgress %> + (new Date().getTime()/1000 - <%= @fakeHostTime %>) + 400)
         // end autoplay after seeking
         widget.pause()
         // give 10 second buffer to allow song to load
@@ -16,8 +18,8 @@
           widget.play()
 
           //prevent occasional reset that causes it to start from the beginning of the song. We can use this to set it to the exact desired time.
-          widget.seekTo(<%= @fakeHostProgress %> + (new Date().getTime() - <%= @fakeHostTime %>))
-        }, 1000);
+          widget.seekTo(<%= @fakeHostProgress %> + (new Date().getTime()*1 - <%= @fakeHostTime %>))
+        }, 500);
         widget.unbind(SC.Widget.Events.PLAY)
       });
       widget.play()
