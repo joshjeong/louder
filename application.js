@@ -56,6 +56,10 @@ Player.Controller = function(view) {
 
     },
 
+    doSomethingWithTracks: function(tracks) {
+      console.log(tracks)
+    },
+
     queueSong: function() {
       this.view.queue.push(url)
       this.view.clearInput(url)
@@ -106,17 +110,14 @@ Player.View.prototype = {
 
 Player.SearchQuery = function(controller){
   this.controller = controller
-}
-
-Player.SearchQuery.prototype = {
-  getTracks: function(searchParameter) {
-    var allTracks = []
+  this.getTracks = function(searchParameter) {
+    var done = function(tracks) {
+      this.controller.doSomethingWithTracks(tracks)
+    }
     SC.initialize({
       client_id: 'd8eb7a8be0cc38d451a51d4d223ee84b'
     });
-    SC.get('http://api.soundcloud.com/tracks', { q: 'zedd' }, function(tracks) {
-      debugger
-    });
+    SC.get('http://api.soundcloud.com/tracks', { q: 'zedd' }, done.bind(this));
   }
 }
 
