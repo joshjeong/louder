@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<title>HTML5 Audio Playback Syncing</title>
+<style>
+body{
+  font-family: Verdana, Geneva, sans-serif;
+  font-size: 10px;
+  color: #666;
+}
+h1{
+  font-weight: normal;
+}
+ul#controls{
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+ul#controls li{
+  float: left;
+  width: 120px;
+  text-align: center;
+  background: #EEE;
+  padding: 1em;
+  margin: 0 1em 1em 0;
+  cursor: pointer;
+}
+ul#controls li:hover{
+  background: #666;
+  color: #EEE;
+}
+.active{
+  background: #FF6 !important;
+}
+.disabled{
+  display: none;
+  background: #EEE;
+  color: #CCC;
+}
+#info{
+  width: 450px;
+  clear: both;
+  color: #060;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 11px;
+  margin: 10px 0;
+  border: 1px solid #999;
+  border-radius: 5px;
+  padding: 10px;
+}
+#loading{
+  position: absolute;
+  top: 40px;
+  font-size: 24px;
+  background: #FF6;
+  line-height: 75px;
+  padding: 0 25px;
+  width: 425px;
+
+}
+#loading.done{
+  display: none;
+}
+</style>
+
+<audio id="au1">
+  <source src="Vocal.edited.ogg" type="audio/ogg">
+  <source src="Vocal.128.mp3" type="audio/mpeg">
+</audio><!--
+<audio id="au2">
+  <source src="Instrumental.edited.ogg" type="audio/ogg">
+  <source src="Instrumental.128.mp3" type="audio/mpeg">
+</audio> -->
+
+<ul id="controls">
+  <li id="ctlPlay">Play</li>
+<!--   <li id="ctlVocal" class="active">Vocal</li>
+  <li id="ctlInstr" class="">Instrumental</li> -->
+</ul>
+<!--
+<div id="info">Now syncing instrumental to vocal<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Vocal currentTime: 45.436643<br>Instrumental currentTime: 45.436643</div>
+ -->
+<script>
+var fakeHostTime = new Date().getTime() - 4000
+var fakeHostProgress = 10
+var au1 = document.getElementById('au1');
+// var au2 = document.getElementById('au2');
+var firstRun = true;
+var syncingFeeling;
+var isAudioLoaded1 = false;
+// var isAudioLoaded2 = false;
+
+au1.volume = 1;
+// au2.volume = 0;
+
+$('#ctlPlay').click( function(){
+    au1.play();
+    syncingFeeling = setInterval( 'syncTime()', 5000 );
+    // au2.play();
+    $(this).html('Pause');
+    $('#ctlVocal').removeClass('disabled');
+    // $('#ctlInstr').removeClass('disabled');
+    if( firstRun ){
+      $('#ctlVocal').addClass('active');
+    }
+    firstRun = false;
+  // $('#au2-time').html( au2.currentTime );
+});
+
+
+// $('#ctlVocal').click( function(){
+//  au1.volume = 1;
+//  au2.volume = 0;
+//  $('#ctlVocal').addClass('active');
+//  $('#ctlInstr').removeClass('active');
+//  $('#au1-time').html( au1.currentTime );
+//  $('#au2-time').html( au2.currentTime );
+//  firstRun = false;
+// });
+
+// $('#ctlInstr').click( function(){
+//  au1.volume = 0;
+//  au2.volume = 1;
+//  $('#ctlVocal').removeClass('active');
+//  $('#ctlInstr').addClass('active');
+//  $('#au1-time').html( au1.currentTime );
+//  $('#au2-time').html( au2.currentTime );
+//  firstRun = false;
+// });
+
+
+
+function syncTime(){
+  var msg = '';
+  // if( au1.volume == 1 ){
+  //  au2.currentTime = au1.currentTime;
+  //  msg = 'Now syncing instrumental to vocal';
+  // }else{
+  //  au1.currentTime = au2.currentTime;
+  //  msg = 'Now syncing vocal to instrumental';
+  // }
+  au1.currentTime = (new Date().getTime() - fakeHostTime) / 1000 + fakeHostProgress
+  debugger
+  $('#info').html( msg );
+  $('#info').append( "<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Vocal currentTime: " + au1.currentTime );
+  // $('#info').append( "<br />Instrumental currentTime: " + au2.currentTime );
+}
+
+</script>
+
+
+</body></html>

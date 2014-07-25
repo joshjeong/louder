@@ -1,4 +1,5 @@
-<iframe id="sc-widget" src="https://w.soundcloud.com/player/?url=http://api.soundcloud.com/users/1539950/favorites?auto_play=true" width="100%" height="465" scrolling="no" frameborder="no"></iframe>
+<!-- Player must be autoplay to allow for seeking for some reason -->
+<iframe id="sc-widget" src="https://w.soundcloud.com/player/?url=https://soundcloud.com/igapromotion/onerepublic-counting-stars" width="100%" height="465" scrolling="no" frameborder="no"></iframe>
 <script src="https://w.soundcloud.com/player/api.js" type="text/javascript"></script>
 <script type="text/javascript">
   (function(){
@@ -6,13 +7,24 @@
         widget       = SC.Widget(widgetIframe);
     widget.bind(SC.Widget.Events.READY, function() {
       widget.bind(SC.Widget.Events.PLAY, function() {
-        // get information about currently playing sound
-        setTimeout(function(){console.log("now playing")}, 2000);
-        widget.seekTo(100000)
-        widget.getCurrentSound(function(currentSound) {
-          console.log('sound ' + currentSound.get('') + 'began to play');
-        });
+        console.log('<%= Time.now.to_s %>')
+        console.log(<%= Time.now.to_f * 1000 - @fakeHostTime %>)
+        widget.seekTo(<%= @fakeHostProgress + (Time.now.to_f * 1000 - @fakeHostTime)  %>)
+        // end autoplay after seeking
+        widget.pause()
+        // give 10 second buffer to allow song to load
+        setTimeout(function(){
+          console.log("now playing")
+          widget.play()
+
+          //prevent occasional reset that causes it to start from the beginning of the song. We can use this to set it to the exact desired time.
+          console.log('<%= Time.now.to_s %>')
+          console.log(<%= Time.now.to_f * 1000 - @fakeHostTime %>)
+          widget.seekTo(<%= @fakeHostProgress + (Time.now.to_f * 1000 - @fakeHostTime) %>)
+        }, 10000);
+        widget.unbind(SC.Widget.Events.PLAY)
       });
+      widget.play()
       // get current level of volume
       widget.getVolume(function(volume) {
         console.log('current volume value is ' + volume);
