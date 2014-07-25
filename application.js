@@ -37,16 +37,19 @@ Player.Controller = function(view) {
   Player.Controller.prototype = {
     bindListeners: function() {
       var form = this.view.getForm()
-      form.on('submit', this.queueSong)
+      form.on('submit', this.queueSong.bind(this))
       // debugger
-      widget.bind(SC.Widget.Events.FINISH, this.view.renderNextSong )
-    },
-
-    queueSong: function() {
+      widget.bind(SC.Widget.Events.FINISH, this.view.renderNextSong.bind(this.view))
+      },
+      // widget.bind(SC.Widget.Events.PLAY_PROGRESS, this.view.renderNextSong.bind(this.view))
+      // },
+    queueSong: function(event) {
+      event.preventDefault()
+      url = this.view.getInput()
       // use serialize toget form info
-      // send to player.presenter
-      // sends return of that to view to store in que
-
+      // send to player.view to store in queue
+      this.view.queue.push(url)
+      this.view.clearInput(url)
     }
   }
 
@@ -60,8 +63,7 @@ Player.Presenter.prototype = {
 
 
 Player.View = function() {
-  var queue = ["https://soundcloud.com/zedd/spectrum"]
-  _this = this
+  this.queue = []
 }
 
 Player.View.prototype = {
@@ -72,10 +74,19 @@ Player.View.prototype = {
   getForm: function() {
     return $('#new-content')
   },
+  getInput: function() {
+    return $('#new-content').find('input').val()
+  },
+  clearInput: function(url) {
+    $('#new-content').find('input').first().val('')
+    $('#flash-message').text("" + url + " Was Just Added")
+    $('#flash-message').fadeIn(1000)
+    $('#flash-message').fadeOut(3000)
+  },
 
   renderNextSong: function() {
-    debugger
-    var url = _this.queue.splice(0,1)
+    // debugger
+    var url = this.queue.splice(0,1)[0]
     var html = '<iframe id="sc-widget" src="https://w.soundcloud.com/player/?url=' + url + '&sharing=false&download=false&buying=false&liking=false&show_comments=false&show_playcount=true&show_user=false&show_artwork=true&visual=true" width="100%" height="465" scrolling="no" frameborder="no"></iframe>'
     $('#frame-holder').html(html)
   }
