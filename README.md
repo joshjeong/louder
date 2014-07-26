@@ -12,9 +12,8 @@ get dependencies and start node server
 ```shell
 $ npm install
 $ bower install
-$ grunt watch
 
-$ node app
+$ grunt nodemon
 ```
 
 *Built with NodeJS using websockets.*
