@@ -12,8 +12,7 @@ var io = require("socket.io");
  */
 var exphbs = require('express3-handlebars');
 var hbs;
-
-// For gzip compression
+ls// For gzip compression
 app.use(express.compress());
 
 
@@ -61,10 +60,10 @@ app.set('view engine', 'handlebars');
 // Index Page
 
 app.get('/', function(request, response, next) {
-    response.render('index');
+    response.render('partials/index');
 });
 app.get('/hello', function(request, response, next) {
-    response.render('hello');
+    response.render('partials/hello');
 });
 
 /*
