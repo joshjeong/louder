@@ -41,8 +41,8 @@ Player.Controller = function(view) {
       var url = $(event.target).parents('.search-result').find('.track').attr('data-url')
       var title = $(event.target).parents('.search-result').find('.track-title').text()
       debugger
-      this.view.queue.push(url)
       $('#search-result-container').fadeOut(1000)
+      this.view.queue.push(url)
       // $('#search-result-container ul').html("")
       this.view.clearInput(url, title)
     },
@@ -53,13 +53,9 @@ Player.Controller = function(view) {
   }
 
 
-Player.Presenter = function() {
-}
+Player.Presenter = function() {}
 
 Player.Presenter.prototype = {
-
-}
-
 
 Player.View = function() {
   this.queue = []
@@ -84,6 +80,7 @@ Player.View.prototype = {
   },
 
   renderNextSong: function() {
+    // debugger
     var url = this.queue.splice(0,1)[0]
     var html = '<iframe id="sc-widget" src="https://w.soundcloud.com/player/?url=' + url + '&sharing=false&download=false&buying=false&liking=false&show_comments=false&show_playcount=true&show_user=false&show_artwork=true&visual=true&auto_play=true" width="100%" height="465" scrolling="no" frameborder="no"></iframe>'
     $('#frame-holder').html(html)
@@ -130,12 +127,6 @@ Player.SearchPresenter = function(controller) {
     this.controller.bindSearchResults()
     }
   }
-
-
-
-
-
-
 
 //////////////////////======================================
 

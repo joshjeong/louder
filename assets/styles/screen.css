@@ -693,15 +693,20 @@ ul {
   position: relative;
   padding: 10px;
   padding-left: 120px;
+  display: inline-block;
+  width: 200px;
+  position: relative;
+  bottom: 30px;
+  padding-left: 27px;
 }
 
-/* line 95, sass/_style.scss */
+/* line 100, sass/_style.scss */
 .track-container a {
   text-decoration: none;
   color: black;
 }
 
-/* line 100, sass/_style.scss */
+/* line 105, sass/_style.scss */
 .title {
   font-size: 1rem;
   font-family: sans-serif;
