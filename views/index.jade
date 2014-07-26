@@ -1,0 +1,29 @@
+doctype html
+html
+  head
+    link(rel='stylesheet', href='http://fonts.googleapis.com/css?family=Open+Sans')
+    link(rel='stylesheet', href='/css/style.css')
+    script(src='//code.jquery.com/jquery-1.11.0.min.js')
+    script(src='/socket.io/socket.io.js')
+    script(src='https://w.soundcloud.com/player/api.js')
+    script(src='/js/application.js')
+    title Super Awesome Chatroom
+  body
+    h1 Super Awesome Fun Time Chat Room
+    #frame-holder
+
+    iframe#sc-widget(src="https://w.soundcloud.com/player/?url=https://soundcloud.com/porter-robinson/porter-robinson-language&sharing=false&download=false&buying=false&liking=false&show_comments=false&show_playcount=false&show_user=false&show_artwork=true&visual=true&auto_play=true" width='100%' height='465' frameborder='no' scrolling='no')
+
+    div
+      div.inlineBlock
+        span Tell us who you are:
+          input(type="text", value="Anonymous")#name
+        br
+        form#messageForm
+          textarea(rows="4", cols="50", placeholder="Share something!", maxlength=200)#outgoingMessage
+          input(type="button", value="Share", disabled=true)#send
+      div.inlineBlock.topAligned
+        b Participants
+        br
+        div#participants
+    div#messages
