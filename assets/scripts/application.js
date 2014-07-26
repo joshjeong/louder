@@ -52,12 +52,9 @@ Player.Controller = function(view) {
   }
 
 
-Player.Presenter = function() {
-}
+Player.Presenter = function() {}
 
-Player.Presenter.prototype = {
-
-}
+Player.Presenter.prototype = {}
 
 
 Player.View = function() {
