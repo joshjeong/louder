@@ -57,7 +57,7 @@ body {
 }
 
 
-.track-container {
+.search-result {
   width: 100%;
   max-width: 350px;
   list-style: none;
@@ -72,7 +72,7 @@ ul {
   margin: auto;
 }
 
-li:nth-child(2n) {
+.search-result:nth-child(2n) {
   background-color: rgba(0,0,0,0.05);
 }
 
@@ -86,11 +86,10 @@ li:nth-child(2n) {
 }
 
 .track-info {
-  display: inline-block;
-  width: 200px;
+  width: 100%;
   position: relative;
-  bottom: 30px;
-  padding-left: 27px;
+  padding: 10px;
+  padding-left: 120px;
 }
 
 .track-container a {

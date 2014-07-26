@@ -9,7 +9,6 @@
     ^ FONTS
     ^ CUSTOM FONT MIXINS
 */
-
 /**
  * Any variables you find set in inuit.css’ `_vars.scss` that you do not wish to
  * keep, simply redefine here. This means that if inuit.css, for example, sets
@@ -99,7 +98,7 @@ label{ cursor:default !important; }
  */
 
 /**
- * ^COLORS 
+ * ^COLORS
  */
 $color1:            $brand-color;           // red
 $color2:            #2F7DC4;                // blue
@@ -133,7 +132,7 @@ $sans-serif:        $brand-face;
 $serif:             "Georgia", serif;
 
 /**
- * ^CUSTOM FONT MIXINS 
+ * ^CUSTOM FONT MIXINS
  */
 @mixin sans-serif-extra-light{
     font-family: 'Gotham SSm 2r', 'Gotham SSm A', 'Gotham SSm B';

@@ -38,16 +38,17 @@ Player.Controller = function(view) {
 
     queueSong: function(event) {
       event.preventDefault()
-      var url = $(event.target).closest('li').attr('data-url')
-      var title = $(event.target).closest('h1').text()
+      var url = $(event.target).parents('.search-result').find('.track').attr('data-url')
+      var title = $(event.target).parents('.search-result').find('.track-title').text()
+      debugger
       this.view.queue.push(url)
-      $('#search-result-container ul').fadeOut(1000)
+      $('#search-result-container').fadeOut(1000)
       // $('#search-result-container ul').html("")
       this.view.clearInput(url, title)
     },
 
     bindSearchResults: function() {
-    $('#search-result-container li').on('click', this.queueSong.bind(this))
+      $('.track').on('click', this.queueSong.bind(this))
     }
   }
 
@@ -83,7 +84,6 @@ Player.View.prototype = {
   },
 
   renderNextSong: function() {
-    // debugger
     var url = this.queue.splice(0,1)[0]
     var html = '<iframe id="sc-widget" src="https://w.soundcloud.com/player/?url=' + url + '&sharing=false&download=false&buying=false&liking=false&show_comments=false&show_playcount=true&show_user=false&show_artwork=true&visual=true&auto_play=true" width="100%" height="465" scrolling="no" frameborder="no"></iframe>'
     $('#frame-holder').html(html)
@@ -117,15 +117,20 @@ Player.SearchPresenter = function(controller) {
   this.formatSearchResults = function(trackArray) {
     var source = $('#search-result-template').html()
     var template = Handlebars.compile(source)
-    $('#search-result-container ul').html("")
+    $('#search-result-container').html("")
     // $('#search-result-container ul').fadeOut(1)
     for (i=0; i < trackArray.length; i++) {
-      $('#search-result-container ul').append(template(trackArray[i]));
-    $('#search-result-container ul').fadeIn(5000)
-    }
+      // $('#search-result-container ul').append(template(trackArray[i]));gu
+      if(trackArray[i].artwork_url == null) {
+        trackArray[i].artwork_url = "images/dummy.jpg"
+      }
+      $('#search-result-container').append(template(trackArray[i]));
+      $('#search-result-container').fadeIn(2000)
+      }
     this.controller.bindSearchResults()
+    }
   }
-}
+
 
 
 

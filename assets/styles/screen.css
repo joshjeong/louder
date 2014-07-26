@@ -42,17 +42,17 @@
 /**
  * Other overrides to inuit
  */
-/* line 85, sass/_vars.scss */
+/* line 84, sass/_vars.scss */
 label {
   cursor: default !important;
 }
 
-/* line 86, sass/_vars.scss */
+/* line 85, sass/_vars.scss */
 .form-fields input[type=text] {
   cursor: text;
 }
 
-/* line 87, sass/_vars.scss */
+/* line 86, sass/_vars.scss */
 .check-list label {
   cursor: pointer !important;
 }
@@ -64,13 +64,13 @@ label {
  * Place any of your own variables that sit on top of inuit.css here.
  */
 /**
- * ^COLORS 
+ * ^COLORS
  */
 /**
  * ^FONTS
  */
 /**
- * ^CUSTOM FONT MIXINS 
+ * ^CUSTOM FONT MIXINS
  */
 /*------------------------------------*\
     $CONTENTS
@@ -659,7 +659,7 @@ body {
 }
 
 /* line 60, sass/_style.scss */
-.track-container {
+.search-result {
   width: 100%;
   max-width: 350px;
   list-style: none;
@@ -675,7 +675,7 @@ ul {
 }
 
 /* line 75, sass/_style.scss */
-li:nth-child(2n) {
+.search-result:nth-child(2n) {
   background-color: rgba(0, 0, 0, 0.05);
 }
 
@@ -689,20 +689,19 @@ li:nth-child(2n) {
 
 /* line 88, sass/_style.scss */
 .track-info {
-  display: inline-block;
-  width: 200px;
+  width: 100%;
   position: relative;
-  bottom: 30px;
-  padding-left: 27px;
+  padding: 10px;
+  padding-left: 120px;
 }
 
-/* line 96, sass/_style.scss */
+/* line 95, sass/_style.scss */
 .track-container a {
   text-decoration: none;
   color: black;
 }
 
-/* line 101, sass/_style.scss */
+/* line 100, sass/_style.scss */
 .title {
   font-size: 1rem;
   font-family: sans-serif;
