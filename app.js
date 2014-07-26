@@ -12,7 +12,7 @@ var io = require("socket.io");
  */
 var exphbs = require('express3-handlebars');
 var hbs;
-ls// For gzip compression
+// For gzip compression
 app.use(express.compress());
 
 
