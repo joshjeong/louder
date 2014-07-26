@@ -33,7 +33,7 @@ app.set('ipaddr', "127.0.0.1");
 
 // Server's Port Number
 
-app.set('port', 8080);
+app.set('port', process.env.PORT || 8080);
 
 // Specify the views folder
 app.set("views", __dirname + "/views");
