@@ -1,0 +1,16 @@
+{
+  "name": "louddder",
+  "version":"0.1.0",
+  "description": "louder app - a spiked branch to understand node.js",
+  "dependencies": {
+    "express": "4.6.1",
+    "jade": "1.4.2",
+    "socket.io": "1.0.6",
+    "underscore": "1.6.0",
+    "body-parser": "1.4.3"
+  },
+  "repository" :
+  { "type" : "git"
+  , "url" : "https://github.com/jeffkynaston/louddder.git"
+  }
+}
