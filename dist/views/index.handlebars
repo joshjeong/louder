@@ -1,0 +1,25 @@
+<div id="frame-holder">
+  <iframe id="sc-widget" src="https://w.soundcloud.com/player/?url=https://soundcloud.com/porter-robinson/porter-robinson-language&sharing=false&download=false&buying=false&liking=false&show_comments=false&show_playcount=false&show_user=false&show_artwork=true&visual=true&auto_play=true" width="100%" height="465" scrolling="no" frameborder="no"></iframe>
+</div>
+<script src="https://w.soundcloud.com/player/api.js" type="text/javascript"></script>
+
+<div id="search-container">
+  <form id="new-content">
+    <input name ="title" id="search-field" type="text" placeholder="search for a song, artist, or playlist">
+    <input id="submit-button" type="submit" value="submit">
+    <div id="flash-message">
+    </div>
+  </div>
+  <div id = "search-result-container">
+    <ul></ul>
+  </div>
+
+<script id="search-result-template" type="text/x-handlebars-template">
+
+    <li data-url="{{uri}}" class="track-container">
+      <img class="thumbnail" src="{{artwork_url}}">
+      <div class="track-info">
+        <h1 class="title">{{title}}</h1>
+      </div>
+    </li>
+</script>
