@@ -55,11 +55,9 @@ Player.Controller = function(view) {
 
 Player.Presenter = function() {}
 
-Player.Presenter.prototype = {
-
 Player.View = function() {
-  this.queue = []
-}
+  this.queue = [];
+};
 
 Player.View.prototype = {
   getWidget: function() {
@@ -127,6 +125,8 @@ Player.SearchPresenter = function(controller) {
     this.controller.bindSearchResults()
     }
   }
+
+
 
 //////////////////////======================================
 
