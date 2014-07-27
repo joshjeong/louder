@@ -6,29 +6,16 @@
         widget       = SC.Widget(widgetIframe);
     widget.bind(SC.Widget.Events.READY, function() {
       widget.bind(SC.Widget.Events.PLAY, function() {
-        console.log(new Date().getTime()*1)
-        console.log(<%= @fakeHostTime %>)
         widget.seekTo(<%= @fakeHostProgress %> + (new Date().getTime()/1000 - <%= @fakeHostTime %>) + 400)
-        // end autoplay after seeking
         widget.pause()
-        // give 10 second buffer to allow song to load
         setTimeout(function(){
-          console.log("now playing")
           widget.play()
-
           //prevent occasional reset that causes it to start from the beginning of the song. We can use this to set it to the exact desired time.
           widget.seekTo(<%= @fakeHostProgress %> + (new Date().getTime()*1 - <%= @fakeHostTime %>))
         }, 500);
         widget.unbind(SC.Widget.Events.PLAY)
       });
       widget.play()
-      // get current level of volume
-      widget.getVolume(function(volume) {
-        console.log('current volume value is ' + volume);
-      });
-      // set new volume level
-      widget.setVolume(50);
-      // get the value of the current position
     });
 
   }());

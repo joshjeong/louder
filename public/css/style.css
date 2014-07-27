@@ -1,0 +1,52 @@
+body {
+  padding: 3em;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 1em;
+}
+
+textarea {
+  resize: none;
+}
+
+h1 {
+  text-align: center;
+}
+
+.inlineBlock {
+ display: inline-block;
+}
+
+.topAligned {
+ vertical-align: top;
+}
+
+#sc-widget {
+  display: none;
+}
+
+#player {
+  margin: auto;
+  height: 500px;
+  width: 400px;
+  background-color: rgba(0,50,0,0.2);
+  display: none;
+}
+
+#buttons {
+  text-align: center;
+  position: relative;
+  top: 350px;
+}
+
+#pause-button {
+  display: none;
+}
+
+#connect-button {
+  display: none;
+  position: absolute;
+  width: 80%;
+  height: 500px;
+  text-align: center;
+  background-color: pink;
+}

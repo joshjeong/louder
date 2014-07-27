@@ -1,0 +1,38 @@
+doctype html
+html
+  head
+    link(rel='stylesheet', href='http://fonts.googleapis.com/css?family=Open+Sans')
+    link(rel='stylesheet', href='/css/style.css')
+    link(rel='stylesheet', href='//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css')
+    script(src='//code.jquery.com/jquery-1.11.0.min.js')
+    script(src='/socket.io/socket.io.js')
+    //- script(src='https://w.soundcloud.com/player/api.js')
+    script(src='//connect.soundcloud.com/sdk.js')
+    script(src='/js/player.js')
+    script(src='/js/application.js')
+    //- if isHost
+    //-   script(src='/js/host.js')
+    //- else
+    //-   script(src='/js/guest.js')
+    title Super Awesome Louder Player
+  body
+    h1 Super Awesome Louder Player
+    i#connect-button.fa.fa-paper-plane.fa-5x
+      h3 Connect
+    #player
+      #buttons
+        i#play-button.fa.fa-play.fa-4x
+        i#pause-button.fa.fa-pause.fa-4x
+    div
+      div.inlineBlock
+        span Tell us who you are:
+          input(type="text", value="Anonymous")#name
+        br
+        form#messageForm
+          textarea(rows="4", cols="50", placeholder="Share something!", maxlength=200)#outgoingMessage
+          input(type="button", value="Share", disabled=true)#send
+      div.inlineBlock.topAligned
+        b Participants
+        br
+        div#participants
+    div#messages
