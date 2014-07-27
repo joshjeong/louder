@@ -71,8 +71,9 @@ socket.on('newConnection', function (data) {
   });
 
 socket.on('songReadyForGuests', function(data) {
-  console.log(sessionId)
-  console.log(data.participants[0])
+  console.log('this is where we should get the song name to assign it')
+  console.log(data.participants[0].song)
+  globalCurrentSongUrl = data.participants[0].song
   if (sessionId != data.participants[0].id) {
     $('#connect-button').show()
     $('#wait-screen').hide()

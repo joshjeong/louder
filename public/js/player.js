@@ -5,6 +5,7 @@ $( document ).ready(function(){
   });
   pController = new Player.Controller
   pController.bindListeners()
+  globalCurrentSongUrl = ""
   // setTimeout(function(){pController.playTrack()}, 3000);
 })
 
@@ -42,8 +43,11 @@ Player.Controller = function() {
     socket.emit('userClickedConnect', {data: 'none'})
       $('#guest-playing').show()
       $('#connect-button').hide()
-    SC.stream(_this.currentSongUri, function(sound){
-      _this.currentSong = sound
+      debugger
+      SC.stream(globalCurrentSongUrl, function(sound){
+        _this.currentSong = sound
+        _this.currentSong.play()
+      // _this.currentSong.pause()
     })
   }
 
