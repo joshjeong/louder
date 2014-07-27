@@ -29,6 +29,7 @@ h1 {
   height: 500px;
   width: 400px;
   background-color: rgba(0,50,0,0.2);
+  display: none;
 }
 
 #buttons {
@@ -39,4 +40,13 @@ h1 {
 
 #pause-button {
   display: none;
+}
+
+#connect-button {
+  display: none;
+  position: absolute;
+  width: 80%;
+  height: 500px;
+  text-align: center;
+  background-color: pink;
 }

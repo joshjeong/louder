@@ -45,10 +45,11 @@ socket.on('newConnection', function (data) {
     updateParticipants(data.participants);
     // checks to see if this client is the host, if so, show controlls & search
     if (sessionId == data.participants[0].id) {
-      $('#sc-widget').show()
+      $('#player').show()
+      $('#connect-button').hide()
     }
     if (sessionId != data.participants[0].id) {
-
+      $('#connect-button').show()
     }
 
   });

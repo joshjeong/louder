@@ -8,6 +8,7 @@ html
     script(src='/socket.io/socket.io.js')
     //- script(src='https://w.soundcloud.com/player/api.js')
     script(src='//connect.soundcloud.com/sdk.js')
+    script(src='/js/player.js')
     script(src='/js/application.js')
     //- if isHost
     //-   script(src='/js/host.js')
@@ -16,7 +17,8 @@ html
     title Super Awesome Louder Player
   body
     h1 Super Awesome Louder Player
-
+    i#connect-button.fa.fa-paper-plane.fa-5x
+      h3 Connect
     #player
       #buttons
         i#play-button.fa.fa-play.fa-4x
