@@ -7,6 +7,10 @@ html
     script(src='/socket.io/socket.io.js')
     script(src='https://w.soundcloud.com/player/api.js')
     script(src='/js/application.js')
+    if isHost
+      script(src='/js/host.js')
+    else
+      script(src='/js/guest.js')
     title Super Awesome Chatroom
   body
     h1 Super Awesome Fun Time Chat Room

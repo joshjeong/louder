@@ -1,12 +1,10 @@
 /*
   Module dependencies:
-
   - Express
   - Http (to run Express)
   - Body parser (to parse JSON requests)
   - Underscore (because it's cool)
   - Socket.IO(Note: we need a web server to attach Socket.IO to)
-
 */
 
 var express = require('express'),
@@ -48,12 +46,14 @@ app.use(express.static("public", __dirname + "/public"));
 app.use(bodyParser.json());
 
 /* Server Routing */
-
 // Root Route
 app.get('/', function(request, response) {
 
+  var isHost = io.eio.clientsCount === 1
+  console.log(io.eio.clientsCount)
+  console.log(isHost)
   //Render a view called 'index'
-  response.render("index");
+  response.render("index", {isHost: isHost});
 
 });
 
