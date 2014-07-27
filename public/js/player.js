@@ -25,6 +25,7 @@ Player.Controller = function() {
     $('#play-button').on('click', this.playTrack)
     $('#pause-button').on('click', this.pauseTrack)
     $('#soundCloudURL').on('submit', this.loadSongFromURL)
+
   }
 
   this.loadSongFromURL = function(event) {
@@ -43,7 +44,8 @@ Player.Controller = function() {
     socket.emit('userClickedConnect', {data: 'none'})
       $('#guest-playing').show()
       $('#connect-button').hide()
-      debugger
+      // send message to server to grab song time from host
+      // new function, server sends time back to guest to play
       SC.stream(globalCurrentSongUrl, function(sound){
         _this.currentSong = sound
         _this.currentSong.play()
@@ -51,19 +53,29 @@ Player.Controller = function() {
     })
   }
 
+  this.sendHostTimestamps = function(){
+    socket.emit('hostClickedPlay',
+      {timestamp: Date.now(), songProgress: _this.currentSong.position}
+    )}
+
   this.playTrack = function() {
 
     console.log('this is in playTrack')
-    SC.stream(_this.currentSongUri, function(sound){
-    _this.currentSong = sound
+    SC.stream(_this.currentSongUri,
+      {onplay: function(){
+        _this.sendHostTimestamps()
+        this.onPosition(1, _this.sendHostTimestamps)
+      }},
+    function(sound){
+      _this.currentSong = sound
       console.log('pause')
       _this.currentSong.pause();
       console.log('play')
       _this.currentSong.play();
-    });
       $('#play-button').hide()
       $('#pause-button').show()
-    }
+    })
+  }
 
   this.pauseTrack = function() {
     console.log('this is in pauseTrack')

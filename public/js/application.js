@@ -103,14 +103,14 @@ socket.on('error', function(reason) {
   console.log('unable to connect to server sry bro', reason);
 });
 
-socket.on('guestPlaySong', function(data){
-  // setTimeout(function(){widget.pause()}, 3000);
-  // setTimeout(function(){widget.play()}, 5000);
-  console.log(data)
-  console.log(data.song)
-  console.log(data.uri)
-  console.log(data.time)
-})
+// socket.on('guestPlaySong', function(data){
+//   // setTimeout(function(){widget.pause()}, 3000);
+//   // setTimeout(function(){widget.play()}, 5000);
+//   console.log(data)
+//   console.log(data.song)
+//   console.log(data.uri)
+//   console.log(data.time)
+// })
 
 // emission to server to indicate a new message
 function sendMessage() {
@@ -162,11 +162,11 @@ $('#send').on('click', sendMessage);
 //     });
 // })
 
-function hostBeganPlaying(data){
-    console.log(currentSong.title)
-    console.log(data)
-    socket.emit('hostPlayedSound', {song: currentSong.title, uri: currentSong.uri, time: data })
-}
+// function hostBeganPlaying(data){
+//     console.log(currentSong.title)
+//     console.log(data)
+//     socket.emit('hostPlayedSound', {song: currentSong.title, uri: currentSong.uri, time: data })
+// }
 
 
 
