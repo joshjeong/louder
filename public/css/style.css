@@ -15,3 +15,7 @@ textarea {
 .topAligned {
  vertical-align: top;
 }
+
+#sc-widget {
+  display: none;
+}

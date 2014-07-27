@@ -40,6 +40,11 @@ log it.
 // take the participants array and use the helper method to update the page
 socket.on('newConnection', function (data) {
     updateParticipants(data.participants);
+      // debugger
+    if (sessionId == data.participants[0].id) {
+      $('#sc-widget').show()
+    }
+
   });
 
 // When the server emits a userDisconnected message, ity passes the id of the disconnected client
