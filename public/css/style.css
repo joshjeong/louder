@@ -8,6 +8,10 @@ textarea {
   resize: none;
 }
 
+h1 {
+  text-align: center;
+}
+
 .inlineBlock {
  display: inline-block;
 }
@@ -17,5 +21,22 @@ textarea {
 }
 
 #sc-widget {
+  display: none;
+}
+
+#player {
+  margin: auto;
+  height: 500px;
+  width: 400px;
+  background-color: rgba(0,50,0,0.2);
+}
+
+#buttons {
+  text-align: center;
+  position: relative;
+  top: 350px;
+}
+
+#pause-button {
   display: none;
 }

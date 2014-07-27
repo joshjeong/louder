@@ -78,7 +78,9 @@ io.on("connection", function(socket){
   //  1) pushes a new user into the participants array defined on line 27
   //  2) emits a new connection message to all clients with the updated particpants array
   socket.on("newUser", function(data){
+    // Adds user to particpants array
     participants.push({id: data.id, name: data.name});
+    // relays the new array of users to all clients
     io.sockets.emit("newConnection", {participants: participants});
   });
 

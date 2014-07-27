@@ -31,18 +31,24 @@ event "connect" is emitted. Let's get the session ID and
 log it.
 */
   socket.on('connect', function () {
+    // Any use connects - first they get an ID
     sessionId = socket.io.engine.id;
     console.log('Connected ' + sessionId);
+    // Sends ID & Name to server
     socket.emit('newUser', {id: sessionId, name: $('#name').val()});
   });
 
 // When the server emits a new connection message, it passes the participants array
 // take the participants array and use the helper method to update the page
 socket.on('newConnection', function (data) {
+      // update list of users on screen
     updateParticipants(data.participants);
-      // debugger
+    // checks to see if this client is the host, if so, show controlls & search
     if (sessionId == data.participants[0].id) {
       $('#sc-widget').show()
+    }
+    if (sessionId != data.participants[0].id) {
+
     }
 
   });
@@ -115,18 +121,19 @@ $('#outgoingMessage').on('keydown', outgoingMessageKeyDown);
 $('#outgoingMessage').on('keyup', outgoingMessageKeyUp);
 $('#name').on('focusout', nameFocusOut);
 $('#send').on('click', sendMessage);
-var widgetIframe = $('#sc-widget')[0]
-widget = SC.Widget(widgetIframe);
+
+// var widgetIframe = $('#sc-widget')[0]
+// widget = SC.Widget(widgetIframe);
 
 
 
-widget.bind(SC.Widget.Events.PLAY, function() {
-    widget.getCurrentSound(function(currentSound) {
-      currentSong = currentSound
-      console.log('sound ' + currentSound.title + 'began to play');
-      widget.getPosition(hostBeganPlaying.bind(widget))
-    });
-})
+// widget.bind(SC.Widget.Events.PLAY, function() {
+//     widget.getCurrentSound(function(currentSound) {
+//       currentSong = currentSound
+//       console.log('sound ' + currentSound.title + 'began to play');
+//       widget.getPosition(hostBeganPlaying.bind(widget))
+//     });
+// })
 
 function hostBeganPlaying(data){
     console.log(currentSong.title)
