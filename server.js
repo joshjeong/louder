@@ -58,19 +58,19 @@ app.get('/', function(request, response) {
 });
 
 // Create a new Chat Message
-app.post("/message", function(request, response) {
-  // store message and sender name in variables
-  var message = request.body.message;
-  var name = request.body.name;
-  // check if message is valid and kick it out if not
-  if (_.isUndefined(message) || _.isEmpty(message.trim())) {
-    return response.json(400, {error: "Message is invalid"});
-  }
-  // send this message to the rest of the clients to update
-  io.sockets.emit("incomingMessage", {message: message, name: name});
-  // respond to sender client with a 200 success
-  response.json(200, {message: "Message received"});
-});
+// app.post("/message", function(request, response) {
+//   // store message and sender name in variables
+//   var message = request.body.message;
+//   var name = request.body.name;
+//   // check if message is valid and kick it out if not
+//   if (_.isUndefined(message) || _.isEmpty(message.trim())) {
+//     return response.json(400, {error: "Message is invalid"});
+//   }
+//   // send this message to the rest of the clients to update
+//   io.sockets.emit("incomingMessage", {message: message, name: name});
+//   // respond to sender client with a 200 success
+//   response.json(200, {message: "Message received"});
+// });
 
 // Socket.IO events
 io.on("connection", function(socket){
@@ -89,6 +89,11 @@ io.on("connection", function(socket){
     _.findWhere(participants, {id: socket.id}).name = data.name;
     io.sockets.emit("nameChanged", {id: data.id, name: data.name});
   });
+
+  socket.on("newMessage", function(name, message){
+    console.log("hello got to the server for new message")
+    io.sockets.emit("incomingMessage", name, message)
+  })
 
   // When a client/user disconnects, run this anonymous function callback that:
   //  1) deletes the disconnected user from the participants array

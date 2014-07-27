@@ -56,9 +56,7 @@ socket.on('nameChanged', function(data) {
 
 // When the server emits an incomingMessage message, it passes the message and name
 // use this info to add that message into the dom
-socket.on('incomingMessage', function(data) {
-  var message = data.message;
-  var name = data.name
+socket.on('incomingMessage', function(name, message) {
    $('#messages').prepend('<b>' + name + '</b><br />' + message + '<hr />');
 });
 
@@ -68,26 +66,19 @@ socket.on('error', function(reason) {
 });
 
 socket.on('guestPlaySong', function(data){
-  setTimeout(function(){widget.pause()}, 3000);
-  setTimeout(function(){widget.play()}, 5000);
+  // setTimeout(function(){widget.pause()}, 3000);
+  // setTimeout(function(){widget.play()}, 5000);
   console.log(data)
   console.log(data.song)
   console.log(data.uri)
   console.log(data.time)
 })
 
-// ajax call to send the message to the server's post route and trigger the
-// server's message emit to all clients
+// emission to server to indicate a new message
 function sendMessage() {
   var outgoingMessage = $('#outgoingMessage').val();
   var name = $('#name').val();
-  $.ajax({
-    url: '/message',
-    type: 'POST',
-    contentType: 'application/json',
-    dataType: 'json',
-    data: JSON.stringify({message: outgoingMessage, name: name})
-  });
+  socket.emit("newMessage", name, outgoingMessage)
 }
 
 // If a user pressees enter (key 13) in the text area, call send message and clear the outgoing message box
