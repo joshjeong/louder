@@ -1,37 +1,18 @@
 {
-  "name": "louder",
-  "version": "0.0.0",
-  "private": true,
+  "name": "louddder",
+  "version": "0.1.0",
+  "description": "louder app - a spiked branch to understand node.js",
   "dependencies": {
-    "express": "~3.4.0",
-    "express3-handlebars": "0.4.x",
-    "socket.io": "*"
+    "body-parser": "1.4.3",
+    "express": "4.6.1",
+    "indexof": "0.0.1",
+    "jade": "1.4.2",
+    "nodemon": "^1.2.1",
+    "socket.io": "1.0.6",
+    "underscore": "1.6.0"
   },
-  "devDependencies": {
-    "grunt": "~0.4.1",
-    "grunt-concurrent": "~0.3.0",
-    "grunt-contrib-clean": "~0.5.0",
-    "grunt-contrib-concat": "~0.3.0",
-    "grunt-contrib-connect": "~0.5.0",
-    "grunt-contrib-copy": "~0.4.1",
-    "grunt-contrib-cssmin": "~0.6.0",
-    "grunt-contrib-htmlmin": "~0.1.3",
-    "grunt-contrib-imagemin": "~0.2.0",
-    "grunt-contrib-jshint": "~0.6.3",
-    "grunt-contrib-sass": "~0.5.0",
-    "grunt-contrib-uglify": "~0.2.0",
-    "grunt-contrib-watch": "~0.5.2",
-    "grunt-express-server": "~0.4.2",
-    "grunt-nodemon": "^0.3.0",
-    "grunt-open": "~0.2.2",
-    "grunt-rev": "~0.1.0",
-    "grunt-svgmin": "~0.2.0",
-    "grunt-usemin": "~0.1.10",
-    "load-grunt-tasks": "~0.1.0",
-    "time-grunt": "~0.1.1"
-  },
-  "engines": {
-    "node": ">=0.8.0",
-    "npm": "1.2.x"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jeffkynaston/louddder.git"
   }
 }
