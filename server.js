@@ -29,7 +29,7 @@ var participants = [];
 /* Server Config */
 
 // Server's IP Address
-app.set('ipaddr', "127.0.0.1");
+// app.set('ipaddr', "127.0.0.1");
 
 // Server's Port Number
 
@@ -105,6 +105,6 @@ io.on("connection", function(socket){
 })
 
 // Start the Server with above specs
-http.listen(app.get("port"), app.get("ipaddr"), function() {
-  console.log("Server up and running. Go to http://" + app.get("ipaddr") + ":" + app.get("port"));
+http.listen(process.env.PORT || 8080, function() {
+  console.log("Server up and running.");
 });
