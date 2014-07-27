@@ -24,6 +24,8 @@ var express = require('express'),
 */
 var participants = [];
 
+var rooms = ['foo', 'bar'];
+
 /* Server Config */
 
 // Server's IP Address
@@ -48,13 +50,13 @@ app.use(bodyParser.json());
 /* Server Routing */
 // Root Route
 app.get('/', function(request, response) {
+  response.render("index", {participants: participants});
+});
 
-  var isHost = io.eio.clientsCount === 1
-  console.log(io.eio.clientsCount)
-  console.log(isHost)
-  //Render a view called 'index'
-  response.render("index", {isHost: isHost});
+app.get('/rooms/:room_name', function(request, response) {
+  // console.log('request', request.params)
 
+  response.render("index", {participants: participants, room_name: request.params.room_name});
 });
 
 // Create a new Chat Message
@@ -80,6 +82,8 @@ io.on("connection", function(socket){
   socket.on("newUser", function(data){
     // Adds user to particpants array
     participants.push({id: data.id, name: data.name});
+    console.log('rooooooooom: ', data.room_name)
+    socket.join(data.room_name)
     // relays the new array of users to all clients
     io.sockets.emit("newConnection", {participants: participants});
   });

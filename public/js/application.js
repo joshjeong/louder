@@ -35,12 +35,13 @@ log it.
     sessionId = socket.io.engine.id;
     console.log('Connected ' + sessionId);
     // Sends ID & Name to server
-    socket.emit('newUser', {id: sessionId, name: $('#name').val()});
+    var room_name = location.pathname.split("/").pop();
+    socket.emit('newUser', {id: sessionId, name: $('#name').val(), room_name: room_name });
   });
 
   $('#connect-button').on('click', function() {
-    alert('hey')
-    socket.emit('newUser', {id: sessionId, name: $('#name').val()});
+    var room_name = location.pathname.split("/").pop();
+    socket.emit('newUser', {id: sessionId, name: $('#name').val(), room_name: room_name });
   })
 
 // When the server emits a new connection message, it passes the participants array
