@@ -9,7 +9,7 @@ var serverBaseUrl = document.domain;
  Note we don't specify a port since we set up our server
  to run on port 8080
 */
-var socket = io.connect(serverBaseUrl);
+socket = io.connect(serverBaseUrl);
 
 // We'll save our session ID in a variable for later
 var sessionId = '';
@@ -38,6 +38,11 @@ log it.
     socket.emit('newUser', {id: sessionId, name: $('#name').val()});
   });
 
+  $('#connect-button').on('click', function() {
+    alert('hey')
+    socket.emit('newUser', {id: sessionId, name: $('#name').val()});
+  })
+
 // When the server emits a new connection message, it passes the participants array
 // take the participants array and use the helper method to update the page
 socket.on('newConnection', function (data) {
@@ -49,6 +54,7 @@ socket.on('newConnection', function (data) {
       $('#connect-button').hide()
     }
     if (sessionId != data.participants[0].id) {
+      $('#player').hide()
       $('#connect-button').show()
     }
 

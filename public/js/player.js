@@ -20,12 +20,13 @@ Player.Controller = function() {
   });
 
   this.bindListeners = function() {
-    $(document.body).on('touchstart', this.playTrack)
+    // $("#connect-button").on('click', this.playTrack)
     $('#play-button').on('click', this.playTrack)
     $('#pause-button').on('click', this.pauseTrack)
   }
 
   this.playTrack = function() {
+    socket.emit('userClickedConnect', {data: 'none'})
     console.log('this is in playTrack')
     SC.stream(_this.currentSongUri, function(sound){
     _this.currentSong = sound

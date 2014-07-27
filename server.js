@@ -84,6 +84,11 @@ io.on("connection", function(socket){
     io.sockets.emit("newConnection", {participants: participants});
   });
 
+  socket.on("userClickedConnect", function(data) {
+    console.log('anything')
+    console.log(data)
+  })
+
   // When a client/user changes their name, run this anonymous function callback that:
   //  1) finds the user that changed their name within the particpants array, and updates their name
   //  2) emits a name changed message to all clients with that user's new ID and name
