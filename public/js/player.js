@@ -36,6 +36,13 @@ Player.Controller = function() {
     $.get('http://api.soundcloud.com/resolve.json?url=' + trackUrl + '&client_id=d8eb7a8be0cc38d451a51d4d223ee84b',
     function (song) {
     _this.currentSongUri = song.uri;
+      SC.stream(_this.currentSongUri,
+      {onplay: function(){
+        this.onPosition(1, _this.sendHostTimestamps)
+      }},
+    function(sound){
+      _this.currentSong = sound
+    })
     socket.emit('hostPickedSong', {song: _this.currentSongUri})
   });
   }
@@ -61,20 +68,10 @@ Player.Controller = function() {
   this.playTrack = function() {
 
     console.log('this is in playTrack')
-    SC.stream(_this.currentSongUri,
-      {onplay: function(){
-        _this.sendHostTimestamps()
-        this.onPosition(1, _this.sendHostTimestamps)
-      }},
-    function(sound){
-      _this.currentSong = sound
-      console.log('pause')
-      _this.currentSong.pause();
-      console.log('play')
-      _this.currentSong.play();
-      $('#play-button').hide()
-      $('#pause-button').show()
-    })
+    _this.currentSong.play();
+    $('#play-button').hide()
+    $('#pause-button').show()
+
   }
 
   this.pauseTrack = function() {
