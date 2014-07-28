@@ -74,11 +74,11 @@ io.on("connection", function(socket){
   })
 
   socket.on("hostClickedPlay", function(data){
-    participants[0].timestamp = data.timestamp
-    participants[0].songProgress = data.songProgress
-    console.log("participant data")
-    console.log(participants[0])
-    io.sockets.emit("hostSentTimestamps", participants[0])
+    console.log(data)
+    var timestampData = {}
+    timestampData.timestamp = data.timestamp
+    timestampData.songProgress = data.songProgress
+    io.sockets.emit("hostSentTimestamps", timestampData)
   })
 
 

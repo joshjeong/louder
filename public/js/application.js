@@ -81,6 +81,7 @@ $(document).on('ready', init);
   })
 
   socket.on('hostSentTimestamps', function(data){
+    console.log(timestampData)
     console.log(data)
     timestampData = data
   })

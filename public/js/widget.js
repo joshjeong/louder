@@ -44,17 +44,16 @@ $( document ).ready(function(){
       _this.currentSongUri = globalCurrentSongUrl;
       _this.createWidget();
       _this.bindGuestWidgetListeners();
-      _this.widget.play();
     }
 
     this.sendHostTimestamps = function(){
       var currentPosition;
       _this.widget.getPosition(function(position){
-        console.log("postion: " + position)
+        console.log("position: " + position)
         currentPosition = position
+        socket.emit('hostClickedPlay',
+        {timestamp: Date.now(), songProgress: currentPosition});
       });
-      socket.emit('hostClickedPlay',
-      {timestamp: Date.now(), songProgress: currentPosition});
     }
 
     this.playTrack = function() {
@@ -99,6 +98,8 @@ $( document ).ready(function(){
 
     //binds the listeners that will cause it to sync on the first play event.
     this.bindGuestWidgetListeners = function(){
+      console.log("timestamp data!")
+      console.log(timestampData)
       _this.widget.bind(SC.Widget.Events.READY, function(){
         _this.widget.bind(SC.Widget.Events.PLAY, function() {
           _this.widget.seekTo(timestampData.songProgress + (new Date().getTime()/1000 - timestampData.timestamp) + 400);
@@ -110,6 +111,7 @@ $( document ).ready(function(){
           }, 500);
           _this.widget.unbind(SC.Widget.Events.PLAY);
         });
+        _this.widget.play();
       });
     }
   }
