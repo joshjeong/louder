@@ -85,6 +85,7 @@ Player.Controller = function() {
       // send message to server to grab song time from host
       // new function, server sends time back to guest to play
       SC.stream(globalCurrentSongUrl, function(sound){
+        debugger
         _this.currentSong = sound
         var hostTimeStamp = timestampData.timestamp
         var hostProgress = timestampData.songProgress
@@ -120,4 +121,3 @@ Player.Controller = function() {
         $('#play-button').show()
       };
     }
-
