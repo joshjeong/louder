@@ -18,8 +18,15 @@ html
   body
     h1 Super Awesome Louder Player
     i#connect-button.fa.fa-paper-plane.fa-5x
-      h3 Connect
+      h3 Connect to host
+    i#wait-screen.fa.fa-camera-retro.fa-5x
+      h3 Waiting for host to pick a song
+    i#guest-playing.fa.fa-child.fa-5x
+      h3 Now Playing Song!
     #player
+      form#soundCloudURL
+        input(type="text" placeholder="Enter Soundcloud URL")
+        input(type="submit", value="Load Song")
       #buttons
         i#play-button.fa.fa-play.fa-4x
         i#pause-button.fa.fa-pause.fa-4x

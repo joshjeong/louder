@@ -1,3 +1,4 @@
+timestampData = {}
 $(document).on('ready', init);
 
 function init() {
@@ -31,34 +32,59 @@ event "connect" is emitted. Let's get the session ID and
 log it.
 */
   socket.on('connect', function () {
-    // Any use connects - first they get an ID
+    // Any user connects - first they get an ID
     sessionId = socket.io.engine.id;
     console.log('Connected ' + sessionId);
     // Sends ID & Name to server
-    socket.emit('newUser', {id: sessionId, name: $('#name').val()});
+    socket.emit('newUser', {id: sessionId, name: $('#name').val(), song: ""});
   });
 
-  $('#connect-button').on('click', function() {
-    alert('hey')
-    socket.emit('newUser', {id: sessionId, name: $('#name').val()});
-  })
 
 // When the server emits a new connection message, it passes the participants array
 // take the participants array and use the helper method to update the page
 socket.on('newConnection', function (data) {
+      // server emits 'newConnection' when it sees a user connect
       // update list of users on screen
     updateParticipants(data.participants);
     // checks to see if this client is the host, if so, show controlls & search
     if (sessionId == data.participants[0].id) {
       $('#player').show()
       $('#connect-button').hide()
+      $('#wait-screen').hide()
+      $('#guest-playing').hide()
     }
     if (sessionId != data.participants[0].id) {
       $('#player').hide()
+      // debugger
+      if (data.participants[0].song == "") {
+        // show waiting screen
+      $('#connect-button').hide()
+      $('#wait-screen').show()
+      $('#guest-playing').hide()
+      }
+      else {
       $('#connect-button').show()
+      $('#wait-screen').hide()
+      $('#guest-playing').hide()
+      }
     }
 
   });
+
+socket.on('songReadyForGuests', function(data) {
+  console.log('this is where we should get the song name to assign it')
+  console.log(data.participants[0].song)
+  globalCurrentSongUrl = data.participants[0].song
+  if (sessionId != data.participants[0].id) {
+    $('#connect-button').show()
+    $('#wait-screen').hide()
+  }
+})
+
+socket.on('hostSentTimestamps', function(data){
+  console.log(data)
+  timestampData = data
+})
 
 // When the server emits a userDisconnected message, ity passes the id of the disconnected client
 // this function removes that user from the list by updating the dom
@@ -83,14 +109,14 @@ socket.on('error', function(reason) {
   console.log('unable to connect to server sry bro', reason);
 });
 
-socket.on('guestPlaySong', function(data){
-  // setTimeout(function(){widget.pause()}, 3000);
-  // setTimeout(function(){widget.play()}, 5000);
-  console.log(data)
-  console.log(data.song)
-  console.log(data.uri)
-  console.log(data.time)
-})
+// socket.on('guestPlaySong', function(data){
+//   // setTimeout(function(){widget.pause()}, 3000);
+//   // setTimeout(function(){widget.play()}, 5000);
+//   console.log(data)
+//   console.log(data.song)
+//   console.log(data.uri)
+//   console.log(data.time)
+// })
 
 // emission to server to indicate a new message
 function sendMessage() {
@@ -142,11 +168,11 @@ $('#send').on('click', sendMessage);
 //     });
 // })
 
-function hostBeganPlaying(data){
-    console.log(currentSong.title)
-    console.log(data)
-    socket.emit('hostPlayedSound', {song: currentSong.title, uri: currentSong.uri, time: data })
-}
+// function hostBeganPlaying(data){
+//     console.log(currentSong.title)
+//     console.log(data)
+//     socket.emit('hostPlayedSound', {song: currentSong.title, uri: currentSong.uri, time: data })
+// }
 
 
 
