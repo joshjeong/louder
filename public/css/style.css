@@ -5,7 +5,13 @@ body {
   background-color: #1B212F;
   line-height: 1.5em;
 }
-
+/*Color Scheme colors:
+writing: D8D8D8;
+background: 1B212F;
+innerdiv backgrounds: 222939;
+innerdiv accents: 333E54;
+standouts: D05158;
+*/
 textarea {
   resize: none;
 }
