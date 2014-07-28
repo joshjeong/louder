@@ -99,7 +99,6 @@ $( document ).ready(function(){
 
     //binds the listeners that will cause it to sync on the first play event.
     this.bindGuestWidgetListeners = function(){
-      debugger
       _this.widget.bind(SC.Widget.Events.READY, function(){
         _this.widget.bind(SC.Widget.Events.PLAY, function() {
           _this.widget.seekTo(timestampData.songProgress + (new Date().getTime()/1000 - timestampData.timestamp) + 400);
