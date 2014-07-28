@@ -68,15 +68,15 @@ Player.Controller = function() {
 
         setTimeout(function() {
         var timeToPlay = (guestTimeStamp - hostTimeStamp + hostProgress)
-        _this.currentSong.setPosition((timeToPlay+5000)).play()
+        _this.currentSong.setPosition((timeToPlay+10000)).play()
         _this.currentSong.toggleMute()
         console.log('now it should jump')
         console.log('heres the time it should jump to')
-        console.log(timeToPlay+5000)
+        console.log(timeToPlay+10000)
         console.log('host time stamp', hostTimeStamp)
         console.log('hostProgress', hostProgress)
         console.log('guestTimeStamp', guestTimeStamp)
-        }, 5000)
+        }, 10000)
 
 
         console.log(_this.currentSong.position)
@@ -97,6 +97,7 @@ Player.Controller = function() {
     setInterval(function(){console.log(_this.currentSong.position)}, 100)
     $('#play-button').hide()
     $('#pause-button').show()
+    // socket.emit('hostPickedSong', {song: _this.currentSongUri})
 
   }
 
