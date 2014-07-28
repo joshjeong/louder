@@ -79,14 +79,32 @@ io.on("connection", function(socket){
   //  2) emits a new connection message to all clients with the updated particpants array
   socket.on("newUser", function(data){
     // Adds user to particpants array
-    participants.push({id: data.id, name: data.name});
+    participants.push({id: data.id, name: data.name, song: data.song, timestamp: data.timestamp, currentProgress: data.currentProgress, playing: data.playing});
     // relays the new array of users to all clients
     io.sockets.emit("newConnection", {participants: participants});
   });
 
+  socket.on("hostPickedSong", function(data) {
+    participants[0].song = data.song
+    io.sockets.emit('songReadyForGuests', {participants: participants})
+  })
+
+  socket.on("hostClickedPlay", function(data){
+    participants[0].timestamp = data.timestamp
+    participants[0].songProgress = data.songProgress
+    participants[0].playing = true
+    console.log("participant data")
+    console.log(participants[0])
+    io.sockets.emit("hostSentTimestamps", {participants: participants})
+  })
+
   socket.on("userClickedConnect", function(data) {
+    console.log('hopefully this logs the current users playing state')
+    _.findWhere(participants, {id: data.id}).playing = true
     console.log('anything')
     console.log(data)
+    console.log('participants')
+    console.log(participants)
   })
 
   // When a client/user changes their name, run this anonymous function callback that:

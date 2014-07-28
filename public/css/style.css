@@ -1,13 +1,26 @@
 body {
-  padding: 3em;
-  font-family: 'Open Sans', sans-serif;
+  /*padding: 3em;*/
+  font-family: 'Montserrat', sans-serif;
   font-size: 1em;
+  background-color: #1B212F;
+  line-height: 1.5em;
 }
-
+/*Color Scheme colors:
+writing: D8D8D8;
+background: 1B212F;
+innerdiv backgrounds: 222939;
+innerdiv accents: 333E54;
+standouts: D05158;
+*/
 textarea {
   resize: none;
 }
-
+svg {
+  z-index: -1;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
 h1 {
   text-align: center;
 }
@@ -20,22 +33,34 @@ h1 {
  vertical-align: top;
 }
 
+.screens {
+  width: 100%;
+  margin: 0 auto;
+}
+
 #sc-widget {
   display: none;
 }
 
 #player {
   margin: auto;
-  height: 500px;
+  margin-top: 5rem;
+  height: 300px;
   width: 400px;
-  background-color: rgba(0,50,0,0.2);
+  background-color: #333E54;
+  border-radius: 15px;
   display: none;
 }
 
 #buttons {
   text-align: center;
   position: relative;
-  top: 350px;
+  color: #D8D8D8;
+}
+
+#messageForm, .chat {
+  display: none;
+  opacity: 0.1;
 }
 
 #pause-button {
@@ -43,47 +68,100 @@ h1 {
 }
 
 #connect-button {
+  display: block;
   display: none;
-  position: absolute;
-  width: 80%;
-  height: 500px;
+  width: 40%;
+  padding: 3rem;
   text-align: center;
-  background-color: pink;
+  background-color: #333E54;
+  color: #D8D8D8;
+  margin: 0 auto;
+  border-radius: 10px;
+  z-index: 1;
+  margin-top: 3rem;
 }
 
 #wait-screen {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+  font-size: 3em;
+  color: #fff;
   display: none;
   position: absolute;
-  width: 80%;
-  height: 500px;
-  text-align: center;
-  background-color: lightblue;
+  height: 0px;
+  left: 0px;
+  width: 100%;
+  top: 100px;
 }
 
 #guest-playing {
+  color: #fff;
   display: none;
-  position: absolute;
-  width: 80%;
-  height: 500px;
+  width: 50%;
+  padding: 3rem;
   text-align: center;
-  background-color: lightgreen;
+  background-color: #333E54;
+  color: #D8D8D8;
+  margin: 0 auto;
+  border-radius: 10px;
+  z-index: 1;
+  margin-top: 3rem;
 }
 
 #soundCloudURL {
-  margin: auto;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 2rem;
 }
 
 #soundCloudURL input {
-  margin: auto;
-  width: 90%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-#soundCloudURL .header {
-  margin: 0 20px 5px 20px;
-  padding: 3px 0;
-  border-bottom: 1px solid #ccc;
+.chat {
+  z-index: -1;
+}
+
+rect {
+  position: absolute;
+  top: 0
+  left: 0;
+  fill: none;
+  pointer-events: all;
+  z-index: 100
+}
+
+circle {
+  fill: none;
+  stroke-width: 2.5px;
+  z-index: 100
+}
+
+.margin1{
+  margin-top: 1rem;
+}
+
+.input-field{
+  padding: 1rem;
+  font-size: 1.3rem;
+  width: 90%;
 }
 
 .waiting {
   cursor: wait;
 }
+
+.submit-button{
+  padding:5px 15px;
+  background:#D8D8D8;
+  width: 100%;
+  height: 3rem;
+  font-size: 1.3rem;
+  color: gray;
+  border:0 none;
+  cursor:pointer;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
