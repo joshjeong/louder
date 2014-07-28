@@ -9,6 +9,7 @@ html
     //- script(src='https://w.soundcloud.com/player/api.js')
     script(src='//connect.soundcloud.com/sdk.js')
     script(src='/js/player.js')
+    script(src='/js/vendor/js/typeahead.bundle.min.js')
     script(src='/js/application.js')
     //- if isHost
     //-   script(src='/js/host.js')
@@ -25,7 +26,7 @@ html
       h3 Now Playing Song!
     #player
       form#soundCloudURL
-        input(type="text" placeholder="Enter Soundcloud URL")
+        input(type="text" placeholder="Enter Soundcloud URL" class="track-query")
         input(type="submit", value="Load Song")
       #buttons
         i#play-button.fa.fa-play.fa-4x
@@ -43,3 +44,4 @@ html
         br
         div#participants
     div#messages
+    #playa

@@ -6,7 +6,43 @@ $( document ).ready(function(){
   pController = new Player.Controller
   pController.bindListeners()
   globalCurrentSongUrl = ""
-  // setTimeout(function(){pController.playTrack()}, 3000);
+  // tracks = new Bloodhound({
+  //   datumTokenizer: Bloodhound.tokenizers.obj.whitespace('track'),
+  //   queryTokenizer: Bloodhound.tokenizers.whitespace,
+  //   prefetch: {url: JSON.stringify(pController.getTracks())}
+  // });
+  // tracks.initialize();
+  var query = $('.track-query').val();
+  $('#soundCloudURL .track-query').typeahead({
+    hint: true,
+    highlight: true,
+    minLength: 1
+  },
+  {
+    name: 'a',
+    displayKey: 'title',
+    source: function (query, process) {
+      var fetch = function(query) {
+      var fetchTracks = new $.Deferred();
+      SC.get('/tracks', {query:query, track_type: 'original'}, function(tracks) {
+        fetchTracks.resolve(tracks)
+      })
+      return fetchTracks.promise();
+    }
+
+      var dataPromise = fetch(query);
+      tracksArray = [];
+      dataPromise.done(function(tracks){
+        tracksArray = tracks
+        process(tracksArray);
+      });
+    // var promise = $.when(this.fetch(query));
+
+    // var a = promise.done(function(tracks) {
+      // tracksArray = tracks
+    // })
+},
+  });
 })
 
 Player = {}
@@ -14,18 +50,48 @@ Player.Controller = function() {
   this.currentSong = {}
   this.currentSongUri = {}
   _this = this
+
+
+// var playlists = new Bloodhound({
+//   datumTokenizer: Bloodhound.tokenizers.obj.whitespace('team'),
+//   queryTokenizer: Bloodhound.tokenizers.whitespace,
+  // prefetch: '../data/playlists.json'
+// });
+
+
   // trackUrl = 'https://soundcloud.com/flosstradamus/flosstradamus-mosh-pit-original-mix';
   // $.get('http://api.soundcloud.com/resolve.json?url=' + trackUrl + '&client_id=d8eb7a8be0cc38d451a51d4d223ee84b',
   // function (song) {
   //   _this.currentSongUri = song.uri;
   // });
 
+
+
+    this.getTracks = function(query) {
+    debugger
+
+  }
+
+  // this.getTracks = function(e) {
+  //   e.preventDefault()
+  //   var options = {
+  //     query: query,
+  //     bpm: {
+  //       from: 120
+  //     }
+  //   }
+  // }
+    //
+
+
+
+
   this.bindListeners = function() {
     $("#connect-button").on('click', this.bufferGuestTrack)
     $('#play-button').on('click', this.playTrack)
     $('#pause-button').on('click', this.pauseTrack)
-    $('#soundCloudURL').on('submit', this.loadSongFromURL)
-
+    // $('#soundCloudURL').on('submit', this.loadSongFromURL)
+    $('#soundCloudURL').on('submit', this.getTracks.bind(this))
   }
 
   this.loadSongFromURL = function(event) {
@@ -59,16 +125,16 @@ Player.Controller = function() {
         var hostTimeStamp = timestampData.timestamp
         var hostProgress = timestampData.songProgress
         var guestTimeStamp = Date.now()
-        
+
         _this.currentSong.play()
 
-        setTimeout(function() { 
+        setTimeout(function() {
         var timeToPlay = (guestTimeStamp - hostTimeStamp + hostProgress)
         _this.currentSong.setPosition((timeToPlay+5100)).play()
         console.log('now it should jump')
         }, 5000)
-        
-        
+
+
         // console.log(_this.currentSong.position)
         // setInterval(function(){console.log(_this.currentSong.position)}, 100)
         //grab host timestamp and host progress
