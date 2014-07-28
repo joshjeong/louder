@@ -6,6 +6,7 @@ $( document ).ready(function(){
   pController = new Player.Controller
   pController.bindListeners()
   globalCurrentSongUrl = ""
+  timestampData = {}
   // setTimeout(function(){pController.playTrack()}, 3000);
 })
 
@@ -54,23 +55,30 @@ Player.Controller = function() {
       $('#connect-button').hide()
       // send message to server to grab song time from host
       // new function, server sends time back to guest to play
+      console.log('this is the stream url! is it getting through?')
+      console.log(globalCurrentSongUrl)
       SC.stream(globalCurrentSongUrl, function(sound){
         _this.currentSong = sound
         var hostTimeStamp = timestampData.timestamp
         var hostProgress = timestampData.songProgress
         var guestTimeStamp = Date.now()
-        
+
         _this.currentSong.play()
 
-        setTimeout(function() { 
+        setTimeout(function() {
         var timeToPlay = (guestTimeStamp - hostTimeStamp + hostProgress)
-        _this.currentSong.setPosition((timeToPlay+5100)).play()
+        _this.currentSong.setPosition((timeToPlay+5000)).play()
         console.log('now it should jump')
+        console.log('heres the time it should jump to')
+        console.log(timeToPlay+5000)
+        console.log('host time stamp', hostTimeStamp)
+        console.log('hostProgress', hostProgress)
+        console.log('guestTimeStamp', guestTimeStamp)
         }, 5000)
-        
-        
-        // console.log(_this.currentSong.position)
-        // setInterval(function(){console.log(_this.currentSong.position)}, 100)
+
+
+        console.log(_this.currentSong.position)
+        setInterval(function(){console.log(_this.currentSong.position)}, 100)
         //grab host timestamp and host progress
         //grab guest timestamp
         //setPosition(host timestamp - guest timestamp + host progress)
