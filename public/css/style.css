@@ -19,10 +19,10 @@ h1 {
 .topAligned {
  vertical-align: top;
 }
-/*
-#sc-widget {
+
+#widget {
   display: none;
-}*/
+}
 
 #player {
   margin: auto;

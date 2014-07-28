@@ -15,6 +15,7 @@ Player.Controller = function() {
   this.currentSongUri = {}
   _this = this
 
+  //Bind the webpage's buttons to the cooresponding functions
   this.bindListeners = function() {
     $("#connect-button").on('click', this.bufferGuestTrack)
     $('#play-button').on('click', this.playTrack)
@@ -22,6 +23,7 @@ Player.Controller = function() {
     $('#soundCloudURL').on('submit', this.loadSongFromURL)
   }
 
+  //loads the song for the host,
   this.loadSongFromURL = function(event) {
     event.preventDefault()
     var trackUrl = $(event.target).find('input').eq(0).val()
