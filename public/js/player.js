@@ -83,7 +83,7 @@ Player.Controller = function() {
         function(track){
           _this.currentSong = track
         })
-      socket.emit('hostPickedSong', {song: _this.currentSongUri})
+      socket.emit('hostPickedSong', {song: track.stream_url})
     });
   },
 

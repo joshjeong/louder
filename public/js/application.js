@@ -94,6 +94,7 @@ socket.on('newConnection', function (data) {
   });
 
 socket.on('songReadyForGuests', function(data) {
+  debugger
   console.log('this is where we should get the song name to assign it')
   console.log(data.participants[0].song)
   globalCurrentSongUrl = data.participants[0].song
