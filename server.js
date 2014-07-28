@@ -56,21 +56,6 @@ app.get('/', function(request, response) {
 
 });
 
-// Create a new Chat Message
-// app.post("/message", function(request, response) {
-//   // store message and sender name in variables
-//   var message = request.body.message;
-//   var name = request.body.name;
-//   // check if message is valid and kick it out if not
-//   if (_.isUndefined(message) || _.isEmpty(message.trim())) {
-//     return response.json(400, {error: "Message is invalid"});
-//   }
-//   // send this message to the rest of the clients to update
-//   io.sockets.emit("incomingMessage", {message: message, name: name});
-//   // respond to sender client with a 200 success
-//   response.json(200, {message: "Message received"});
-// });
-
 // Socket.IO events
 io.on("connection", function(socket){
   // When a client/user connects, run this anonmymous function callback that:
@@ -124,10 +109,6 @@ io.on("connection", function(socket){
     participants = _.without(participants,_.findWhere(participants, {id: socket.id}));
     io.sockets.emit("userDisconnected", {id: socket.id, sender:"system"});
   });
-
-  // socket.on("hostPlayedSound", function(data) {
-  //   io.sockets.emit("guestPlaySong", {song: data.song, uri: data.uri, time: data.time})
-  // })
 
 })
 

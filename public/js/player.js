@@ -14,18 +14,12 @@ Player.Controller = function() {
   this.currentSong = {}
   this.currentSongUri = {}
   _this = this
-  // trackUrl = 'https://soundcloud.com/flosstradamus/flosstradamus-mosh-pit-original-mix';
-  // $.get('http://api.soundcloud.com/resolve.json?url=' + trackUrl + '&client_id=d8eb7a8be0cc38d451a51d4d223ee84b',
-  // function (song) {
-  //   _this.currentSongUri = song.uri;
-  // });
 
   this.bindListeners = function() {
     $("#connect-button").on('click', this.bufferGuestTrack)
     $('#play-button').on('click', this.playTrack)
     $('#pause-button').on('click', this.pauseTrack)
     $('#soundCloudURL').on('submit', this.loadSongFromURL)
-
   }
 
   this.loadSongFromURL = function(event) {
@@ -59,33 +53,14 @@ Player.Controller = function() {
         var hostTimeStamp = timestampData.timestamp
         var hostProgress = timestampData.songProgress
         var guestTimeStamp = Date.now()
-        
+
         _this.currentSong.play()
 
-        setTimeout(function() { 
+        setTimeout(function() {
         var timeToPlay = (guestTimeStamp - hostTimeStamp + hostProgress)
         _this.currentSong.setPosition((timeToPlay+5100)).play()
         console.log('now it should jump')
         }, 5000)
-        
-        
-        // console.log(_this.currentSong.position)
-        // setInterval(function(){console.log(_this.currentSong.position)}, 100)
-        //grab host timestamp and host progress
-        //grab guest timestamp
-        //setPosition(host timestamp - guest timestamp + host progress)
-        //play()
-
-        // _this.currentSong.position = (timestampData.songProgress
-        //   + (Date.now() - timestampData.timestamp) + 400)
-        // debugger
-        // setTimeout(function(){
-        //   _this.currentSong.position = (timestampData.songProgress
-        //   + (Date.now() - timestampData.timestamp))
-        //   debugger
-        //   _this.currentSong.play()},
-        //   500)
-      // _this.currentSong.pause()
     })
   }
 
