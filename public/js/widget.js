@@ -95,7 +95,6 @@ $( document ).ready(function(){
           }, 500);
           _this.widget.unbind(SC.Widget.Events.PLAY);
         });
-        _this.widget.play();
       });
     }
   }
