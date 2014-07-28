@@ -9,7 +9,7 @@ $( document ).ready(function(){
   globalCurrentSongUrl = ""
 });
   timestampData = {}
-
+  Player = {}
   // D3 OBJECT --------------------------------------
 
   var width = Math.max(2000, innerWidth),
@@ -45,18 +45,17 @@ $( document ).ready(function(){
     d3.event.preventDefault();
   }
 
-Player = {}
 Player.Controller = function() {
   this.currentSong = {}
   this.currentSongUri = {}
   _this = this
 
   this.setupTypeAhead = function() {
-    $('#soundCloudURL .track-query').typeahead({
+    $('#soundCloudURL .track-query').typeahead(
+    {
       hint: true,
       highlight: true,
-      minLength: 1
-    },
+      minLength: 1 },
     {
       name: 'tracks',
       displayKey: 'title',
@@ -98,18 +97,17 @@ Player.Controller = function() {
     socket.emit('userClickedConnect', {id: socket.io.engine.id, playing: true})
       $('#guest-playing').show()
       $('#connect-button').hide()
-      console.log(globalCurrentSongUrl)
       SC.stream(globalCurrentSongUrl, function(sound){
-        debugger
         _this.currentSong = sound
         var hostTimeStamp = timestampData.timestamp
         var hostProgress = timestampData.songProgress
         var guestTimeStamp = Date.now()
-
+        // _this.currentSong.play()
+        // _this.currentSong.toggleMute()
+        debugger
         _this.currentSong.play()
-        _this.currentSong.toggleMute()
       })
-    }
+  } 
   this.sendHostTimestamps = function(){
     socket.emit('hostClickedPlay',
       {timestamp: Date.now(), songProgress: _this.currentSong.position}
