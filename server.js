@@ -1,3 +1,5 @@
+//      return db.collection("rooms").find({room_name: 'test-room'}).toArray(function(err, response){console.log})
+//
 /*
   Module dependencies:
   - Express
@@ -7,30 +9,41 @@
   - Socket.IO(Note: we need a web server to attach Socket.IO to)
 */
 
+//db.rooms.find({room_name:"test-room"})
+//return rooms.toArray(function(err, response){})
+
 var express = require('express'),
+    mongojs = require('mongojs'),
+    Q = require("q"),
     app = express(),
     http = require('http').createServer(app),
     bodyParser = require('body-parser'),
     io = require('socket.io').listen(http),
     _ = require('underscore');
 
-/*
-  The list of participants in our chatroom.
-  The format of each participant will be:
-  {
-    id: "sessionId",
-    name: "participantName"
-  }
-*/
 var participants = [];
 
-var rooms = ['foo', 'bar'];
+
+///===================================
+function Database() {
+  self = this
+  this.db = mongojs("louder");
+  this.rooms = this.db.collection('rooms');
+  this.goFetch = function() {
+    var defer = Q.defer();
+    this.rooms.find({room_name:"test-room"}, defer.makeNodeResolver());
+    self.grabRooms(defer.promise);
+  }
+  this.grabRooms = function(promise) {
+    promise.then(function(result) {
+      return 1
+    })
+  }
+}
+
+db = new Database()
 
 /* Server Config */
-
-// Server's IP Address
-// app.set('ipaddr', "127.0.0.1");
-
 // Server's Port Number
 
 app.set('port', process.env.PORT || 8080);
@@ -59,21 +72,6 @@ app.get('/rooms/:room_name', function(request, response) {
   response.render("index", {participants: participants, room_name: request.params.room_name});
 });
 
-// Create a new Chat Message
-// app.post("/message", function(request, response) {
-//   // store message and sender name in variables
-//   var message = request.body.message;
-//   var name = request.body.name;
-//   // check if message is valid and kick it out if not
-//   if (_.isUndefined(message) || _.isEmpty(message.trim())) {
-//     return response.json(400, {error: "Message is invalid"});
-//   }
-//   // send this message to the rest of the clients to update
-//   io.sockets.emit("incomingMessage", {message: message, name: name});
-//   // respond to sender client with a 200 success
-//   response.json(200, {message: "Message received"});
-// });
-
 // Socket.IO events
 io.on("connection", function(socket){
   // When a client/user connects, run this anonmymous function callback that:
@@ -84,6 +82,7 @@ io.on("connection", function(socket){
     participants.push({id: data.id, name: data.name});
     console.log('rooooooooom: ', data.room_name)
     socket.join(data.room_name)
+    console.log('dbBlah: ', db.grabRooms())
     // relays the new array of users to all clients
     io.sockets.emit("newConnection", {participants: participants});
   });
