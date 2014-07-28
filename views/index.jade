@@ -16,6 +16,7 @@ html
     //-   script(src='/js/guest.js')
     title Super Awesome Louder Player
   body
+    iframe(id="sc-widget", src="http://w.soundcloud.com/player/?url=https://soundcloud.com/kagerou-project/hatsune-miku-heat-haze-days", scrolling="no")
     h1 Super Awesome Louder Player
     i#connect-button.fa.fa-paper-plane.fa-5x
       h3 Connect to host
@@ -24,12 +25,12 @@ html
     i#guest-playing.fa.fa-child.fa-5x
       h3 Now Playing Song!
     #player
-      form#soundCloudURL
-        input(type="text" placeholder="Enter Soundcloud URL")
-        input(type="submit", value="Load Song")
-      #buttons
-        i#play-button.fa.fa-play.fa-4x
-        i#pause-button.fa.fa-pause.fa-4x
+      //-form#soundCloudURL
+        //-input(type="text" placeholder="Enter Soundcloud URL")
+        //-input(type="submit", value="Load Song")
+      //-#buttons
+        //-i#play-button.fa.fa-play.fa-4x
+        //-i#pause-button.fa.fa-pause.fa-4x
     div
       div.inlineBlock
         span Tell us who you are:
@@ -43,3 +44,4 @@ html
         br
         div#participants
     div#messages
+  script(src='/js/widget.js')
