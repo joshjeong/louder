@@ -50,7 +50,7 @@ Player.Controller = function() {
   }
 
   this.bufferGuestTrack = function () {
-    socket.emit('userClickedConnect', {data: 'none'})
+    socket.emit('userClickedConnect', {id: socket.io.engine.id, playing: true})
       $('#guest-playing').show()
       $('#connect-button').hide()
       // send message to server to grab song time from host

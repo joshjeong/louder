@@ -91,6 +91,7 @@ io.on("connection", function(socket){
   socket.on("hostClickedPlay", function(data){
     participants[0].timestamp = data.timestamp
     participants[0].songProgress = data.songProgress
+    participants[0].playing = true
     console.log("participant data")
     console.log(participants[0])
     io.sockets.emit("hostSentTimestamps", participants[0])
@@ -98,8 +99,12 @@ io.on("connection", function(socket){
 
 
   socket.on("userClickedConnect", function(data) {
+    console.log('hopefully this logs the current users playing state')
+    _.findWhere(participants, {id: data.id}).playing = true
     console.log('anything')
     console.log(data)
+    console.log('participants')
+    console.log(participants)
   })
 
 

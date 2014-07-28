@@ -61,7 +61,7 @@ socket.on('newConnection', function (data) {
       globalCurrentSongUrl = data.participants[0].song
       timestampData.timestamp = data.participants[0].timestamp
       timestampData.songProgress = data.participants[0].songProgress
-      if (data.participants[0].song == "") {
+      if (data.participants[0].playing == false) {
         // show waiting screen
         // debugger
       $('#connect-button').hide()
@@ -69,10 +69,15 @@ socket.on('newConnection', function (data) {
       $('#guest-playing').hide()
       }
       // else if timestampData.timestamp
-      else {
-      $('#connect-button').show()
-      $('#wait-screen').hide()
-      $('#guest-playing').hide()
+      else if (data.participants[0].playing == true) {
+        if ($.grep(data.participants, function(e){ return e.id == sessionId})[0].playing == false) {
+          $('#connect-button').show()
+          $('#wait-screen').hide()
+          $('#guest-playing').hide()
+        }
+        else {
+          return
+        }
       }
     }
 
