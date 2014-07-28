@@ -15,7 +15,7 @@ $( document ).ready(function(){
 
   var i = 0;
 
-  var svg = d3.select("body").append("svg")
+  var svg = d3.select("#d3").append("svg")
       .attr("width", width)
       .attr("height", height);
 
