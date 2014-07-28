@@ -9,7 +9,6 @@ $( document ).ready(function(){
 
     this.bindListeners = function() {
       $("#connect-button").on('click', this.bufferGuestTrack);
-      $('#widget').on('click', this.playTrack);
       $('#play-button').on('click', this.playTrack);
       $('#pause-button').on('click', this.pauseTrack);
       $('#soundCloudURL').on('submit', this.loadSongFromURL);
@@ -66,7 +65,7 @@ $( document ).ready(function(){
     this.createWidget = function(){
       //create widget by inserting it into the widget div. You will not see the widget as it is hidden.
       widgetFirstHalf = "<iframe id='sc-widget' src='http://w.soundcloud.com/player/?url="
-      widgetSecondHalf = "&client_id=d8eb7a8be0cc38d451a51d4d223ee84b' height=500px width=955px></iframe>"
+      widgetSecondHalf = "&client_id=d8eb7a8be0cc38d451a51d4d223ee84b'></iframe>"
       $("div#widget").html(widgetFirstHalf + _this.currentSongUri + widgetSecondHalf)
 
       //set widget variable to the widget

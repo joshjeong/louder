@@ -68,7 +68,7 @@ $(document).on('ready', init);
 
   });
 
-  socket.on('songReadyForGuests', function(data) {to assign it')
+  socket.on('songReadyForGuests', function(data) {
     globalCurrentSongUrl = data.participants[0].song
     if (sessionId != data.participants[0].id) {
       $('#connect-button').show()
@@ -99,7 +99,8 @@ $(document).on('ready', init);
   });
 
   // when the server emits an error message, log it to the console
-  socket.on('error', function(reason) {);
+  socket.on('error', function(reason) {
+    console.log('unable to connect to server sry bro', reason);
   });
 
   // emission to server to indicate a new message
