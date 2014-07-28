@@ -36,7 +36,7 @@ log it.
     sessionId = socket.io.engine.id;
     console.log('Connected ' + sessionId);
     // Sends ID & Name to server
-    socket.emit('newUser', {id: sessionId, name: $('#name').val(), song: ""});
+    socket.emit('newUser', {id: sessionId, name: $('#name').val(), song: "", timestamp: 0, currentProgress: 0, playing: false});
   });
 
 
@@ -61,13 +61,14 @@ socket.on('newConnection', function (data) {
       globalCurrentSongUrl = data.participants[0].song
       timestampData.timestamp = data.participants[0].timestamp
       timestampData.songProgress = data.participants[0].songProgress
-      // debugger
       if (data.participants[0].song == "") {
         // show waiting screen
+        // debugger
       $('#connect-button').hide()
       $('#wait-screen').show()
       $('#guest-playing').hide()
       }
+      // else if timestampData.timestamp
       else {
       $('#connect-button').show()
       $('#wait-screen').hide()

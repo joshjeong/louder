@@ -64,10 +64,12 @@ Player.Controller = function() {
         var guestTimeStamp = Date.now()
 
         _this.currentSong.play()
+        _this.currentSong.toggleMute()
 
         setTimeout(function() {
         var timeToPlay = (guestTimeStamp - hostTimeStamp + hostProgress)
         _this.currentSong.setPosition((timeToPlay+5000)).play()
+        _this.currentSong.toggleMute()
         console.log('now it should jump')
         console.log('heres the time it should jump to')
         console.log(timeToPlay+5000)
@@ -79,21 +81,7 @@ Player.Controller = function() {
 
         console.log(_this.currentSong.position)
         setInterval(function(){console.log(_this.currentSong.position)}, 100)
-        //grab host timestamp and host progress
-        //grab guest timestamp
-        //setPosition(host timestamp - guest timestamp + host progress)
-        //play()
 
-        // _this.currentSong.position = (timestampData.songProgress
-        //   + (Date.now() - timestampData.timestamp) + 400)
-        // debugger
-        // setTimeout(function(){
-        //   _this.currentSong.position = (timestampData.songProgress
-        //   + (Date.now() - timestampData.timestamp))
-        //   debugger
-        //   _this.currentSong.play()},
-        //   500)
-      // _this.currentSong.pause()
     })
   }
 
