@@ -49,8 +49,6 @@ app.use(bodyParser.json());
 app.get('/', function(request, response) {
 
   var isHost = io.eio.clientsCount === 1
-  console.log(io.eio.clientsCount)
-  console.log(isHost)
   //Render a view called 'index'
   response.render("index", {isHost: isHost});
 
@@ -74,7 +72,6 @@ io.on("connection", function(socket){
   })
 
   socket.on("hostClickedPlay", function(data){
-    console.log(data)
     var timestampData = {}
     timestampData.timestamp = data.timestamp
     timestampData.songProgress = data.songProgress
@@ -83,8 +80,6 @@ io.on("connection", function(socket){
 
 
   socket.on("userClickedConnect", function(data) {
-    console.log('anything')
-    console.log(data)
   })
 
 
@@ -98,7 +93,6 @@ io.on("connection", function(socket){
   });
 
   socket.on("newMessage", function(name, message){
-    console.log("hello got to the server for new message")
     io.sockets.emit("incomingMessage", name, message)
   })
 
@@ -114,5 +108,4 @@ io.on("connection", function(socket){
 
 // Start the Server with above specs
 http.listen(process.env.PORT || 8080, function() {
-  console.log("Server up and running.");
 });

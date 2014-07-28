@@ -33,7 +33,6 @@ $(document).on('ready', init);
   socket.on('connect', function () {
   // Any user connects - first they get an ID
   sessionId = socket.io.engine.id;
-  console.log('Connected ' + sessionId);
   // Sends ID & Name to server
   socket.emit('newUser', {id: sessionId, name: $('#name').val(), song: ""});
   });
@@ -54,7 +53,6 @@ $(document).on('ready', init);
   }
   if (sessionId != data.participants[0].id) {
     $('#player').hide()
-  // debugger
   if (data.participants[0].song == "") {
     // show waiting screen
     $('#connect-button').hide()
@@ -70,9 +68,7 @@ $(document).on('ready', init);
 
   });
 
-  socket.on('songReadyForGuests', function(data) {
-    console.log('this is where we should get the song name to assign it')
-    console.log(data.participants[0].song)
+  socket.on('songReadyForGuests', function(data) {to assign it')
     globalCurrentSongUrl = data.participants[0].song
     if (sessionId != data.participants[0].id) {
       $('#connect-button').show()
@@ -81,8 +77,6 @@ $(document).on('ready', init);
   })
 
   socket.on('hostSentTimestamps', function(data){
-    console.log(timestampData)
-    console.log(data)
     timestampData = data
   })
 
@@ -105,8 +99,7 @@ $(document).on('ready', init);
   });
 
   // when the server emits an error message, log it to the console
-  socket.on('error', function(reason) {
-    console.log('unable to connect to server sry bro', reason);
+  socket.on('error', function(reason) {);
   });
 
   // emission to server to indicate a new message
