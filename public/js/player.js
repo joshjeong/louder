@@ -56,20 +56,21 @@ Player.Controller = function() {
       // new function, server sends time back to guest to play
       SC.stream(globalCurrentSongUrl, function(sound){
         _this.currentSong = sound
-        // _this.currentSong.play()
-        // setTimeout(function(){_this.currentSong.pause()}, 1000)
         var hostTimeStamp = timestampData.timestamp
         var hostProgress = timestampData.songProgress
         var guestTimeStamp = Date.now()
-        soundManager.setPosition('louderPlayer', guestTimeStamp - hostTimeStamp
-          + hostProgress + 400)
-          console.log(_this.currentSong.position)
-        setTimeout(function(){
-          soundManager.setPosition('louderPlayer', guestTimeStamp - hostTimeStamp
-          + hostProgress)
-          _this.currentSong.play()
-          console.log(_this.currentSong.position)
-        }, 500)
+        
+        _this.currentSong.play()
+
+        setTimeout(function() { 
+        var timeToPlay = (guestTimeStamp - hostTimeStamp + hostProgress)
+        _this.currentSong.setPosition((timeToPlay+5100)).play()
+        console.log('now it should jump')
+        }, 5000)
+        
+        
+        // console.log(_this.currentSong.position)
+        // setInterval(function(){console.log(_this.currentSong.position)}, 100)
         //grab host timestamp and host progress
         //grab guest timestamp
         //setPosition(host timestamp - guest timestamp + host progress)
@@ -97,6 +98,7 @@ Player.Controller = function() {
 
     console.log('this is in playTrack')
     _this.currentSong.play();
+    setInterval(function(){console.log(_this.currentSong.position)}, 100)
     $('#play-button').hide()
     $('#pause-button').show()
 
