@@ -3,6 +3,7 @@ body {
   font-family: 'Montserrat', sans-serif;
   font-size: 1em;
   background-color: #000;
+  line-height: 1.5em;
 }
 
 textarea {
@@ -19,6 +20,11 @@ h1 {
 
 .topAligned {
  vertical-align: top;
+}
+
+.screens {
+  width: 100%;
+  margin: 0 auto;
 }
 
 #sc-widget {
@@ -50,13 +56,13 @@ h1 {
 }
 
 #connect-button {
+  display: block;
   display: none;
-  position: absolute;
-  width: 80%;
-  height: 500px;
+  width: 40%;
+  padding: 3rem;
   text-align: center;
   background-color: pink;
-  z-index: -1;
+  margin: 0 auto;
 }
 
 #wait-screen {
@@ -74,21 +80,19 @@ h1 {
   background-repeat: no-repeat;
   background-attachment:fixed;
   background-position:center;
-  z-index: -1;
 }
 
 #guest-playing {
   color: #fff;
   display: none;
-  position: absolute;
-  width: 80%;
-  height: 500px;
+  width: 50%;
+  padding: 3rem;
   text-align: center;
   background-image :url('../img/louder.png') center no-repeat;
   background-repeat:no-repeat;
   background-attachment:fixed;
   background-position:center;
-  z-index: -1;
+  margin: 0 auto;
 }
 
 #soundCloudURL {
