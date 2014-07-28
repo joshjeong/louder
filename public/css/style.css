@@ -50,3 +50,30 @@ h1 {
   text-align: center;
   background-color: pink;
 }
+
+#wait-screen {
+  display: none;
+  position: absolute;
+  width: 80%;
+  height: 500px;
+  text-align: center;
+  background-color: lightblue;
+}
+
+#guest-playing {
+  display: none;
+  position: absolute;
+  width: 80%;
+  height: 500px;
+  text-align: center;
+  background-color: lightgreen;
+}
+
+#soundCloudURL {
+  margin: auto;
+}
+
+#soundCloudURL input {
+  margin: auto;
+  width: 90%;
+}
