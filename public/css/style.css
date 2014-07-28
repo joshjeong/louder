@@ -1,7 +1,8 @@
 body {
-  padding: 3em;
-  font-family: 'Open Sans', sans-serif;
+  /*padding: 3em;*/
+  font-family: 'Montserrat', sans-serif;
   font-size: 1em;
+  background-color: #000;
 }
 
 textarea {
@@ -30,12 +31,18 @@ h1 {
   width: 400px;
   background-color: rgba(0,50,0,0.2);
   display: none;
+  z-index: -1;
 }
 
 #buttons {
   text-align: center;
   position: relative;
   top: 350px;
+}
+
+#messageForm, .chat {
+  display: none;
+  opacity: 0.1;
 }
 
 #pause-button {
@@ -49,24 +56,39 @@ h1 {
   height: 500px;
   text-align: center;
   background-color: pink;
+  z-index: -1;
 }
 
 #wait-screen {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+  font-size: 3em;
+  color: #fff;
   display: none;
   position: absolute;
-  width: 80%;
-  height: 500px;
-  text-align: center;
-  background-color: lightblue;
+  width: 100%;
+  height: 100%;
+  left: 0px;
+  top: 100px;
+  background-image:url('../img/louder.png');
+  background-repeat: no-repeat;
+  background-attachment:fixed;
+  background-position:center;
+  z-index: -1;
 }
 
 #guest-playing {
+  color: #fff;
   display: none;
   position: absolute;
   width: 80%;
   height: 500px;
   text-align: center;
-  background-color: lightgreen;
+  background-image :url('../img/louder.png') center no-repeat;
+  background-repeat:no-repeat;
+  background-attachment:fixed;
+  background-position:center;
+  z-index: -1;
 }
 
 #soundCloudURL {
@@ -77,3 +99,24 @@ h1 {
   margin: auto;
   width: 90%;
 }
+
+.chat {
+  z-index: -1;
+}
+
+rect {
+  position: absolute;
+  top: 0
+  left: 0;
+  fill: none;
+  pointer-events: all;
+  z-index: 100
+}
+
+circle {
+  fill: none;
+  stroke-width: 2.5px;
+  z-index: 100
+}
+
+
