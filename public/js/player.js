@@ -12,14 +12,13 @@ $( document ).ready(function(){
   //   prefetch: {url: JSON.stringify(pController.getTracks())}
   // });
   // tracks.initialize();
-  var query = $('.track-query').val();
   $('#soundCloudURL .track-query').typeahead({
     hint: true,
     highlight: true,
     minLength: 1
   },
   {
-    name: 'a',
+    name: 'tracks',
     displayKey: 'title',
     source: function (query, process) {
       var fetch = function(query) {
@@ -42,8 +41,19 @@ $( document ).ready(function(){
       // tracksArray = tracks
     // })
 },
+  }).bind("typeahead:selected", function(event, track, name) {
+      SC.stream(track.stream_url, {
+        id: "louderPlayer",
+        onplay: function(){
+        this.onPosition(1, _this.sendHostTimestamps)
+    }},
+    function(track){
+      _this.currentSong = track
+    })
+      console.log('emitted')
+    socket.emit('hostPickedSong', {song: _this.currentSongUri})
   });
-})
+});
 
 Player = {}
 Player.Controller = function() {
@@ -64,13 +74,6 @@ Player.Controller = function() {
   // function (song) {
   //   _this.currentSongUri = song.uri;
   // });
-
-
-
-    this.getTracks = function(query) {
-    debugger
-
-  }
 
   // this.getTracks = function(e) {
   //   e.preventDefault()
@@ -161,13 +164,11 @@ Player.Controller = function() {
     )}
 
   this.playTrack = function() {
-
-    console.log('this is in playTrack')
+    console.log('this is in playTrack',  _this.currentSong)
     _this.currentSong.play();
     setInterval(function(){console.log(_this.currentSong.position)}, 100)
     $('#play-button').hide()
     $('#pause-button').show()
-
   }
 
   this.pauseTrack = function() {
