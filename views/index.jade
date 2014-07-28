@@ -24,25 +24,7 @@ html
         h3 Now Playing Song!
     #player
       form#soundCloudURL
-        input(type="text" placeholder="Enter Soundcloud URL" class="track-query")
-        input(type="submit", value="Load Song")
-      #buttons
-        i#play-button.fa.fa-play.fa-4x
-        i#pause-button.fa.fa-pause.fa-4x
-    div
-      div.inlineBlock
-        span Tell us who you are:
-          input(type="text", value="Anonymous")#name
-        br
-        form#messageForm
-          textarea(rows="4", cols="50", placeholder="Share something!", maxlength=200)#outgoingMessage
-          input(type="button", value="Share", disabled=true)#send
-      div.inlineBlock.topAligned
-        b Participants
-        br
-        div#participants
-    div#messages
-        input(type="text", class = "margin1 input-field", placeholder="Enter Soundcloud URL")
+        input(type="text", class = "margin1 input-field", placeholder="Enter Soundcloud URL" class="track-query")
         input(type="submit", class = "margin1 submit-button", value="Load Song")
       #buttons
         i#play-button.fa.fa-play.fa-4x
