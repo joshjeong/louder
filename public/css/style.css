@@ -150,6 +150,10 @@ circle {
   width: 90%;
 }
 
+.waiting {
+  cursor: wait;
+}
+
 .submit-button{
   padding:5px 15px;
   background:#D8D8D8;
@@ -161,5 +165,3 @@ circle {
   cursor:pointer;
   -webkit-border-radius: 5px;
   border-radius: 5px;
-}
-
