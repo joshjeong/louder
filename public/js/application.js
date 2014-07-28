@@ -1,3 +1,4 @@
+timestampData = {}
 $(document).on('ready', init);
 
 function init() {
@@ -78,6 +79,11 @@ socket.on('songReadyForGuests', function(data) {
     $('#connect-button').show()
     $('#wait-screen').hide()
   }
+})
+
+socket.on('hostSentTimestamps', function(data){
+  console.log(data)
+  timestampData = data
 })
 
 // When the server emits a userDisconnected message, ity passes the id of the disconnected client

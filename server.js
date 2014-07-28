@@ -93,6 +93,7 @@ io.on("connection", function(socket){
     participants[0].songProgress = data.songProgress
     console.log("participant data")
     console.log(participants[0])
+    io.sockets.emit("hostSentTimestamps", participants[0])
   })
 
 

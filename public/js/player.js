@@ -36,10 +36,11 @@ Player.Controller = function() {
     $.get('http://api.soundcloud.com/resolve.json?url=' + trackUrl + '&client_id=d8eb7a8be0cc38d451a51d4d223ee84b',
     function (song) {
     _this.currentSongUri = song.uri;
-      SC.stream(_this.currentSongUri,
-      {onplay: function(){
-        this.onPosition(1, _this.sendHostTimestamps)
-      }},
+    SC.stream(_this.currentSongUri, {
+      id: "louderPlayer",
+      onplay: function(){
+      this.onPosition(1, _this.sendHostTimestamps)
+    }},
     function(sound){
       _this.currentSong = sound
     })
@@ -55,7 +56,34 @@ Player.Controller = function() {
       // new function, server sends time back to guest to play
       SC.stream(globalCurrentSongUrl, function(sound){
         _this.currentSong = sound
-        _this.currentSong.play()
+        // _this.currentSong.play()
+        // setTimeout(function(){_this.currentSong.pause()}, 1000)
+        var hostTimeStamp = timestampData.timestamp
+        var hostProgress = timestampData.songProgress
+        var guestTimeStamp = Date.now()
+        soundManager.setPosition('louderPlayer', guestTimeStamp - hostTimeStamp
+          + hostProgress + 400)
+          console.log(_this.currentSong.position)
+        setTimeout(function(){
+          soundManager.setPosition('louderPlayer', guestTimeStamp - hostTimeStamp
+          + hostProgress)
+          _this.currentSong.play()
+          console.log(_this.currentSong.position)
+        }, 500)
+        //grab host timestamp and host progress
+        //grab guest timestamp
+        //setPosition(host timestamp - guest timestamp + host progress)
+        //play()
+
+        // _this.currentSong.position = (timestampData.songProgress
+        //   + (Date.now() - timestampData.timestamp) + 400)
+        // debugger
+        // setTimeout(function(){
+        //   _this.currentSong.position = (timestampData.songProgress
+        //   + (Date.now() - timestampData.timestamp))
+        //   debugger
+        //   _this.currentSong.play()},
+        //   500)
       // _this.currentSong.pause()
     })
   }
