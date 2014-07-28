@@ -86,13 +86,13 @@ $( document ).ready(function(){
       _this.widget.bind(SC.Widget.Events.READY, function(){
         _this.widget.bind(SC.Widget.Events.PLAY, function() {
           //seekTO is calculated on the spot to minimize delay, despite it not being dry. This could be placed in another function but it would not be as quick.
-          _this.widget.seekTo(timestampData.songProgress + (new Date().getTime()/1000 - timestampData.timestamp) + 400);
+          _this.widget.seekTo(timestampData.songProgress + (new Date().getTime()/1000 - timestampData.timestamp) + 900);
           _this.widget.pause();
           setTimeout(function(){
             _this.widget.play();
             //prevent occasional buffer reset that causes it to start from the beginning of the song. We can use this to set it to the exact desired time.
             _this.widget.seekTo(timestampData.songProgress + (new Date().getTime()*1 - timestampData.timestamp));
-          }, 500);
+          }, 1000);
           _this.widget.unbind(SC.Widget.Events.PLAY);
         });
       });
