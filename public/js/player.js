@@ -23,7 +23,7 @@ $( document ).ready(function(){
     source: function (query, process) {
       var fetch = function(query) {
       var fetchTracks = new $.Deferred();
-      SC.get('/tracks', {query:query, track_type: 'original'}, function(tracks) {
+      SC.get('/tracks', {q:query}, function(tracks) {
         fetchTracks.resolve(tracks)
       })
       return fetchTracks.promise();
@@ -32,14 +32,8 @@ $( document ).ready(function(){
       var dataPromise = fetch(query);
       tracksArray = [];
       dataPromise.done(function(tracks){
-        tracksArray = tracks
-        process(tracksArray);
+        process(tracks);
       });
-    // var promise = $.when(this.fetch(query));
-
-    // var a = promise.done(function(tracks) {
-      // tracksArray = tracks
-    // })
 },
   }).bind("typeahead:selected", function(event, track, name) {
       SC.stream(track.stream_url, {
@@ -94,7 +88,7 @@ Player.Controller = function() {
     $('#play-button').on('click', this.playTrack)
     $('#pause-button').on('click', this.pauseTrack)
     // $('#soundCloudURL').on('submit', this.loadSongFromURL)
-    $('#soundCloudURL').on('submit', this.getTracks.bind(this))
+    // $('#soundCloudURL').on('submit', this.getTracks.bind(this))
   }
 
   this.loadSongFromURL = function(event) {
