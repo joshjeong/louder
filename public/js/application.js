@@ -36,7 +36,7 @@ log it.
     sessionId = socket.io.engine.id;
     console.log('Connected ' + sessionId);
     // Sends ID & Name to server
-    socket.emit('newUser', {id: sessionId, name: $('#name').val(), song: ""});
+    socket.emit('newUser', {id: sessionId, name: $('#name').val(), song: "", timestamp: 0, currentProgress: 0, playing: false});
   });
 
 
@@ -61,17 +61,23 @@ socket.on('newConnection', function (data) {
       globalCurrentSongUrl = data.participants[0].song
       timestampData.timestamp = data.participants[0].timestamp
       timestampData.songProgress = data.participants[0].songProgress
-      // debugger
-      if (data.participants[0].song == "") {
+      if (data.participants[0].playing == false) {
         // show waiting screen
+        // debugger
       $('#connect-button').hide()
       $('#wait-screen').show()
       $('#guest-playing').hide()
       }
-      else {
-      $('#connect-button').show()
-      $('#wait-screen').hide()
-      $('#guest-playing').hide()
+      // else if timestampData.timestamp
+      else if (data.participants[0].playing == true) {
+        if ($.grep(data.participants, function(e){ return e.id == sessionId})[0].playing == false) {
+          $('#connect-button').show()
+          $('#wait-screen').hide()
+          $('#guest-playing').hide()
+        }
+        else {
+          return
+        }
       }
     }
 
