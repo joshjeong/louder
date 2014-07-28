@@ -1,4 +1,4 @@
-timestampData = {}
+
 $(document).on('ready', init);
 
 function init() {
@@ -36,7 +36,7 @@ log it.
     sessionId = socket.io.engine.id;
     console.log('Connected ' + sessionId);
     // Sends ID & Name to server
-    socket.emit('newUser', {id: sessionId, name: $('#name').val(), song: ""});
+    socket.emit('newUser', {id: sessionId, name: $('#name').val(), song: "", timestamp: 0, currentProgress: 0, playing: false});
   });
 
 
@@ -55,9 +55,15 @@ socket.on('newConnection', function (data) {
     }
     if (sessionId != data.participants[0].id) {
       $('#player').hide()
-      // debugger
-      if (data.participants[0].song == "") {
+
+      console.log ('when a new user comes in, this is the host data')
+      console.log(data.participants[0])
+      globalCurrentSongUrl = data.participants[0].song
+      timestampData.timestamp = data.participants[0].timestamp
+      timestampData.songProgress = data.participants[0].songProgress
+      if (data.participants[0].playing == false) {
         // show waiting screen
+        // debugger
       $('#connect-button').hide()
       $('#wait-screen').show()
       setInterval(function(){
@@ -68,10 +74,16 @@ socket.on('newConnection', function (data) {
       }, 2000)
       $('#guest-playing').hide()
       }
-      else {
-      $('#connect-button').show()
-      $('#wait-screen').hide()
-      $('#guest-playing').hide()
+      // else if timestampData.timestamp
+      else if (data.participants[0].playing == true) {
+        if ($.grep(data.participants, function(e){ return e.id == sessionId})[0].playing == false) {
+          $('#connect-button').show()
+          $('#wait-screen').hide()
+          $('#guest-playing').hide()
+        }
+        else {
+          return
+        }
       }
     }
 
