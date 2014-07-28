@@ -94,7 +94,7 @@ io.on("connection", function(socket){
     participants[0].playing = true
     console.log("participant data")
     console.log(participants[0])
-    io.sockets.emit("hostSentTimestamps", participants[0])
+    io.sockets.emit("hostSentTimestamps", {participants: participants})
   })
 
 

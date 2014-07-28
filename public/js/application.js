@@ -53,22 +53,26 @@ socket.on('newConnection', function (data) {
       $('#wait-screen').hide()
       $('#guest-playing').hide()
     }
+    // if client is a guest, check these conditions
     if (sessionId != data.participants[0].id) {
+      // first, hide the player
       $('#player').hide()
 
+      // second, set global song and timestamp info
       console.log ('when a new user comes in, this is the host data')
       console.log(data.participants[0])
       globalCurrentSongUrl = data.participants[0].song
       timestampData.timestamp = data.participants[0].timestamp
       timestampData.songProgress = data.participants[0].songProgress
+      // now, check to see if host is playing
       if (data.participants[0].playing == false) {
-        // show waiting screen
+        // if host isn't playing, show waiting screen
         // debugger
       $('#connect-button').hide()
       $('#wait-screen').show()
       $('#guest-playing').hide()
       }
-      // else if timestampData.timestamp
+        // if host is playing,
       else if (data.participants[0].playing == true) {
         if ($.grep(data.participants, function(e){ return e.id == sessionId})[0].playing == false) {
           $('#connect-button').show()
@@ -87,15 +91,19 @@ socket.on('songReadyForGuests', function(data) {
   console.log('this is where we should get the song name to assign it')
   console.log(data.participants[0].song)
   globalCurrentSongUrl = data.participants[0].song
-  if (sessionId != data.participants[0].id) {
-    $('#connect-button').show()
-    $('#wait-screen').hide()
-  }
+  // if (sessionId != data.participants[0].id) {
+  //   $('#connect-button').show()
+  //   $('#wait-screen').hide()
+  // }
 })
 
 socket.on('hostSentTimestamps', function(data){
   console.log(data)
-  timestampData = data
+  timestampData = data.participants[0]
+  if (sessionId != data.participants[0].id) {
+    $('#connect-button').show()
+    $('#wait-screen').hide()
+  }
 })
 
 // When the server emits a userDisconnected message, ity passes the id of the disconnected client
