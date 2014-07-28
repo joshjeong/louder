@@ -1,4 +1,4 @@
-timestampData = {}
+
 $(document).on('ready', init);
 
 function init() {
@@ -55,6 +55,12 @@ socket.on('newConnection', function (data) {
     }
     if (sessionId != data.participants[0].id) {
       $('#player').hide()
+
+      console.log ('when a new user comes in, this is the host data')
+      console.log(data.participants[0])
+      globalCurrentSongUrl = data.participants[0].song
+      timestampData.timestamp = data.participants[0].timestamp
+      timestampData.songProgress = data.participants[0].songProgress
       // debugger
       if (data.participants[0].song == "") {
         // show waiting screen
