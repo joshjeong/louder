@@ -3,7 +3,9 @@ body {
   font-size: 1em;
   background-color: #1B212F;
   line-height: 1.5em;
-  .waiting {
+  width: 50%;
+  margin: 0 auto;
+  &.waiting {
     cursor: wait;
   }
 }

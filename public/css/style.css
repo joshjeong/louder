@@ -49,8 +49,10 @@ body {
   font-family: 'Montserrat', sans-serif;
   font-size: 1em;
   background-color: #1B212F;
-  line-height: 1.5em; }
-  body .waiting {
+  line-height: 1.5em;
+  width: 50%;
+  margin: 0 auto; }
+  body.waiting {
     cursor: wait; }
 
 /*Color Scheme colors:
