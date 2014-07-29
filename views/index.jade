@@ -9,9 +9,10 @@ html
     script(src='//code.jquery.com/jquery-1.11.0.min.js')
     script(src='/socket.io/socket.io.js')
     script(src='//connect.soundcloud.com/sdk.js')
-    script(src='/js/player.js')
-    script(src='/js/application.js')
     script(src='//d3js.org/d3.v3.min.js')
+    script(src='/js/vendor/js/typeahead.bundle.min.js')
+    script(src='/js/application.js')
+    script(src='/js/player.js')
     title Super Awesome Louder Player
   body
     .screens
@@ -23,11 +24,9 @@ html
         h3 Now Playing Song!
     #player
       form#soundCloudURL
-        input(type="text", class = "margin1 input-field", placeholder="Enter Soundcloud URL")
+        input(type="text", class = "margin1 input-field", placeholder="Enter Soundcloud URL" class="track-query")
         input(type="submit", class = "margin1 submit-button", value="Load Song")
       #buttons
         i#play-button.fa.fa-play.fa-4x
         i#pause-button.fa.fa-pause.fa-4x
     #d3
-
-
