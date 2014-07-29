@@ -1,10 +1,58 @@
+/* http://meyerweb.com/eric/tools/css/reset/
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline; }
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block; }
+
 body {
-  /*padding: 3em;*/
+  line-height: 0; }
+
+ol, ul {
+  list-style: none; }
+
+blockquote, q {
+  quotes: none; }
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none; }
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+body {
   font-family: 'Montserrat', sans-serif;
   font-size: 1em;
   background-color: #1B212F;
-  line-height: 1.5em;
-}
+  line-height: 1.5em; }
+  body .waiting {
+    cursor: wait; }
+
 /*Color Scheme colors:
 writing: D8D8D8;
 background: 1B212F;
@@ -12,35 +60,43 @@ innerdiv backgrounds: 222939;
 innerdiv accents: 333E54;
 standouts: D05158;
 */
-textarea {
-  resize: none;
-}
-svg {
-  z-index: -1;
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-h1 {
-  text-align: center;
-}
-
-.inlineBlock {
- display: inline-block;
-}
-
-.topAligned {
- vertical-align: top;
-}
-
 .screens {
   width: 100%;
-  margin: 0 auto;
-}
-
-#sc-widget {
-  display: none;
-}
+  margin: 0 auto; }
+  .screens #connect-button {
+    display: block;
+    display: none;
+    width: 40%;
+    padding: 3rem;
+    text-align: center;
+    background-color: #333E54;
+    color: #D8D8D8;
+    margin: 0 auto;
+    border-radius: 10px;
+    z-index: 1;
+    margin-top: 3rem; }
+  .screens #wait-screen {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 3em;
+    color: #fff;
+    display: none;
+    position: absolute;
+    height: 0px;
+    left: 0px;
+    width: 100%;
+    top: 100px; }
+  .screens #guest-playing {
+    display: none;
+    width: 50%;
+    padding: 3rem;
+    text-align: center;
+    background-color: #333E54;
+    color: #D8D8D8;
+    margin: 0 auto;
+    border-radius: 10px;
+    z-index: 1;
+    margin-top: 3rem; }
 
 #player {
   margin: auto;
@@ -49,119 +105,47 @@ h1 {
   width: 400px;
   background-color: #333E54;
   border-radius: 15px;
-  display: none;
-}
+  display: none; }
+  #player #soundCloudURL {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 2rem; }
+    #player #soundCloudURL .input-field {
+      padding: 1rem;
+      font-size: 1.3rem;
+      width: 90%; }
+    #player #soundCloudURL .submit-button {
+      padding: 5px 15px;
+      background: #D8D8D8;
+      width: 100%;
+      height: 3rem;
+      font-size: 1.3rem;
+      color: gray;
+      border: 0 none;
+      cursor: pointer;
+      -webkit-border-radius: 5px;
+      border-radius: 5px; }
+  #player #buttons {
+    text-align: center;
+    position: relative;
+    color: #D8D8D8; }
+    #player #buttons #pause-button {
+      display: none; }
 
-#buttons {
-  text-align: center;
-  position: relative;
-  color: #D8D8D8;
-}
-
-#messageForm, .chat {
-  display: none;
-  opacity: 0.1;
-}
-
-#pause-button {
-  display: none;
-}
-
-#connect-button {
-  display: block;
-  display: none;
-  width: 40%;
-  padding: 3rem;
-  text-align: center;
-  background-color: #333E54;
-  color: #D8D8D8;
-  margin: 0 auto;
-  border-radius: 10px;
-  z-index: 1;
-  margin-top: 3rem;
-}
-
-#wait-screen {
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 400;
-  font-size: 3em;
-  color: #fff;
-  display: none;
-  position: absolute;
-  height: 0px;
-  left: 0px;
-  width: 100%;
-  top: 100px;
-}
-
-#guest-playing {
-  color: #fff;
-  display: none;
-  width: 50%;
-  padding: 3rem;
-  text-align: center;
-  background-color: #333E54;
-  color: #D8D8D8;
-  margin: 0 auto;
-  border-radius: 10px;
-  z-index: 1;
-  margin-top: 3rem;
-}
-
-#soundCloudURL {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 2rem;
-}
-
-#soundCloudURL input {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.chat {
+#d3 svg {
   z-index: -1;
-}
-
-rect {
   position: absolute;
-  top: 0
-  left: 0;
-  fill: none;
-  pointer-events: all;
-  z-index: 100
-}
-
-circle {
-  fill: none;
-  stroke-width: 2.5px;
-  z-index: 100
-}
-
-.margin1{
-  margin-top: 1rem;
-}
-
-.input-field{
-  padding: 1rem;
-  font-size: 1.3rem;
-  width: 90%;
-}
-
-.waiting {
-  cursor: wait;
-}
-
-.submit-button{
-  padding:5px 15px;
-  background:#D8D8D8;
-  width: 100%;
-  height: 3rem;
-  font-size: 1.3rem;
-  color: gray;
-  border:0 none;
-  cursor:pointer;
-  -webkit-border-radius: 5px;
-  border-radius: 5px;
+  top: 0;
+  left: 0; }
+  #d3 svg rect {
+    position: absolute;
+    top: 0;
+    left: 0;
+    fill: none;
+    pointer-events: all;
+    z-index: 100; }
+  #d3 svg circle {
+    fill: none;
+    stroke-width: 2.5px;
+    z-index: 100; }
