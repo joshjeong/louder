@@ -47,9 +47,10 @@ Player.Controller = function() {
         onplay: function(){
           this.onPosition(1, _this.sendHostTimestamps)
         }},
+        _this.showPlayButton(),
         function(track){
           _this.currentSong = track
-        })
+        }),
       socket.emit('hostPickedSong', {song: track.stream_url})
     });
   },
@@ -97,6 +98,13 @@ Player.Controller = function() {
     $('#pause-button').hide()
     $('#play-button').show()
   };
+
+  //Show button and change height of player once song has been selectd
+  this.showPlayButton = function() {
+    $('#player').animate({height: '14rem'}, 900);
+
+    $('#buttons').delay(900).fadeIn(600)
+  }
 }
 
   // D3 OBJECT --------------------------------------

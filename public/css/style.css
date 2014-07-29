@@ -51,7 +51,8 @@ body {
   background-color: #1B212F;
   line-height: 1.5em;
   width: 50%;
-  margin: 0 auto; }
+  margin: 0 auto;
+  overflow-y: hidden; }
   body.waiting {
     cursor: wait; }
 
@@ -103,7 +104,7 @@ standouts: D05158;
 #player {
   margin: auto;
   margin-top: 5rem;
-  height: 9rem;
+  height: 8rem;
   width: 30rem;
   background-color: #333E54;
   border-radius: 15px;
@@ -122,11 +123,13 @@ standouts: D05158;
       height: 2rem;
       padding: 1rem;
       font-color: #D05158;
-      background-color: #D8D8D8; }
+      background-color: #D8D8D8;
+      overflow: hidden; }
     #player #soundCloudURL .tt-dropdown-menu {
       border: 1px solid white;
       height: 20rem;
-      overflow: scroll; }
+      overflow: scroll;
+      width: 25.5rem; }
     #player #soundCloudURL .input-field {
       margin: auto;
       padding: 1rem;
