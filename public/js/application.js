@@ -112,6 +112,16 @@ socket.on('hostSentTimestamps', function(data){
   }
 })
 
+socket.on('grabHostTimeStampsForAll', function(data) {
+  socket.emit('hostReturnsTimeStamps', {songProgress: _this.currentSong.position})
+})
+
+socket.on("setPositionForAllClients", function(data){
+  console.log('HEY THIS IS THE TIME THAT WE ARE GOING TO SET ALL CLIENTS TO')
+  console.log(data.time)
+  _this.currentSong.setPosition(data.time).play()
+})
+
 // When the server emits a userDisconnected message, ity passes the id of the disconnected client
 // this function removes that user from the list by updating the dom
 socket.on('userDisconnected', function(data) {

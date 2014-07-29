@@ -94,6 +94,10 @@ Player.Controller = function() {
   }
 
   this.bufferGuestTrack = function () {
+    // need to get timestamp from host and send to server
+    // also need to que playing on mute so that guest buffers
+
+
     socket.emit('userClickedConnect', {id: socket.io.engine.id, playing: true})
     $('#guest-playing').show()
     $('#connect-button').hide()
@@ -101,19 +105,20 @@ Player.Controller = function() {
       _this.currentSong = sound
       var hostTimeStamp = timestampData.timestamp
       var hostProgress = timestampData.songProgress
-      var guestTimeStamp = Date.now()
       _this.currentSong.play()
       _this.currentSong.toggleMute()
-      setTimeout(function() {
-        var timeToPlay = (guestTimeStamp - hostTimeStamp + hostProgress)
-      _this.currentSong.setPosition((timeToPlay+10000)).play()
-      _this.currentSong.toggleMute()
-    }, 10000)
+    //   setTimeout(function() {
+    //     var guestTimeStamp = Date.now()
+    //     var timeToPlay = (guestTimeStamp - hostTimeStamp + hostProgress)
+    //   _this.currentSong.setPosition((timeToPlay+10000)).play()
+    //   _this.currentSong.toggleMute()
+    // }, 10000)
       setInterval(function(){
         console.log(_this.currentSong.position)
       }, 100)
     })
-  } 
+  }
+
   this.sendHostTimestamps = function(){
     socket.emit('hostClickedPlay', {timestamp: Date.now(), songProgress: _this.currentSong.position})
   }
@@ -131,3 +136,5 @@ Player.Controller = function() {
     $('#play-button').show()
   };
 }
+
+

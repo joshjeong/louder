@@ -103,10 +103,18 @@ io.on("connection", function(socket){
   socket.on("userClickedConnect", function(data) {
     console.log('hopefully this logs the current users playing state')
     _.findWhere(participants, {id: data.id}).playing = true
-    console.log('anything')
-    console.log(data)
-    console.log('participants')
-    console.log(participants)
+    io.sockets.emit('grabHostTimeStampsForAll', {data: 'data'})
+    // console.log('anything')
+    // console.log(data)
+    // console.log('participants')
+    // console.log(participants)
+  })
+
+  socket.on("hostReturnsTimeStamps", function(data){
+    console.log(data.songProgress)
+    setTimeout(function(){
+      io.sockets.emit('setPositionForAllClients', {time: (data.songProgress + 10000)})
+    },10000)
   })
 
   // When a client/user changes their name, run this anonymous function callback that:
