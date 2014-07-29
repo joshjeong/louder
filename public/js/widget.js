@@ -1,6 +1,10 @@
 timestampData = {}
 globalCurrentSongUrl = ""
 $( document ).ready(function(){
+  SC.initialize({
+    client_id: "d8eb7a8be0cc38d451a51d4d223ee84b",
+    redirect_uri: "http://localhost:8080/",
+  });
   Player = {}
 
   guestAnimation();
@@ -16,9 +20,8 @@ $( document ).ready(function(){
       $('#soundCloudURL').on('submit', this.loadSongFromURL);
     }
 
-    this.loadSongFromURL = function(event) {
-      event.preventDefault();
-      var trackUrl = $(event.target).find('input').eq(0).val();
+    this.loadSongFromURL = function() {
+      var trackUrl = _this.currentSongUri //$(event.target).find('input').eq(0).val();
       $.get('http://api.soundcloud.com/resolve.json?url=' + trackUrl + '&client_id=d8eb7a8be0cc38d451a51d4d223ee84b',
       function (song) {
         _this.currentSongUri = song.uri;
@@ -40,11 +43,9 @@ $( document ).ready(function(){
     }
 
     this.sendHostTimestamps = function(){
-      var currentPosition;
       _this.widget.getPosition(function(position){
-        currentPosition = position
         socket.emit('hostClickedPlay',
-        {timestamp: Date.now(), songProgress: currentPosition});
+        {timestamp: Date.now(), songProgress: position});
       });
     }
 
@@ -76,9 +77,11 @@ $( document ).ready(function(){
 
     this.bindHostWidgetListeners = function(){
       _this.widget.bind(SC.Widget.Events.READY, function(){
-        _this.widget.bind(SC.Widget.Events.PLAY_PROGRESS, function(){
+        _this.widget.bind(SC.Widget.Events.PLAY, function(relativePosition, loadProgress, currentPosition){
+          setTimeout(function(){
             _this.sendHostTimestamps();
             _this.widget.unbind(SC.Widget.Events.PLAY_PROGRESS);
+          }, 100)
         });
       });
     }
@@ -88,21 +91,53 @@ $( document ).ready(function(){
       _this.widget.bind(SC.Widget.Events.READY, function(){
         _this.widget.bind(SC.Widget.Events.PLAY, function() {
           //seekTO is calculated on the spot to minimize delay, despite it not being dry. This could be placed in another function but it would not be as quick.
-          _this.widget.seekTo(timestampData.songProgress + (new Date().getTime()/1000 - timestampData.timestamp) + 2900);
+          _this.widget.seekTo(timestampData.songProgress + (new Date().getTime() - timestampData.timestamp)+400);
           _this.widget.pause();
           setTimeout(function(){
+            console.log("buffered")
             _this.widget.play();
             //prevent occasional buffer reset that causes it to start from the beginning of the song. We can use this to set it to the exact desired time.
-            _this.widget.seekTo(timestampData.songProgress + (new Date().getTime()*1 - timestampData.timestamp));
-          }, 3000);
+            _this.widget.seekTo(timestampData.songProgress + (new Date().getTime() - timestampData.timestamp));
+          }, 500);
           _this.widget.unbind(SC.Widget.Events.PLAY);
         });
       });
     }
+
+    this.setupTypeAhead = function() {
+      $('#soundCloudURL .track-query').typeahead(
+      {
+        hint: true,
+        highlight: true,
+        minLength: 1 },
+      {
+        name: 'tracks',
+        displayKey: 'title',
+        source: function (query, process) {
+          var fetch = function(query) {
+            var fetchTracks = new $.Deferred();
+            SC.get('/tracks', {q:query}, function(tracks) {
+              fetchTracks.resolve(tracks)
+            })
+            return fetchTracks.promise();
+          }
+          var dataPromise = fetch(query);
+          $('body').addClass('waiting')
+          dataPromise.done(function(tracks){
+            $('body').removeClass('waiting')
+            process(tracks);
+          });
+        },
+      }).bind("typeahead:selected", function(event, track, name){
+          _this.currentSongUri = track.uri
+          _this.loadSongFromURL()
+        })
+    };
   }
 
-  pController = new Player.Controller
-  pController.bindListeners()
+  pController = new Player.Controller;
+  pController.bindListeners();
+  pController.setupTypeAhead();
 });
 
 // D3 OBJECT --------------------------------------

@@ -1,3 +1,4 @@
+socket = {};
 timestampData = {}
 $(document).on('ready', init);
 
