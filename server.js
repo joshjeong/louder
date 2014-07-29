@@ -103,11 +103,8 @@ io.on("connection", function(socket){
   socket.on("userClickedConnect", function(data) {
     console.log('hopefully this logs the current users playing state')
     _.findWhere(participants, {id: data.id}).playing = true
-    io.sockets.emit('grabHostTimeStampsForAll', {data: 'data'})
-    // console.log('anything')
-    // console.log(data)
-    // console.log('participants')
-    // console.log(participants)
+    console.log(participants[0].id)
+    socket.broadcast.to(participants[0].id).emit('grabHostTimeStampsForAll', {data: 'data'})
   })
 
   socket.on("hostReturnsTimeStamps", function(data){

@@ -1,4 +1,3 @@
-
 $(document).on('ready', init);
 
 function init() {
@@ -104,7 +103,6 @@ socket.on('songReadyForGuests', function(data) {
 })
 
 socket.on('hostSentTimestamps', function(data){
-  console.log(data)
   timestampData = data.participants[0]
   if (sessionId != data.participants[0].id) {
     $('#connect-button').show()
@@ -112,14 +110,22 @@ socket.on('hostSentTimestamps', function(data){
   }
 })
 
+//THIS IS WHERE ITS FUCKED UP BOTH GUEST AND HOST ARE FIRING OFF 'hostreturnstimestamps'
 socket.on('grabHostTimeStampsForAll', function(data) {
-  socket.emit('hostReturnsTimeStamps', {songProgress: _this.currentSong.position})
+  // if (sessionId == data.participants[0].id) {
+    socket.emit('hostReturnsTimeStamps', {songProgress: _this.currentSong.position})
+  // }
 })
 
 socket.on("setPositionForAllClients", function(data){
   console.log('HEY THIS IS THE TIME THAT WE ARE GOING TO SET ALL CLIENTS TO')
   console.log(data.time)
-  _this.currentSong.setPosition(data.time).play()
+  //check if "I" am playing
+  // debugger
+  // if(_this.currentSong.playState) {
+    console.log(Date.now())
+    _this.currentSong.setPosition(data.time).play()
+  // }
 })
 
 // When the server emits a userDisconnected message, ity passes the id of the disconnected client
