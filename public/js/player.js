@@ -95,30 +95,25 @@ Player.Controller = function() {
 
   this.bufferGuestTrack = function () {
     socket.emit('userClickedConnect', {id: socket.io.engine.id, playing: true})
-      $('#guest-playing').show()
-      $('#connect-button').hide()
-      SC.stream(globalCurrentSongUrl, function(sound){
-        _this.currentSong = sound
-        var hostTimeStamp = timestampData.timestamp
-        var hostProgress = timestampData.songProgress
-        var guestTimeStamp = Date.now()
-        // _this.currentSong.play()
-        // _this.currentSong.toggleMute()
-        debugger
-        _this.currentSong.play()
-      })
-  } 
-  this.sendHostTimestamps = function(){
-    socket.emit('hostClickedPlay',
-      {timestamp: Date.now(), songProgress: _this.currentSong.position}
-      )
-      var timeToPlay = (guestTimeStamp - hostTimeStamp + hostProgress)
+    $('#guest-playing').show()
+    $('#connect-button').hide()
+    SC.stream(globalCurrentSongUrl, function(sound){
+      _this.currentSong = sound
+      var hostTimeStamp = timestampData.timestamp
+      var hostProgress = timestampData.songProgress
+      var guestTimeStamp = Date.now()
+      _this.currentSong.play()
+      _this.currentSong.toggleMute()
+      setTimeout(function() {
+        var timeToPlay = (guestTimeStamp - hostTimeStamp + hostProgress)
       _this.currentSong.setPosition((timeToPlay+10000)).play()
       _this.currentSong.toggleMute()
-    setInterval(function(){
-      console.log(_this.currentSong.position)
-    }, 100)
-  }
+    }, 10000)
+      setInterval(function(){
+        console.log(_this.currentSong.position)
+      }, 100)
+    })
+  } 
   this.sendHostTimestamps = function(){
     socket.emit('hostClickedPlay', {timestamp: Date.now(), songProgress: _this.currentSong.position})
   }
