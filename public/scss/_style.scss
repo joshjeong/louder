@@ -73,26 +73,33 @@ standouts: D05158;
     margin-right: auto;
     padding: 2rem;
     .twitter-typeahead {
-      width: 100%
+      width: 100%;
+      .tt-hint {
+        color: #D8D8D8;
+      }
     }
-    .tt-dataset-tracks{
-      color: #333E54;
-    }
-    .tt-suggestion {
+    .tt-dropdown-menu {
       border: 1px solid white;
-      height:2rem;
-      padding: 1rem;
-      font-color: #D05158;
-      background-color:#D8D8D8;
-      overflow:hidden;
-    }
-    .tt-dropdown-menu{
-      border: 1px solid white;
-      height: 20rem;
-      overflow: scroll;
+      max-height: 20rem;
       width: 25.5rem;
+      overflow-y:auto;
+        .tt-dataset-tracks{
+          color: #333E54;
+        }
+        .tt-suggestion {
+          border: 1px solid white;
+          height:2rem;
+          padding: 1rem;
+          font-color: #D05158;
+          background-color:#D8D8D8;
+          &:hover {
+            background-color:#BFBFBF;
+            cursor: pointer;
+          }
+        }
+      }
     }
-    .input-field {
+    .search-field {
       margin: auto;
       padding: 1rem;
       font-size: 1.3rem;
@@ -113,7 +120,6 @@ standouts: D05158;
       -webkit-border-radius: 5px;
       border-radius: 5px;
     }
-  }
   #buttons {
     display: none;
     text-align: center;

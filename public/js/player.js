@@ -18,9 +18,9 @@ Player.Controller = function() {
   _this = this
 
   this.setupTypeAhead = function() {
-    $('#soundCloudURL .track-query').typeahead(
+    $('.search-field').typeahead(
     {
-      hint: true,
+      hint: false,
       highlight: true,
       minLength: 1 },
     {
@@ -99,11 +99,11 @@ Player.Controller = function() {
     $('#play-button').show()
   };
 
-  //Show button and change height of player once song has been selectd
+  //Show button and change height of player once song has been selected
   this.showPlayButton = function() {
-    $('#player').animate({height: '14rem'}, 900);
-
-    $('#buttons').delay(900).fadeIn(600)
+    $('#player').animate({height: '14rem'}, 900, function(data) {
+      $('#buttons').fadeIn(900);
+    });
   }
 }
 
