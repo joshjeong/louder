@@ -61,8 +61,8 @@ standouts: D05158;
 #player {
   margin: auto;
   margin-top: 5rem;
-  height: 300px;
-  width: 400px;
+  height: 9rem;
+  width: 30rem;
   background-color: #333E54;
   border-radius: 15px;
   display: none;
@@ -71,7 +71,21 @@ standouts: D05158;
     margin-left: auto;
     margin-right: auto;
     padding: 2rem;
+    .twitter-typeahead {
+      // border: 5px solid red;
+      width: 100%
+    }
+    .tt-suggestion {
+      // border: 1px solid yellow;
+      color: green;
+    }
+    .tt-dropdown-menu{
+      // border: 4px solid pink;
+      height: 20rem;
+      overflow: scroll;
+    }
     .input-field {
+      margin: auto;
       padding: 1rem;
       font-size: 1.3rem;
       width: 90%;
@@ -90,6 +104,7 @@ standouts: D05158;
     }
   }
   #buttons {
+    display: none;
     text-align: center;
     position: relative;
     color: #D8D8D8;
