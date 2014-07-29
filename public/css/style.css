@@ -115,9 +115,16 @@ standouts: D05158;
     padding: 2rem; }
     #player #soundCloudURL .twitter-typeahead {
       width: 100%; }
+    #player #soundCloudURL .tt-dataset-tracks {
+      color: #333E54; }
     #player #soundCloudURL .tt-suggestion {
-      color: green; }
+      border: 1px solid white;
+      height: 2rem;
+      padding: 1rem;
+      font-color: #D05158;
+      background-color: #D8D8D8; }
     #player #soundCloudURL .tt-dropdown-menu {
+      border: 1px solid white;
       height: 20rem;
       overflow: scroll; }
     #player #soundCloudURL .input-field {
@@ -125,6 +132,8 @@ standouts: D05158;
       padding: 1rem;
       font-size: 1.3rem;
       width: 90%; }
+      #player #soundCloudURL .input-field:focus {
+        outline: 0; }
     #player #soundCloudURL .submit-button {
       padding: 5px 15px;
       background: #D8D8D8;
