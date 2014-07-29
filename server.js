@@ -6,6 +6,7 @@
   - Underscore (because it's cool)
   - Socket.IO(Note: we need a web server to attach Socket.IO to)
 */
+
 var express = require('express'),
     app = express(),
     http = require('http').createServer(app),
@@ -49,10 +50,27 @@ app.use(bodyParser.json());
 app.get('/', function(request, response) {
 
   var isHost = io.eio.clientsCount === 1
+  console.log(io.eio.clientsCount)
+  console.log(isHost)
   //Render a view called 'index'
   response.render("index", {isHost: isHost});
 
 });
+
+// Create a new Chat Message
+// app.post("/message", function(request, response) {
+//   // store message and sender name in variables
+//   var message = request.body.message;
+//   var name = request.body.name;
+//   // check if message is valid and kick it out if not
+//   if (_.isUndefined(message) || _.isEmpty(message.trim())) {
+//     return response.json(400, {error: "Message is invalid"});
+//   }
+//   // send this message to the rest of the clients to update
+//   io.sockets.emit("incomingMessage", {message: message, name: name});
+//   // respond to sender client with a 200 success
+//   response.json(200, {message: "Message received"});
+// });
 
 // Socket.IO events
 io.on("connection", function(socket){
@@ -61,28 +79,35 @@ io.on("connection", function(socket){
   //  2) emits a new connection message to all clients with the updated particpants array
   socket.on("newUser", function(data){
     // Adds user to particpants array
-    participants.push({id: data.id, name: data.name, song: data.song});
+    participants.push({id: data.id, name: data.name, song: data.song, timestamp: data.timestamp, currentProgress: data.currentProgress, playing: data.playing});
     // relays the new array of users to all clients
     io.sockets.emit("newConnection", {participants: participants});
   });
 
   socket.on("hostPickedSong", function(data) {
     participants[0].song = data.song
+    console.log('data', data)
+    console.log('data.song', data.song)
     io.sockets.emit('songReadyForGuests', {participants: participants})
   })
 
   socket.on("hostClickedPlay", function(data){
-    var timestampData = {}
-    timestampData.timestamp = data.timestamp
-    timestampData.songProgress = data.songProgress
-    io.sockets.emit("hostSentTimestamps", timestampData)
+    participants[0].timestamp = data.timestamp
+    participants[0].songProgress = data.songProgress
+    participants[0].playing = true
+    console.log("participant data")
+    console.log(participants[0])
+    io.sockets.emit("hostSentTimestamps", {participants: participants})
   })
-
 
   socket.on("userClickedConnect", function(data) {
+    console.log('hopefully this logs the current users playing state')
+    _.findWhere(participants, {id: data.id}).playing = true
+    console.log('anything')
+    console.log(data)
+    console.log('participants')
+    console.log(participants)
   })
-
-
 
   // When a client/user changes their name, run this anonymous function callback that:
   //  1) finds the user that changed their name within the particpants array, and updates their name
@@ -93,6 +118,7 @@ io.on("connection", function(socket){
   });
 
   socket.on("newMessage", function(name, message){
+    console.log("hello got to the server for new message")
     io.sockets.emit("incomingMessage", name, message)
   })
 
@@ -104,8 +130,13 @@ io.on("connection", function(socket){
     io.sockets.emit("userDisconnected", {id: socket.id, sender:"system"});
   });
 
+  socket.on("hostPlayedSound", function(data) {
+    io.sockets.emit("guestPlaySong", {song: data.song, uri: data.uri, time: data.time})
+  })
+
 })
 
 // Start the Server with above specs
 http.listen(process.env.PORT || 8080, function() {
+  console.log("Server up and running.");
 });

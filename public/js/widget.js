@@ -27,7 +27,7 @@ $( document ).ready(function(){
     }
 
     this.bufferGuestTrack = function() {
-      socket.emit('userClickedConnect', {data: 'none'});
+      socket.emit('userClickedConnect', {id: socket.io.engine.id, playing: true});
       $('#guest-playing').show();
       $('#connect-button').hide();
 

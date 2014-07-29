@@ -2,47 +2,49 @@ doctype html
 html
   head
     link(rel='stylesheet', href='http://fonts.googleapis.com/css?family=Open+Sans')
-    link(rel='stylesheet', href='/css/style.css')
+    link(rel='stylesheet', href='http://fonts.googleapis.com/css?family=Montserrat:400,700')
     link(rel='stylesheet', href='//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css')
+    link(rel='stylesheet', href='/css/reset.css')
+    link(rel='stylesheet', href='/css/style.css')
     script(src='//code.jquery.com/jquery-1.11.0.min.js')
     script(src='/socket.io/socket.io.js')
+    script(src='//connect.soundcloud.com/sdk.js')
+    script(src='//d3js.org/d3.v3.min.js')
+    script(src='/js/vendor/js/typeahead.bundle.min.js')
+    script(src='/js/application.js')
     title Super Awesome Louder Player
   body
-    div#widget
-      //- iframe(id="sc-widget", src="http://w.soundcloud.com/player/?url=https://soundcloud.com/kagerou-project/hatsune-miku-heat-haze-days", scrolling="no")
-
-    h1 Super Awesome Louder Player
-    i#connect-button.fa.fa-paper-plane.fa-5x
-      h3 Connect to host
-    i#wait-screen.fa.fa-camera-retro.fa-5x
-      h3 Waiting for host to pick a song
-    i#guest-playing.fa.fa-child.fa-5x
-      h3 Now Playing Song!
+    #widget
+    .screens
+      #connect-button.fa.fa-paper-plane.fa-5x
+        h3 Connect to host
+      i#wait-screen.fa.fa-camera-retro.fa-5x
+        h3 Waiting for host to pick a song
+      #guest-playing.fa.fa-child.fa-5x
+        h3 Now Playing Song!
     #player
       form#soundCloudURL
-        input(type="text" placeholder="Enter Soundcloud URL")
-        input(type="submit", value="Load Song")
+        input(type="text", class = "margin1 input-field", placeholder="Enter Soundcloud URL" class="track-query")
+        input(type="submit", class = "margin1 submit-button", value="Load Song")
       #buttons
         i#play-button.fa.fa-play.fa-4x
         i#pause-button.fa.fa-pause.fa-4x
-    div
-      div.inlineBlock
-        span Tell us who you are:
-          input(type="text", value="Anonymous")#name
-        br
-        form#messageForm
-          textarea(rows="4", cols="50", placeholder="Share something!", maxlength=200)#outgoingMessage
-          input(type="button", value="Share", disabled=true)#send
-      div.inlineBlock.topAligned
-        b Participants
-        br
-        div#participants
-    div#messages
-  script(src='//connect.soundcloud.com/sdk.js')
+    //- div
+    //-   div.inlineBlock
+    //-     span Tell us who you are:
+    //-       input(type="text", value="Anonymous")#name
+    //-     br
+    //-     form#messageForm
+    //-       textarea(rows="4", cols="50", placeholder="Share something!", maxlength=200)#outgoingMessage
+    //-       input(type="button", value="Share", disabled=true)#send
+    //-   div.inlineBlock.topAligned
+    //-     b Participants
+    //-     br
+    //-     div#participants
+    //- div#messages
   script(src='https://w.soundcloud.com/player/api.js')
   script(src='/js/widget.js')
   //- script(src='/js/player.js')
-  script(src='/js/application.js')
   //- if isHost
   //-   script(src='/js/host.js')
   //- else
