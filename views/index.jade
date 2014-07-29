@@ -12,9 +12,9 @@ html
     script(src='//d3js.org/d3.v3.min.js')
     script(src='/js/vendor/js/typeahead.bundle.min.js')
     script(src='/js/application.js')
-    script(src='/js/player.js')
     title Super Awesome Louder Player
   body
+    #widget
     .screens
       #connect-button.fa.fa-paper-plane.fa-5x
         h3 Connect to host
@@ -29,4 +29,23 @@ html
       #buttons
         i#play-button.fa.fa-play.fa-4x
         i#pause-button.fa.fa-pause.fa-4x
-    #d3
+    //- div
+    //-   div.inlineBlock
+    //-     span Tell us who you are:
+    //-       input(type="text", value="Anonymous")#name
+    //-     br
+    //-     form#messageForm
+    //-       textarea(rows="4", cols="50", placeholder="Share something!", maxlength=200)#outgoingMessage
+    //-       input(type="button", value="Share", disabled=true)#send
+    //-   div.inlineBlock.topAligned
+    //-     b Participants
+    //-     br
+    //-     div#participants
+    //- div#messages
+  script(src='https://w.soundcloud.com/player/api.js')
+  script(src='/js/widget.js')
+  //- script(src='/js/player.js')
+  //- if isHost
+  //-   script(src='/js/host.js')
+  //- else
+  //-   script(src='/js/guest.js')
