@@ -50,26 +50,28 @@ $( document ).ready(function(){
     }
 
     this.playTrack = function() {
-      _this.widget.play();
+      // if ($('body').hasClass('guest')) {
+      // }
       setInterval(
         function(){_this.widget.getPosition(function(position){
         })
       }, 100)
+      debugger
       $('#play-button').hide()
       $('#pause-button').show()
     }
 
     this.pauseTrack = function() {
+      socket.emit("hostClickedPause")
       _this.widget.pause();
       $('#pause-button').hide();
       $('#play-button').show();
     }
-
     this.createWidget = function(){
       //create widget by inserting it into the widget div. You will not see the widget as it is hidden.
-      widgetFirstHalf = "<iframe id='sc-widget' src='http://w.soundcloud.com/player/?url="
-      widgetSecondHalf = "&client_id=d8eb7a8be0cc38d451a51d4d223ee84b'></iframe>"
-      $("div#widget").html(widgetFirstHalf + _this.currentSongUri + widgetSecondHalf)
+      var widgetFirstHalf = "<iframe id='sc-widget' src='http://w.soundcloud.com/player/?url="
+      var widgetSecondHalf = "&client_id=d8eb7a8be0cc38d451a51d4d223ee84b'></iframe>"
+      $(".widget").html(widgetFirstHalf + _this.currentSongUri + widgetSecondHalf)
       //set widget variable to the widget
       _this.widget = SC.Widget(document.getElementById('sc-widget'));
     }
@@ -82,6 +84,9 @@ $( document ).ready(function(){
             _this.widget.unbind(SC.Widget.Events.PLAY_PROGRESS);
           }, 100)
         });
+        _this.widget.bind(SC.Widget.Events.PAUSE, function(){
+          _this.pauseTrack();
+        })
       });
     }
 

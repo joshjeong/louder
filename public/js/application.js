@@ -57,7 +57,7 @@ socket.on('newConnection', function (data) {
     if (sessionId != data.participants[0].id) {
       // first, hide the player
       $('#player').hide()
-
+      $('body').addClass('guest')
       // second, set global song and timestamp info
       console.log ('when a new user comes in, this is the host data')
       console.log(data.participants[0])
@@ -90,7 +90,6 @@ socket.on('newConnection', function (data) {
         }
       }
     }
-
   });
 
   socket.on('songReadyForGuests', function(data) {
@@ -104,11 +103,11 @@ socket.on('newConnection', function (data) {
 })
 
 socket.on('hostSentTimestamps', function(data){
-  console.log(data)
   timestampData = data.participants[0]
   if (sessionId != data.participants[0].id) {
     $('#connect-button').show()
     $('#wait-screen').hide()
+    _this.widget.play();
   }
 })
 
@@ -143,6 +142,10 @@ socket.on('error', function(reason) {
 //   console.log(data.uri)
 //   console.log(data.time)
 // })
+
+socket.on('PauseGuests', function(data) {
+  _this.widget.pause();
+})
 
 // emission to server to indicate a new message
 function sendMessage() {

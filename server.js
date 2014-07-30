@@ -100,6 +100,10 @@ io.on("connection", function(socket){
     io.sockets.emit("hostSentTimestamps", {participants: participants})
   })
 
+  socket.on("hostClickedPause", function(widget) {
+    io.sockets.emit("PauseGuests")
+  })
+
   socket.on("userClickedConnect", function(data) {
     console.log('hopefully this logs the current users playing state')
     _.findWhere(participants, {id: data.id}).playing = true
