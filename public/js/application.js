@@ -57,7 +57,6 @@ socket.on('newConnection', function (data) {
     if (sessionId != data.participants[0].id) {
       // first, hide the player
       $('#player').hide()
-      $('body').addClass('guest')
       // second, set global song and timestamp info
       console.log ('when a new user comes in, this is the host data')
       console.log(data.participants[0])

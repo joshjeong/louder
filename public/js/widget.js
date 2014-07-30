@@ -50,13 +50,10 @@ $( document ).ready(function(){
     }
 
     this.playTrack = function() {
-      // if ($('body').hasClass('guest')) {
-      // }
       setInterval(
         function(){_this.widget.getPosition(function(position){
         })
       }, 100)
-      debugger
       $('#play-button').hide()
       $('#pause-button').show()
     }
