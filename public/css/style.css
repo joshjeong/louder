@@ -45,16 +45,33 @@ table {
   border-collapse: collapse;
   border-spacing: 0; }
 
-body {
-  /*padding: 3em;*/
-  font-family: 'Montserrat', sans-serif;
-  font-size: 1em;
-  background-color: #1B212F;
-  line-height: 1.5em;
-  width: 50%;
-  margin: 0 auto; }
-  body.waiting {
-    cursor: wait; }
+@media only screen and (max-width: 660px) {
+  body {
+    width: 100%; }
+    body .wrapper {
+      margin-top: 60%; }
+      body .wrapper #player {
+        width: 95%;
+        margin: 0 auto;
+        display: block; }
+        body .wrapper #player .search-field {
+          font-size: 0.9rem; }
+          body .wrapper #player .search-field .tt-suggestion {
+            font-size: 0.2rem; } }
+@media only screen and (min-width: 661px) {
+  body {
+    width: 50%; }
+    body .wrapper #player {
+      width: 40%;
+      min-width: 400px;
+      position: absolute;
+      top: 30%; }
+      body .wrapper #player .search-field {
+        font-size: 1.3rem; }
+        body .wrapper #player .search-field .tt-suggestion {
+          font-size: 0.2rem; } }
+* {
+  box-sizing: border-box; }
 
 /*Color Scheme colors:
 writing: D8D8D8;
@@ -63,118 +80,109 @@ innerdiv backgrounds: 222939;
 innerdiv accents: 333E54;
 standouts: D05158;
 */
-
-
-#widget {
-  /*display: none;*/
-}
-
-.screens {
-  width: 100%;
-  margin: 0 auto;
-}
-
-.screens #connect-button {
-  display: block;
-  display: none;
-  width: 40%;
-  padding: 3rem;
-  text-align: center;
-  background-color: #333E54;
-  color: #D8D8D8;
-  margin: 0 auto;
-  border-radius: 10px;
-  z-index: 1;
-  margin-top: 3rem; }
-.screens #wait-screen {
+body {
   font-family: 'Montserrat', sans-serif;
-  font-weight: 400;
-  font-size: 3em;
-  color: #fff;
-  display: none;
-  position: absolute;
-  height: 0px;
-  left: 0px;
-  width: 100%;
-  top: 100px; }
-.screens #guest-playing {
-  display: none;
-  width: 50%;
-  padding: 3rem;
-  text-align: center;
-  background-color: #333E54;
-  color: #D8D8D8;
+  font-size: 1em;
+  background-color: #1B212F;
+  line-height: 1.5em;
   margin: 0 auto;
-  border-radius: 10px;
-  z-index: 1;
-  margin-top: 3rem; }
-
-#player {
-  margin: auto;
-  margin-top: 5rem;
-  height: 9rem;
-  width: 30rem;
-  background-color: #333E54;
-  border-radius: 15px;
-  display: none; }
-  #player #soundCloudURL {
+  overflow-y: hidden; }
+  body.waiting {
+    cursor: wait; }
+  body .wrapper #player {
     display: block;
-    margin-left: auto;
-    margin-right: auto;
-    padding: 2rem; }
-    #player #soundCloudURL .twitter-typeahead {
-      width: 100%; }
-    #player #soundCloudURL .tt-dataset-tracks {
-      color: #333E54; }
-    #player #soundCloudURL .tt-suggestion {
-      border: 1px solid white;
-      height: 2rem;
-      padding: 1rem;
-      font-color: #D05158;
-      background-color: #D8D8D8; }
-    #player #soundCloudURL .tt-dropdown-menu {
-      border: 1px solid white;
-      height: 20rem;
-      overflow: scroll; }
-    #player #soundCloudURL .input-field {
+    margin: 0 auto;
+    box-sizing: border-box;
+    background-color: #333E54;
+    border-radius: 15px;
+    height: 7.5rem; }
+    body .wrapper #player #soundCloudURL {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      padding: 2rem; }
+      body .wrapper #player #soundCloudURL .twitter-typeahead {
+        width: 100%; }
+        body .wrapper #player #soundCloudURL .twitter-typeahead .tt-hint {
+          color: #D8D8D8; }
+      body .wrapper #player #soundCloudURL .tt-dropdown-menu {
+        border: 1px solid white;
+        max-height: 20rem;
+        overflow-y: auto; }
+        body .wrapper #player #soundCloudURL .tt-dropdown-menu .tt-dataset-tracks {
+          color: #333E54; }
+        body .wrapper #player #soundCloudURL .tt-dropdown-menu .tt-suggestion {
+          border: 1px solid white;
+          line-height: 1.3rem;
+          padding: 1rem;
+          font-color: #D05158;
+          background-color: #D8D8D8; }
+          body .wrapper #player #soundCloudURL .tt-dropdown-menu .tt-suggestion:hover {
+            background-color: #BFBFBF;
+            cursor: pointer; }
+    body .wrapper #player .search-field {
       margin: auto;
       padding: 1rem;
-      font-size: 1.3rem;
-      width: 90%; }
-      #player #soundCloudURL .input-field:focus {
+      width: 100%; }
+      body .wrapper #player .search-field:focus {
         outline: 0; }
-    #player #soundCloudURL .submit-button {
-      padding: 5px 15px;
-      background: #D8D8D8;
+    body .wrapper #player #buttons {
+      display: none;
+      text-align: center;
+      position: relative;
+      color: #D8D8D8; }
+      body .wrapper #player #buttons #pause-button {
+        display: none; }
+  body .screens {
+    width: 100%;
+    margin: 0 auto; }
+    body .screens #connect-button {
+      display: block;
+      display: none;
+      width: 40%;
+      padding: 3rem;
+      text-align: center;
+      background-color: #333E54;
+      color: #D8D8D8;
+      margin: 0 auto;
+      border-radius: 10px;
+      z-index: 1;
+      margin-top: 3rem; }
+    body .screens #wait-screen {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 400;
+      font-size: 3em;
+      color: #fff;
+      display: none;
+      position: absolute;
+      height: 0px;
+      left: 0px;
       width: 100%;
-      height: 3rem;
-      font-size: 1.3rem;
-      color: gray;
-      border: 0 none;
-      cursor: pointer;
-      -webkit-border-radius: 5px;
-      border-radius: 5px; }
-  #player #buttons {
-    display: none;
-    text-align: center;
-    position: relative;
-    color: #D8D8D8; }
-    #player #buttons #pause-button {
-      display: none; }
-
-#d3 svg {
-  z-index: -1;
-  position: absolute;
-  top: 0;
-  left: 0; }
-  #d3 svg rect {
+      top: 100px; }
+    body .screens #guest-playing {
+      display: none;
+      width: 50%;
+      padding: 3rem;
+      text-align: center;
+      background-color: #333E54;
+      color: #D8D8D8;
+      margin: 0 auto;
+      border-radius: 10px;
+      z-index: 1;
+      margin-top: 3rem; }
+  body #d3 svg {
+    z-index: -1;
     position: absolute;
     top: 0;
-    left: 0;
-    fill: none;
-    pointer-events: all;
-    z-index: 100; }
-  #d3 svg circle {
-    fill: none;
-    stroke-width: 2.5px;
-    z-index: 100; }
+    left: 0; }
+    body #d3 svg rect {
+      position: absolute;
+      top: 0;
+      left: 0;
+      fill: none;
+      pointer-events: all;
+      z-index: 100; }
+    body #d3 svg circle {
+      fill: none;
+      stroke-width: 2.5px;
+      z-index: 100; }

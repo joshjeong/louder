@@ -105,9 +105,9 @@ $( document ).ready(function(){
     }
 
     this.setupTypeAhead = function() {
-      $('#soundCloudURL .track-query').typeahead(
+      $('.search-field').typeahead(
       {
-        hint: true,
+        hint: false,
         highlight: true,
         minLength: 1 },
       {
