@@ -49,7 +49,7 @@ function newConnection(data) {
       }, 2000)
       $('#guest-playing').hide()
       }
-        // if host is playing,
+      // if host is playing,
       else if (data.participants[0].playing == true) {
         if ($.grep(data.participants, function(e){ return e.id == sessionId})[0].playing == false) {
           $('#connect-button').show()
