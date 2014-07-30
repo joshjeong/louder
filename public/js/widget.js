@@ -53,7 +53,7 @@ $( document ).ready(function(){
     }
 
     this.changePlayerHeight = function() {
-      $('#player').animate({height: "20rem"}, 1000)
+      $('#player').animate({height: "15rem"}, 1000)
     }
 
     this.playTrack = function() {
@@ -82,7 +82,7 @@ $( document ).ready(function(){
       songInfo = _this.currentSongUri + ".json?client_id=" + CLIENT_ID
       SC.get(songInfo, function(track) {
         // songWaveform = track.waveform_url;
-        $('#player').append("<img src = '" + track.waveform_url + "' class = 'waveform'/>")
+        // $('#player').append("<img src = '" + track.waveform_url + "' class = 'waveform'/>")
         $('#player').append("<div class = 'title'>" + track.title + "</div>");
         });
     }
