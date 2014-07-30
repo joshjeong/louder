@@ -41,12 +41,12 @@ function newConnection(data) {
         // debugger
       $('#connect-button').hide()
       $('#wait-screen').show()
-      setInterval(function(){
-        $('#wait-screen').find('h3').css( "margin-top", function( index ) {
-        return (Math.floor(Math.random()*300));})
-        $('#wait-screen').find('h3').css( "margin-left", function( index ) {
-        return (Math.floor(Math.random()*250));})
-      }, 2000)
+      // setInterval(function(){
+      //   $('#wait-screen').find('h3').css( "margin-top", function( index ) {
+      //   return (Math.floor(Math.random()*300));})
+      //   $('#wait-screen').find('h3').css( "margin-left", function( index ) {
+      //   return (Math.floor(Math.random()*250));})
+      // }, 2000)
       $('#guest-playing').hide()
       }
       // if host is playing,

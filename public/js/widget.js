@@ -53,7 +53,7 @@ $( document ).ready(function(){
     }
 
     this.changePlayerHeight = function() {
-      $('#player').animate({height: "15rem"}, 1000)
+      $('#player').addClass('show-widget')
     }
 
     this.playTrack = function() {

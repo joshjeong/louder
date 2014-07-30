@@ -2,6 +2,7 @@
    v2.0 | 20110126
    License: none (public domain)
 */
+@import url(http://fonts.googleapis.com/css?family=Frijole);
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -45,6 +46,50 @@ table {
   border-collapse: collapse;
   border-spacing: 0; }
 
+.logo {
+  font-family: Frijole;
+  font-size: 30px;
+  display: inline-block;
+  color: white;
+  -webkit-animation-name: logo-shake;
+  -webkit-animation-duration: 0.8s;
+  -webkit-transform-origin: 50% 50%;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-timing-function: linear; }
+
+@-webkit-keyframes logo-shake {
+  0% {
+    -webkit-transform: translate(2px, 1px) rotate(0deg); }
+
+  10% {
+    -webkit-transform: translate(-1px, -2px) rotate(-1deg); }
+
+  20% {
+    -webkit-transform: translate(-3px, 0px) rotate(1deg); }
+
+  30% {
+    -webkit-transform: translate(0px, 2px) rotate(0deg); }
+
+  40% {
+    -webkit-transform: translate(1px, -1px) rotate(1deg); }
+
+  50% {
+    -webkit-transform: translate(-1px, 2px) rotate(-1deg); }
+
+  60% {
+    -webkit-transform: translate(-3px, 1px) rotate(0deg); }
+
+  70% {
+    -webkit-transform: translate(2px, 1px) rotate(-1deg); }
+
+  80% {
+    -webkit-transform: translate(-1px, -1px) rotate(1deg); }
+
+  90% {
+    -webkit-transform: translate(2px, 2px) rotate(0deg); }
+
+  100% {
+    -webkit-transform: translate(1px, -2px) rotate(-1deg); } }
 @media only screen and (max-width: 760px) {
   body {
     background: #1b212f url("../img/louder_logo.png");
@@ -64,7 +109,7 @@ table {
             font-size: 0.2rem; } }
 @media only screen and (min-width: 761px) {
   body {
-    background: #1b212f url("../img/louder_logo.png");
+    background: #1B212F;
     background-size: 100px;
     width: 100%;
     background-size: 500px;
@@ -104,7 +149,8 @@ body {
     display: block;
     margin: 0 auto;
     background-color: #333E54;
-    border-radius: 15px; }
+    border-radius: 15px;
+    height: 7.5rem; }
     body .wrapper #player #sc-widget {
       width: 4rem;
       height: 5.5rem; }
@@ -156,6 +202,9 @@ body {
       width: 100%; }
       body .wrapper #player .search-field:focus {
         outline: 0; }
+    body .wrapper #player.show-widget {
+      -webkit-transition: all 1s;
+      height: 15rem; }
   body .screens {
     width: 100%;
     margin: 0 auto; }
@@ -182,6 +231,8 @@ body {
       left: 0px;
       width: 100%;
       top: 100px; }
+      body .screens #wait-screen h3 {
+        text-align: center; }
     body .screens #guest-playing {
       display: none;
       width: 50%;
@@ -209,3 +260,44 @@ body {
       fill: none;
       stroke-width: 2.5px;
       z-index: 100; }
+
+.loader {
+  position: fixed;
+  z-index: 3;
+  margin: 0 auto;
+  left: 0;
+  right: 0;
+  top: 50%;
+  margin-top: -30px;
+  width: 60px;
+  height: 60px;
+  list-style: none; }
+
+@-webkit-keyframes 'loadbars' {
+  0% {
+    height: 10px;
+    margin-top: 25px; }
+
+  50% {
+    height: 50px;
+    margin-top: 0px; }
+
+  100% {
+    height: 10px;
+    margin-top: 25px; } }
+li {
+  background-color: transparent;
+  width: 10px;
+  height: 10px;
+  float: right;
+  margin-right: 5px;
+  box-shadow: 0px 100px 20px rgba(255, 255, 255, 0.7); }
+
+li:first-child {
+  -webkit-animation: loadbars 0.6s cubic-bezier(0.645, 0.045, 0.355, 1) infinite 0s; }
+
+li:nth-child(2) {
+  -webkit-animation: loadbars 0.6s ease-in-out infinite -0.2s; }
+
+li:nth-child(3) {
+  -webkit-animation: loadbars 0.6s ease-in-out infinite -0.4s; }

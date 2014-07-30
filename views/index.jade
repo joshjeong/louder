@@ -20,13 +20,18 @@ html
           h3 Connect to host
         i#wait-screen.fa.fa-camera-retro.fa-5x
           h3 Waiting for host to pick a song
+          ul.loader
+            li
+            li
+            li
         #guest-playing.fa.fa-child.fa-5x
           h3 Now Playing Song!
       #widget
+        .logo Louder
       #player
         #soundCloudURL
           input(type="text" class="search-field" placeholder="Search")
-        #button    
+        #button
           img(src= "../img/sc_play_button.png" id ="play-button")
     #d3
   script(src='https://w.soundcloud.com/player/api.js')
