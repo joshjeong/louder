@@ -38,11 +38,7 @@ app.use(bodyParser.json());
 /* Server Routing */
 // Root Route
 app.get('/', function(request, response) {
-
-  var isHost = io.eio.clientsCount === 1
-  //Render a view called 'index'
-  response.render("index", {isHost: isHost});
-
+  response.render("index");
 });
 
 // Socket.IO events
