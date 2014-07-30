@@ -67,7 +67,7 @@ table {
     background: #1b212f url("../img/louder_logo.png");
     background-size: 100px;
     width: 100%;
-    background-size: 600px;
+    background-size: 500px;
     background-position: 30% -5%;
     max-width: 1026px; }
     body .wrapper #player {
@@ -75,7 +75,7 @@ table {
       width: 55%;
       max-width: 40rem;
       position: absolute;
-      top: 20rem;
+      top: 16rem;
       left: 40%; }
       body .wrapper #player .search-field {
         font-size: 1.3rem; }
@@ -108,6 +108,15 @@ body {
     body .wrapper #player #sc-widget {
       width: 4rem;
       height: 5.5rem; }
+    body .wrapper #player #button {
+      display: none;
+      width: 100%;
+      position: absolute;
+      text-align: center;
+      left: 0; }
+      body .wrapper #player #button #play-button {
+        width: 78px;
+        height: 88px; }
     body .wrapper #player #widget {
       width: 100%;
       text-align: center; }
@@ -116,6 +125,8 @@ body {
       left: 0;
       width: 100%; }
     body .wrapper #player .title {
+      bottom: 13%;
+      position: relative;
       color: white;
       text-align: center; }
     body .wrapper #player #soundCloudURL {
@@ -126,7 +137,7 @@ body {
           color: #D8D8D8; }
       body .wrapper #player #soundCloudURL .tt-dropdown-menu {
         border: 1px solid white;
-        max-height: 20rem;
+        max-height: 15rem;
         overflow-y: auto; }
         body .wrapper #player #soundCloudURL .tt-dropdown-menu .tt-dataset-tracks {
           color: #333E54; }
@@ -145,13 +156,6 @@ body {
       width: 100%; }
       body .wrapper #player .search-field:focus {
         outline: 0; }
-    body .wrapper #player #buttons {
-      display: none;
-      text-align: center;
-      position: relative;
-      color: #D8D8D8; }
-      body .wrapper #player #buttons #pause-button {
-        display: none; }
   body .screens {
     width: 100%;
     margin: 0 auto; }

@@ -27,7 +27,7 @@
     background: #1B212F url("../img/louder_logo.png");
     background-size: 100px;
     width: 100%;
-    background-size: 600px;
+    background-size: 500px;
     background-position: 30% -5%;
     max-width: 1026px;
     .wrapper {
@@ -36,7 +36,7 @@
         width: 55%;
         max-width: 40rem;
         position: absolute;
-        top: 20rem;
+        top: 16rem;
         left: 40%;
         .search-field {
           font-size: 1.3rem;
@@ -79,6 +79,17 @@ body{
         width: 4rem;
         height: 5.5rem;
       }
+      #button {
+        display: none;
+        width: 100%;
+        position: absolute;
+        text-align: center;
+        left: 0;
+        #play-button {
+          width: 78px;
+          height: 88px;
+        }
+      }
       #widget {
         width: 100%;
         text-align: center;
@@ -89,6 +100,8 @@ body{
         width: 100%;
       }
       .title{
+        bottom: 13%;
+        position: relative;
         color: white;
         text-align: center
       }
@@ -102,7 +115,7 @@ body{
         }
         .tt-dropdown-menu {
           border: 1px solid white;
-          max-height: 20rem;
+          max-height: 15rem;
           overflow-y:auto;
             .tt-dataset-tracks{
               color: #333E54;
@@ -128,15 +141,6 @@ body{
             outline:0;
           }
         }
-      #buttons {
-        display: none;
-        text-align: center;
-        position: relative;
-        color: #D8D8D8;
-        #pause-button {
-          display: none;
-        }
-      }
     }
   }
   .screens {
