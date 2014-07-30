@@ -1,36 +1,36 @@
-
+socket = {};
+timestampData = {}
 $(document).on('ready', init);
 
-function init() {
+  function init() {
 
-var serverBaseUrl = document.domain;
+  var serverBaseUrl = document.domain;
 
-/*
- On client init, try to connect to the socket.IO server.
- Note we don't specify a port since we set up our server
- to run on port 8080
-*/
-socket = io.connect(serverBaseUrl);
+  /*
+  On client init, try to connect to the socket.IO server.
+  Note we don't specify a port since we set up our server
+  to run on port 8080
+  */
+  socket = io.connect(serverBaseUrl);
 
-// We'll save our session ID in a variable for later
-var sessionId = '';
-var songTime = 0
-var currentSong = ""
+  // We'll save our session ID in a variable for later
+  var sessionId = '';
+  var songTime = 0
+  var currentSong = ""
 
-// Helper function to update the participants' list
-function updateParticipants(participants) {
-  $('#participants').html('');
-  for (var i = 0; i < participants.length; i++) {
-    $('#participants').append('<span id="' + participants[i].id + '">' +
-      participants[i].name + ' ' + (participants[i].id === sessionId ? '(You)' : '') + '<br /></span>');
+  // Helper function to update the participants' list
+  function updateParticipants(participants) {
+    $('#participants').html('');
+    for (var i = 0; i < participants.length; i++) {
+      $('#participants').append('<span id="' + participants[i].id + '">' + participants[i].name + ' ' + (participants[i].id === sessionId ? '(You)' : '') + '<br /></span>');
     }
   }
 
-/*
-When the client successfully connects to the server, an
-event "connect" is emitted. Let's get the session ID and
-log it.
-*/
+  /*
+  When the client successfully connects to the server, an
+  event "connect" is emitted. Let's get the session ID and
+  log it.
+  */
   socket.on('connect', function () {
     // Any user connects - first they get an ID
     sessionId = socket.io.engine.id;
@@ -93,7 +93,7 @@ socket.on('newConnection', function (data) {
 
   });
 
-socket.on('songReadyForGuests', function(data) {
+  socket.on('songReadyForGuests', function(data) {
   console.log('this is where we should get the song name to assign it')
   console.log(data.participants[0].song)
   globalCurrentSongUrl = data.participants[0].song
@@ -153,15 +153,15 @@ function sendMessage() {
 
 // If a user pressees enter (key 13) in the text area, call send message and clear the outgoing message box
 function outgoingMessageKeyDown(event) {
-    if (event.which == 13) {
-      event.preventDefault();
-      if ($('#outgoingMessage').val().trim().length <= 0) {
-        return;
-      }
-      sendMessage();
-      $('#outgoingMessage').val('');
+  if (event.which == 13) {
+    event.preventDefault();
+    if ($('#outgoingMessage').val().trim().length <= 0) {
+      return;
     }
+    sendMessage();
+    $('#outgoingMessage').val('');
   }
+}
 
 // disable clicking outgoing message if there's no text in the box
 function outgoingMessageKeyUp() {
@@ -180,29 +180,4 @@ $('#outgoingMessage').on('keydown', outgoingMessageKeyDown);
 $('#outgoingMessage').on('keyup', outgoingMessageKeyUp);
 $('#name').on('focusout', nameFocusOut);
 $('#send').on('click', sendMessage);
-
-// var widgetIframe = $('#sc-widget')[0]
-// widget = SC.Widget(widgetIframe);
-
-
-
-// widget.bind(SC.Widget.Events.PLAY, function() {
-//     widget.getCurrentSound(function(currentSound) {
-//       currentSong = currentSound
-//       console.log('sound ' + currentSound.title + 'began to play');
-//       widget.getPosition(hostBeganPlaying.bind(widget))
-//     });
-// })
-
-// function hostBeganPlaying(data){
-//     console.log(currentSong.title)
-//     console.log(data)
-//     socket.emit('hostPlayedSound', {song: currentSong.title, uri: currentSong.uri, time: data })
-// }
-
-
-
 }
-
-// var widgetIframe = document.getElementById('sc-widget'),
-// widget = SC.Widget(widgetIframe);
