@@ -22,8 +22,18 @@ $( document ).ready(function(){
       $('#soundCloudURL').on('submit', this.loadSongFromURL);
     }
 
+    //Socket
+    this.emitCurrentSong = function(song){
+      socket.emit('hostPickedSong', {song: song});
+    }
+
+    //Socket
+    this.emitGuestConnect = function(){
+      socket.emit('userClickedConnect', {id: socket.io.engine.id, playing: true});
+    }
+
     this.loadSongFromURL = function() {
-      var trackUrl = _this.currentSongUri //$(event.target).find('input').eq(0).val();
+      var trackUrl = _this.currentSongUri
       _this.changePlayerHeight();
       $.get('http://api.soundcloud.com/resolve.json?url=' + trackUrl + '&client_id=d8eb7a8be0cc38d451a51d4d223ee84b',
       function (song) {
@@ -32,18 +42,25 @@ $( document ).ready(function(){
         //SC player
         _this.createWidget();
         //Socket manager
-        socket.emit('hostPickedSong', {song: _this.currentSongUri});
+        _this.emitCurrentSong(this.currentSongUri);
+        //SC player
         _this.bindHostWidgetListeners();
       });
     }
 
+    //View
+    this.showPlay = function() {
+      $('#guest-playing').show();
+      $('#pause-button').hide();
+      $('#connect-button').hide();
+    }
+
     this.bufferGuestTrack = function() {
       //Socket
-      socket.emit('userClickedConnect', {id: socket.io.engine.id, playing: true});
+      _this.emitGuestConnect();
 
       //View
-      $('#guest-playing').show();
-      $('#connect-button').hide();
+      _this.showPlay();
 
       _this.currentSongUri = globalCurrentSongUrl;
 
@@ -52,19 +69,28 @@ $( document ).ready(function(){
       _this.bindGuestWidgetListeners();
     }
 
-    this.sendHostTimestamps = function(){
-      var songProgress = "";
-      var timestamp = "";
-
-      //SC Player (SC Player must also return the timestamps)
+    this.generateTimestamps = function(){
+      var songProgress = ""
+      var timestamp = ""
       _this.widget.getPosition(function(position){
         songProgress = position;
         timestamp = Date.now();
       });
+      return {songProgress: songProgress, timestamp: timestamp}
+    }
+
+    //Socket
+    this.emitTimestamps = function(timestamp, songProgress){
+      socket.emit('hostClickedPlay',
+      {timestamp: timestamp, songProgress: songProgress});
+    }
+
+    this.sendHostTimestamps = function(){
+      //SC player
+      var timestamps = generateTimestamps();
 
       //Socket
-      socket.emit('hostClickedPlay',
-      {timestamp: timestamp, songProgress:songProgress});
+      _this.emitTimestamps(timestamps.timestamp, timestamps.songProgress)
     }
 
     //View
@@ -72,13 +98,18 @@ $( document ).ready(function(){
       $('#player').animate({height: "15rem"}, 1000)
     }
 
+    //View
+    this.showPause = function(){
+      $('#play-button').hide()
+      $('#pause-button').show()
+    }
+
     //SC Player
     this.playTrack = function() {
       _this.widget.play();
 
       //View
-      $('#play-button').hide()
-      $('#pause-button').show()
+      _this.showPause();
     }
 
     //SC Player
@@ -86,8 +117,7 @@ $( document ).ready(function(){
       _this.widget.pause();
 
       //View
-      $('#pause-button').hide();
-      $('#play-button').show();
+      _this.showPlay();
     }
 
     this.createWidget = function(){
