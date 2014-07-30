@@ -40,8 +40,6 @@ app.use(bodyParser.json());
 app.get('/', function(request, response) {
 
   var isHost = io.eio.clientsCount === 1
-  console.log(io.eio.clientsCount)
-  console.log(isHost)
   //Render a view called 'index'
   response.render("index", {isHost: isHost});
 
@@ -57,8 +55,6 @@ io.on("connection", function(socket){
 
   socket.on("hostPickedSong", function(data) {
     participants[0].song = data.song
-    console.log('data', data)
-    console.log('data.song', data.song)
     io.sockets.emit('songReadyForGuests', {participants: participants})
   })
 
@@ -66,18 +62,12 @@ io.on("connection", function(socket){
     participants[0].timestamp = data.timestamp
     participants[0].songProgress = data.songProgress
     participants[0].playing = true
-    console.log("participant data")
-    console.log(participants[0])
     io.sockets.emit("hostSentTimestamps", {participants: participants})
   })
 
   socket.on("userClickedConnect", function(data) {
     console.log('hopefully this logs the current users playing state')
     _.findWhere(participants, {id: data.id}).playing = true
-    console.log('anything')
-    console.log(data)
-    console.log('participants')
-    console.log(participants)
   })
 
   // When a client changes their name, update participants[] and notify clients
