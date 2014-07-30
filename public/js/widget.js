@@ -1,8 +1,10 @@
 timestampData = {}
 globalCurrentSongUrl = ""
+
+CLIENT_ID = "d8eb7a8be0cc38d451a51d4d223ee84b"
 $( document ).ready(function(){
   SC.initialize({
-    client_id: "d8eb7a8be0cc38d451a51d4d223ee84b",
+    client_id: CLIENT_ID,
     redirect_uri: "http://localhost:8080/",
   });
   Player = {}
@@ -22,6 +24,7 @@ $( document ).ready(function(){
 
     this.loadSongFromURL = function() {
       var trackUrl = _this.currentSongUri //$(event.target).find('input').eq(0).val();
+      _this.changePlayerHeight();
       $.get('http://api.soundcloud.com/resolve.json?url=' + trackUrl + '&client_id=d8eb7a8be0cc38d451a51d4d223ee84b',
       function (song) {
         _this.currentSongUri = song.uri;
@@ -49,6 +52,10 @@ $( document ).ready(function(){
       });
     }
 
+    this.changePlayerHeight = function() {
+      $('#player').animate({height: "19rem"}, 1000)
+    }
+
     this.playTrack = function() {
       _this.widget.play();
       setInterval(
@@ -66,13 +73,19 @@ $( document ).ready(function(){
     }
 
     this.createWidget = function(){
-      //create widget by inserting it into the widget div. You will not see the widget as it is hidden.
+      // //create widget by inserting it into the widget div. You will not see the widget as it is hidden.
       widgetFirstHalf = "<iframe id='sc-widget' src='http://w.soundcloud.com/player/?url="
-      widgetSecondHalf = "&client_id=d8eb7a8be0cc38d451a51d4d223ee84b'></iframe>"
+      widgetSecondHalf = "&client_id=" + CLIENT_ID + "'></iframe>"
       $("div#widget").html(widgetFirstHalf + _this.currentSongUri + widgetSecondHalf)
-      //set widget variable to the widget
+      // //set widget variable to the widget
       _this.widget = SC.Widget(document.getElementById('sc-widget'));
-    }
+      songInfo = _this.currentSongUri + ".json?client_id=" + CLIENT_ID
+      SC.get(songInfo, function(track) {
+        debugger
+        // songWaveform = track.waveform_url;
+        $('#player').append("<h3>" + track.title + "</h3>")
+      });
+      }
 
     this.bindHostWidgetListeners = function(){
       _this.widget.bind(SC.Widget.Events.READY, function(){
