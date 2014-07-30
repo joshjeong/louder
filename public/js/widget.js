@@ -22,101 +22,176 @@ $( document ).ready(function(){
       $('#soundCloudURL').on('submit', this.loadSongFromURL);
     }
 
+    //Socket
+    this.emitCurrentSong = function(song){
+      socket.emit('hostPickedSong', {song: song});
+    }
+
+    //Socket
+    this.emitGuestConnect = function(){
+      socket.emit('userClickedConnect', {id: socket.io.engine.id, playing: true});
+    }
+
     this.loadSongFromURL = function() {
-      var trackUrl = _this.currentSongUri //$(event.target).find('input').eq(0).val();
+      var trackUrl = _this.currentSongUri
       _this.changePlayerHeight();
       $.get('http://api.soundcloud.com/resolve.json?url=' + trackUrl + '&client_id=d8eb7a8be0cc38d451a51d4d223ee84b',
       function (song) {
         _this.currentSongUri = song.uri;
+
+        //SC player
         _this.createWidget();
-        socket.emit('hostPickedSong', {song: _this.currentSongUri});
+        //Socket manager
+        _this.emitCurrentSong(this.currentSongUri);
+        //SC player
         _this.bindHostWidgetListeners();
       });
     }
 
-    this.bufferGuestTrack = function() {
-      socket.emit('userClickedConnect', {id: socket.io.engine.id, playing: true});
+    //View
+    this.showPlay = function() {
       $('#guest-playing').show();
+      $('#pause-button').hide();
       $('#connect-button').hide();
+    }
 
-      //create the widget
+    this.bufferGuestTrack = function() {
+      //Socket
+      _this.emitGuestConnect();
+
+      //View
+      _this.showPlay();
+
       _this.currentSongUri = globalCurrentSongUrl;
+
+      //View
       _this.createWidget();
       _this.bindGuestWidgetListeners();
     }
 
-    this.sendHostTimestamps = function(){
+    this.generateTimestamps = function(){
+      var songProgress = ""
+      var timestamp = ""
       _this.widget.getPosition(function(position){
-        socket.emit('hostClickedPlay',
-        {timestamp: Date.now(), songProgress: position});
+        songProgress = position;
+        timestamp = Date.now();
       });
+      return {songProgress: songProgress, timestamp: timestamp}
     }
 
+    //Socket
+    this.emitTimestamps = function(timestamp, songProgress){
+      socket.emit('hostClickedPlay',
+      {timestamp: timestamp, songProgress: songProgress});
+    }
+
+    this.sendHostTimestamps = function(){
+      //SC player
+      var timestamps = generateTimestamps();
+
+      //Socket
+      _this.emitTimestamps(timestamps.timestamp, timestamps.songProgress)
+    }
+
+    //View
     this.changePlayerHeight = function() {
       $('#player').animate({height: "15rem"}, 1000)
     }
 
-    this.playTrack = function() {
-      _this.widget.play();
-      setInterval(
-        function(){_this.widget.getPosition(function(position){
-        })
-      }, 100)
+    //View
+    this.showPause = function(){
       $('#play-button').hide()
       $('#pause-button').show()
     }
 
+    //SC Player
+    this.playTrack = function() {
+      _this.widget.play();
+
+      //View
+      _this.showPause();
+    }
+
+    //SC Player
     this.pauseTrack = function() {
       _this.widget.pause();
-      $('#pause-button').hide();
-      $('#play-button').show();
+
+      //View
+      _this.showPlay();
+    }
+
+    //View
+    this.showWidget = function(){
+      var widgetFirstHalf = "<iframe id='sc-widget' src='http://w.soundcloud.com/player/?url=";
+      var widgetSecondHalf = "&client_id=" + CLIENT_ID + "'></iframe>";
+      $('#button').show();
+      $("div#widget").html(widgetFirstHalf + _this.currentSongUri + widgetSecondHalf);
+    }
+
+    //SC widget
+    this.SCshowTrackTitle = function(){
+      var songInfo = _this.currentSongUri + ".json?client_id=" + CLIENT_ID;
+
+      SC.get(songInfo, function(track) {
+        console.log(track)
+        _this.showTrackTitle(track.title);
+      });
     }
 
     this.createWidget = function(){
-      // //create widget by inserting it into the widget div. You will not see the widget as it is hidden.
-      widgetFirstHalf = "<iframe id='sc-widget' src='http://w.soundcloud.com/player/?url="
-      widgetSecondHalf = "&client_id=" + CLIENT_ID + "'></iframe>"
-      $('#button').show();
-      $("div#widget").html(widgetFirstHalf + _this.currentSongUri + widgetSecondHalf)
-      // //set widget variable to the widget
+      //View
+      _this.showWidget();
+
+      //managed in SC Player
       _this.widget = SC.Widget(document.getElementById('sc-widget'));
-      songInfo = _this.currentSongUri + ".json?client_id=" + CLIENT_ID
-      SC.get(songInfo, function(track) {
-        // songWaveform = track.waveform_url;
-        // $('#player').append("<img src = '" + track.waveform_url + "' class = 'waveform'/>")
-        $('#player').append("<div class = 'title'>" + track.title + "</div>");
-        });
+
+      //SCPlayer
+      _this.SCshowTrackTitle()
     }
 
+    //View
+    this.showTrackTitle = function(title){
+      $('#player').append("<div class = 'title'>" + title + "</div>");
+    }
+
+    //SC Player
     this.bindHostWidgetListeners = function(){
       _this.widget.bind(SC.Widget.Events.READY, function(){
-        _this.widget.bind(SC.Widget.Events.PLAY, function(relativePosition, loadProgress, currentPosition){
-          setTimeout(function(){
-            _this.sendHostTimestamps();
-            _this.widget.unbind(SC.Widget.Events.PLAY_PROGRESS);
-          }, 100)
-        });
+        _this.bindHostPlay();
       });
     }
 
-    //binds the listeners that will cause it to sync on the first play event.
+    //SC Player
+    this.bindHostPlay = function(){
+      _this.widget.bind(SC.Widget.Events.PLAY, function(){
+        setTimeout(function(){
+          _this.sendHostTimestamps();
+          _this.widget.unbind(SC.Widget.Events.PLAY_PROGRESS);
+        }, 100);
+      });
+    }
+
+    //SC Player
     this.bindGuestWidgetListeners = function(){
       _this.widget.bind(SC.Widget.Events.READY, function(){
-        _this.widget.bind(SC.Widget.Events.PLAY, function() {
-          //seekTO is calculated on the spot to minimize delay, despite it not being dry. This could be placed in another function but it would not be as quick.
-          _this.widget.seekTo(timestampData.songProgress + (new Date().getTime() - timestampData.timestamp)+1900);
-          _this.widget.pause();
-          setTimeout(function(){
-            console.log("buffered")
-            _this.widget.play();
-            //prevent occasional buffer reset that causes it to start from the beginning of the song. We can use this to set it to the exact desired time.
-            _this.widget.seekTo(timestampData.songProgress + (new Date().getTime() - timestampData.timestamp));
-          }, 2000);
-          _this.widget.unbind(SC.Widget.Events.PLAY);
-        });
+        _this.bindGuestPlay();
       });
     }
 
+    //SC Player
+    this.bindGuestPlay = function(){
+      _this.widget.bind(SC.Widget.Events.PLAY, function() {
+        _this.widget.seekTo(timestampData.songProgress + (new Date().getTime() - timestampData.timestamp)+1900);
+        _this.widget.pause();
+        setTimeout(function(){
+          _this.widget.play();
+          _this.widget.seekTo(timestampData.songProgress + (new Date().getTime() - timestampData.timestamp));
+        }, 2000);
+        _this.widget.unbind(SC.Widget.Events.PLAY);
+      });
+    }
+
+    // This is Val's job.
     this.setupTypeAhead = function() {
       $('.search-field').typeahead(
       {
