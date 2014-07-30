@@ -3,6 +3,8 @@
 ### Sass ###
 .sass-cache
 
+### API KEY ###
+env.js
 
 ### Node ###
 # Logs
