@@ -1,10 +1,10 @@
 /*
   Module dependencies:
   - Express
-  - Http (to run Express)
-  - Body parser (to parse JSON requests)
+  - Http
+  - Body parser(to parse JSON requests)
   - Underscore
-  - Socket.IO(Note: we need a web server to attach Socket.IO to)
+  - Socket.IO
 */
 
 var express = require('express'),
@@ -18,8 +18,6 @@ var express = require('express'),
 var participants = [];
 
 /* Server Config */
-
-
 // Set to accept Heroku's dynamic port assignemnt, or 8080 on localhost
 app.set('port', process.env.PORT || 8080);
 
@@ -66,26 +64,10 @@ io.on("connection", function(socket){
     _.findWhere(participants, {id: data.id}).playing = true
   })
 
-  // When a client changes their name, update participants[] and notify clients
-  socket.on("nameChange", function(data) {
-    _.findWhere(participants, {id: socket.id}).name = data.name;
-    io.sockets.emit("nameChanged", {id: data.id, name: data.name});
-  });
-
-  socket.on("newMessage", function(name, message){
-    console.log("hello got to the server for new message")
-    io.sockets.emit("incomingMessage", name, message)
-  })
-
   // When a client/user disconnects, delete from participants[] & notify clients
   socket.on("disconnect", function() {
     participants = _.without(participants,_.findWhere(participants, {id: socket.id}));
-    io.sockets.emit("userDisconnected", {id: socket.id, sender:"system"});
   });
-
-  socket.on("hostPlayedSound", function(data) {
-    io.sockets.emit("guestPlaySong", {song: data.song, uri: data.uri, time: data.time})
-  })
 
 })
 
