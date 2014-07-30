@@ -120,28 +120,39 @@ $( document ).ready(function(){
       _this.showPlay();
     }
 
+    //View
+    this.showWidget = function(){
+      $('#button').show();
+      $("div#widget").html(widgetFirstHalf + _this.currentSongUri + widgetSecondHalf);
+    }
+
+    //SC widget
+    this.SCshowTrackTitle = function(){
+      var songInfo = _this.currentSongUri + ".json?client_id=" + CLIENT_ID;
+
+      SC.get(songInfo, function(track) {
+        console.log(track)
+        _this.showTrackTitle(track.title);
+      });
+    }
+
     this.createWidget = function(){
       widgetFirstHalf = "<iframe id='sc-widget' src='http://w.soundcloud.com/player/?url=";
       widgetSecondHalf = "&client_id=" + CLIENT_ID + "'></iframe>";
 
       //View
-      $('#button').show();
-      $("div#widget").html(widgetFirstHalf + _this.currentSongUri + widgetSecondHalf);
+      _this.showWidget();
 
       //managed in SC Player
       _this.widget = SC.Widget(document.getElementById('sc-widget'));
 
-      var songInfo = _this.currentSongUri + ".json?client_id=" + CLIENT_ID;
+      //SCPlayer
+      _this.SCshowTrackTitle()
+    }
 
-      var currentTrack = "";
-
-      //SC Player
-      SC.get(songInfo, function(track) {
-        currentTrack = track;
-      });
-
-      //View
-      $('#player').append("<div class = 'title'>" + currentTrack.title + "</div>");
+    //View
+    this.showTrackTitle = function(title){
+      $('#player').append("<div class = 'title'>" + title + "</div>");
     }
 
     //SC Player
@@ -164,7 +175,7 @@ $( document ).ready(function(){
     //SC Player
     this.bindGuestWidgetListeners = function(){
       _this.widget.bind(SC.Widget.Events.READY, function(){
-
+        _this.bindGuestPlay();
       });
     }
 
@@ -174,7 +185,6 @@ $( document ).ready(function(){
         _this.widget.seekTo(timestampData.songProgress + (new Date().getTime() - timestampData.timestamp)+1900);
         _this.widget.pause();
         setTimeout(function(){
-          console.log("buffered")
           _this.widget.play();
           _this.widget.seekTo(timestampData.songProgress + (new Date().getTime() - timestampData.timestamp));
         }, 2000);
