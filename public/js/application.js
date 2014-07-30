@@ -32,7 +32,9 @@ Socket.bindListeners = function(){
   socket.on('hostSentTimestamps', Socket.readyToConnect)
   socket.on('songReadyForGuests', Socket.guestReadySong)
   socket.on('error', Socket.errorMessage)
-
+  $(document).on("newSong", Socket.emitCurrentSong)
+  $(document).on("newGuest", Socket.emitGuestConnect)
+  $(document).on("sendHostClickedPlay", Socket.emitHostClickedPlay)
 }
 
 Socket.emitNewUser = function(){
@@ -64,13 +66,23 @@ Socket.readyToConnect = function(data){
 
 Socket.errorMessage = function(reason){
     console.log('unable to connect to server sry bro', reason);
+}
 
+Socket.emitCurrentSong = function(event, data){
+  socket.emit('hostPickedSong', {song: data});
+}
+
+Socket.emitGuestConnect = function(){
+  socket.emit('userClickedConnect', {id: socket.io.engine.id, playing: true});
+}
+
+Socket.emitHostClickedPlay = function(event, timestamp, songProgress){
+  socket.emit('hostClickedPlay', {timestamp: timestamp, songProgress: songProgress});
 }
 
 
-
 // SocketStore
-// Helper = {}
+Helper = {}
 //change to client soon
 Helper.isHost = function(data){
   return sessionId == data.participants[0].id

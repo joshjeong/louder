@@ -20,30 +20,15 @@ $( document ).ready(function(){
       $('#soundCloudURL').on('submit', this.loadSongFromURL);
     }
 
-    //Socket
-    this.emitCurrentSong = function(song){
-      socket.emit('hostPickedSong', {song: song});
-    }
-
-    //Socket
-    this.emitGuestConnect = function(){
-      socket.emit('userClickedConnect', {id: socket.io.engine.id, playing: true});
-    }
-
     this.loadSongFromURL = function() {
       var trackUrl = _this.currentSongUri
       _this.changePlayerHeight();
       $.get('http://api.soundcloud.com/resolve.json?url=' + trackUrl + '&client_id=d8eb7a8be0cc38d451a51d4d223ee84b',
       function (song) {
+        console.log(song.uri)
         _this.currentSongUri = song.uri;
-
-        //SC player
         _this.createWidget();
-        //Socket manager
-        // $('document').trigger('setSong', [this.currentSongURI])
-        // $(document).on('setSong', )
-        _this.emitCurrentSong(this.currentSongUri);
-        //SC player
+        $(document).trigger("newSong", [_this.currentSongUri])
         _this.bindHostWidgetListeners();
       });
     }
@@ -57,40 +42,28 @@ $( document ).ready(function(){
 
     this.bufferGuestTrack = function() {
       //Socket
-      _this.emitGuestConnect();
-
+      $(document).trigger("newGuest")
       //View
       _this.showPlay();
-
       _this.currentSongUri = globalCurrentSongUrl;
-
+      console.log(globalCurrentSongUrl)
       //View
       _this.createWidget();
       _this.bindGuestWidgetListeners();
     }
 
-    this.generateTimestamps = function(){
-      var songProgress = ""
-      var timestamp = ""
-      _this.widget.getPosition(function(position){
-        songProgress = position;
-        timestamp = Date.now();
-      });
-      return {songProgress: songProgress, timestamp: timestamp}
-    }
-
     //Socket
-    this.emitTimestamps = function(timestamp, songProgress){
-      socket.emit('hostClickedPlay',
-      {timestamp: timestamp, songProgress: songProgress});
-    }
+    // this.emitTimestamps = function(timestamp, songProgress){
+    //   socket.emit('hostClickedPlay',
+    //   {timestamp: timestamp, songProgress: songProgress});
+    // }
 
     this.sendHostTimestamps = function(){
       //SC player
-      var timestamps = generateTimestamps();
-
-      //Socket
-      _this.emitTimestamps(timestamps.timestamp, timestamps.songProgress)
+      _this.widget.getPosition(function(position){
+        $(document).trigger("sendHostClickedPlay",
+         [Date.now(), position])
+      });
     }
 
     //View
