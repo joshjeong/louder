@@ -70,7 +70,6 @@ $( document ).ready(function(){
       widgetFirstHalf = "<iframe id='sc-widget' src='http://w.soundcloud.com/player/?url="
       widgetSecondHalf = "&client_id=d8eb7a8be0cc38d451a51d4d223ee84b'></iframe>"
       $("div#widget").html(widgetFirstHalf + _this.currentSongUri + widgetSecondHalf)
-
       //set widget variable to the widget
       _this.widget = SC.Widget(document.getElementById('sc-widget'));
     }

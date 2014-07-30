@@ -14,7 +14,7 @@ html
     script(src='/js/application.js')
     title Super Awesome Louder Player
   body
-    #widget
+    .logo
     .wrapper
       .screens
         #connect-button.fa.fa-paper-plane.fa-5x
@@ -24,11 +24,9 @@ html
         #guest-playing.fa.fa-child.fa-5x
           h3 Now Playing Song!
       #player
-        form#soundCloudURL
+        #soundCloudURL
           input(type="text" class="search-field" placeholder="Search")
-        #buttons
-          i#play-button.fa.fa-play.fa-4x
-          i#pause-button.fa.fa-pause.fa-4x
+        #widget
     #d3
   script(src='https://w.soundcloud.com/player/api.js')
   script(src='/js/widget.js')
