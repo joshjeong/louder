@@ -1,5 +1,7 @@
 $(document).ready(function(){
   View.hideAll()
+  Socket.bindListeners()
+
 })
 
 
@@ -22,17 +24,22 @@ Client.prototype = {
   }
 }
 
+Socket = {}
 
-socket.on('connect', emitNewUser)
+Socket.bindListeners = function(){
+  socket.on('connect', Socket.emitNewUser)
+  socket.on('newConnection', Socket.newConnection )
+  socket.on('hostSentTimestamps', Socket.readyToConnect)
+  socket.on('songReadyForGuests', Socket.guestReadySong)
+  socket.on('error', Socket.errorMessage)
+}
 
-function emitNewUser(){
+Socket.emitNewUser = function(){
   sessionId = socket.io.engine.id;
   socket.emit('newUser', {id: sessionId, name: $('#name').val(), song: "", timestamp: 0, currentProgress: 0, playing: false});
 }
 
-socket.on('newConnection', newConnection )
-
-function newConnection(data) {
+Socket.newConnection = function(data){
   if (Helper.isHost(data)) {
     View.hideAll()
     View.showPlayer()
@@ -42,16 +49,11 @@ function newConnection(data) {
   }
 }
 
-socket.on('songReadyForGuests', guestReadySong)
-
-function guestReadySong(data) {
+Socket.guestReadySong = function(data){
   globalCurrentSongUrl = data.participants[0].song
 }
 
-// socket.on('hostSentTimestamps', function(data){
-socket.on('hostSentTimestamps', readyToConect)
-
-function readyToConect(data){
+Socket.readyToConnect = function(data){
   timestampData = data.participants[0]
   if (sessionId != data.participants[0].id) {
     $('#connect-button').show()
@@ -59,31 +61,34 @@ function readyToConect(data){
   }
 }
 
-socket.on('error', function(reason) {
-  console.log('unable to connect to server sry bro', reason);
-});
+Socket.errorMessage = function(reason){
+    console.log('unable to connect to server sry bro', reason);
+
+}
+
 
 
 
 Helper = {}
 //change to client soon
 Helper.isHost = function(data){
-  console.log("Is host ", sessionId == data.participants[0].id)
   return sessionId == data.participants[0].id
 }
 Helper.isHostPlaying = function(data){
   return data.participants[0].playing
 }
 
-
+Helper.setHostInfo = function(data){
+  globalCurrentSongUrl = data.participants[0].song
+  timestampData.timestamp = data.participants[0].timestamp
+  timestampData.songProgress = data.participants[0].songProgress
+}
 
 
 View = {}
 
 View.changeView = function(data){
-  globalCurrentSongUrl = data.participants[0].song
-  timestampData.timestamp = data.participants[0].timestamp
-  timestampData.songProgress = data.participants[0].songProgress
+  Helper.setHostInfo(data)
   var isClientPlaying = $.grep(data.participants, function(e){ return e.id == sessionId})[0].playing
   if (!Helper.isHostPlaying(data)) {
     View.showWaitScreen()
