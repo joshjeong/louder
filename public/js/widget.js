@@ -122,6 +122,8 @@ $( document ).ready(function(){
 
     //View
     this.showWidget = function(){
+      var widgetFirstHalf = "<iframe id='sc-widget' src='http://w.soundcloud.com/player/?url=";
+      var widgetSecondHalf = "&client_id=" + CLIENT_ID + "'></iframe>";
       $('#button').show();
       $("div#widget").html(widgetFirstHalf + _this.currentSongUri + widgetSecondHalf);
     }
@@ -137,9 +139,6 @@ $( document ).ready(function(){
     }
 
     this.createWidget = function(){
-      widgetFirstHalf = "<iframe id='sc-widget' src='http://w.soundcloud.com/player/?url=";
-      widgetSecondHalf = "&client_id=" + CLIENT_ID + "'></iframe>";
-
       //View
       _this.showWidget();
 
