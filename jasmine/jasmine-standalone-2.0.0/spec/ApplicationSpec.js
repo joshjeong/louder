@@ -1,6 +1,9 @@
 var serverBaseUrl = "http://127.0.0.0"
-io = {connect: function(){}};
-socket = function(){on: function(){}}
+io = { connect: function() { return new Socket }};
+function Socket(){
+  this.on = function(){}
+  this.emit = function(){}
+}
 describe("Application Testing", function(){
 
   it("should run a test", function(){
