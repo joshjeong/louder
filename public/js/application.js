@@ -84,4 +84,3 @@ function readyToConect(data){
 socket.on('error', function(reason) {
   console.log('unable to connect to server sry bro', reason);
 });
-
