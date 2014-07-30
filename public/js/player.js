@@ -47,9 +47,9 @@ Player.Controller = function() {
         onplay: function(){
           this.onPosition(1, _this.sendHostTimestamps)
         }},
-        _this.showPlayButton(),
         function(track){
           _this.currentSong = track
+          _this.showPlayButton()
         }),
       socket.emit('hostPickedSong', {song: track.stream_url})
     });
@@ -86,8 +86,9 @@ Player.Controller = function() {
     socket.emit('hostClickedPlay', {timestamp: Date.now(), songProgress: _this.currentSong.position})
   }
   this.playTrack = function() {
+    debugger
     _this.currentSong.play();
-    setInterval(function(){console.log(_this.currentSong.position)}, 100)
+    // setInterval(function(){console.log(_this.currentSong.position)}, 100)
     $('#play-button').hide()
     $('#pause-button').show()
     // socket.emit('hostPickedSong', {song: _this.currentSongUri})

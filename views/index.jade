@@ -1,6 +1,7 @@
 doctype html
 html
   head
+    meta(name="viewport", content="width=device-width, user-scalable=no")
     link(rel='stylesheet', href='http://fonts.googleapis.com/css?family=Open+Sans')
     link(rel='stylesheet', href='http://fonts.googleapis.com/css?family=Montserrat:400,700')
     link(rel='stylesheet', href='//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css')
@@ -14,17 +15,18 @@ html
     script(src='/js/player.js')
     title Super Awesome Louder Player
   body
-    .screens
-      #connect-button.fa.fa-paper-plane.fa-5x
-        h3 Connect to host
-      i#wait-screen.fa.fa-camera-retro.fa-5x
-        h3 Waiting for host to pick a song
-      #guest-playing.fa.fa-child.fa-5x
-        h3 Now Playing Song!
-    #player
-      form#soundCloudURL
-        input(type="text" class="search-field" placeholder="Search")
-      #buttons
-        i#play-button.fa.fa-play.fa-4x
-        i#pause-button.fa.fa-pause.fa-4x
+    .wrapper
+      .screens
+        #connect-button.fa.fa-paper-plane.fa-5x
+          h3 Connect to host
+        i#wait-screen.fa.fa-camera-retro.fa-5x
+          h3 Waiting for host to pick a song
+        #guest-playing.fa.fa-child.fa-5x
+          h3 Now Playing Song!
+      #player
+        form#soundCloudURL
+          input(type="text" class="search-field" placeholder="Search")
+        #buttons
+          i#play-button.fa.fa-play.fa-4x
+          i#pause-button.fa.fa-pause.fa-4x
     #d3
