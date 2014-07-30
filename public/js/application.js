@@ -32,6 +32,7 @@ Socket.bindListeners = function(){
   socket.on('hostSentTimestamps', Socket.readyToConnect)
   socket.on('songReadyForGuests', Socket.guestReadySong)
   socket.on('error', Socket.errorMessage)
+
 }
 
 Socket.emitNewUser = function(){
@@ -68,8 +69,8 @@ Socket.errorMessage = function(reason){
 
 
 
-
-Helper = {}
+// SocketStore
+// Helper = {}
 //change to client soon
 Helper.isHost = function(data){
   return sessionId == data.participants[0].id
@@ -80,6 +81,7 @@ Helper.isHostPlaying = function(data){
 
 Helper.setHostInfo = function(data){
   globalCurrentSongUrl = data.participants[0].song
+  // $(document).trigger('newSong',data.participants[0].song)
   timestampData.timestamp = data.participants[0].timestamp
   timestampData.songProgress = data.participants[0].songProgress
 }

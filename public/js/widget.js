@@ -42,6 +42,8 @@ $( document ).ready(function(){
         //SC player
         _this.createWidget();
         //Socket manager
+        // $('document').trigger('setSong', [this.currentSongURI])
+        // $(document).on('setSong', )
         _this.emitCurrentSong(this.currentSongUri);
         //SC player
         _this.bindHostWidgetListeners();
