@@ -29,6 +29,10 @@ html
         #buttons
           i#play-button.fa.fa-play.fa-4x
           i#pause-button.fa.fa-pause.fa-4x
+      #queue
+        form#addToQueue
+          input(type="text" class="queue-search-field" placeholder="Search")
+        ol#sc-tracklist
     #d3
   script(src='https://w.soundcloud.com/player/api.js')
   script(src='/js/widget.js')

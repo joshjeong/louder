@@ -1,9 +1,9 @@
-timestampData = {}
-globalCurrentSongUrl = ""
+timestampData = {};
+globalCurrentSongUrl = "";
 $( document ).ready(function(){
   SC.initialize({
     client_id: "d8eb7a8be0cc38d451a51d4d223ee84b",
-    redirect_uri: "http://localhost:8080/",
+    redirect_uri: "http://localhost:8080/"
   });
   Player = {}
 
@@ -83,6 +83,22 @@ $( document ).ready(function(){
             _this.widget.unbind(SC.Widget.Events.PLAY_PROGRESS);
           }, 100)
         });
+        _this.widget.bind(SC.Widget.Events.FINISH, function(){
+          _this.widget.bind(SC.Widget.Events.PLAY, function(){
+            setTimeout(function(){
+              _this.sendHostTimestamps();
+              _this.widget.unbind(SC.Widget.Events.PLAY_PROGRESS);
+            }, 100)
+          })
+          $track = $('#sc-tracklist li a').first();
+          _this.currentSongUri = $track.attr('href');
+          _this.widget.load(_this.currentSongUri);
+          setTimeout(function(){
+            _this.widget.play();
+            socket.emit('hostPickedSong', {song: _this.currentSongUri});
+          }, 100);
+          $track.remove();
+        })
       });
     }
 
@@ -101,10 +117,55 @@ $( document ).ready(function(){
           }, 2000);
           _this.widget.unbind(SC.Widget.Events.PLAY);
         });
+        _this.widget.bind(SC.Widget.Events.FINISH, function(){
+          _this.currentSongUri = globalCurrentSongUrl;
+          _this.widget.load(_this.currentSongUri);
+          _this.widget.bind(SC.Widget.Events.PLAY, function() {
+            //seekTO is calculated on the spot to minimize delay, despite it not being dry. This could be placed in another function but it would not be as quick.
+            _this.widget.seekTo(timestampData.songProgress + (new Date().getTime() - timestampData.timestamp)+1900);
+            _this.widget.pause();
+            setTimeout(function(){
+              console.log("buffered")
+              _this.widget.play();
+              //prevent occasional buffer reset that causes it to start from the beginning of the song. We can use this to set it to the exact desired time.
+              _this.widget.seekTo(timestampData.songProgress + (new Date().getTime() - timestampData.timestamp));
+            }, 2000);
+            _this.widget.unbind(SC.Widget.Events.PLAY);
+          });
+        });
       });
     }
 
-    this.setupTypeAhead = function() {
+    this.setupQueueTypeAhead = function() {
+      $('.queue-search-field').typeahead(
+      {
+        hint: false,
+        highlight: true,
+        minLength: 1 },
+      {
+        name: 'tracks',
+        displayKey: 'title',
+        source: function (query, process) {
+          var fetch = function(query) {
+            var fetchTracks = new $.Deferred();
+            SC.get('/tracks', {q:query}, function(tracks) {
+              fetchTracks.resolve(tracks)
+            })
+            return fetchTracks.promise();
+          }
+          var dataPromise = fetch(query);
+          $('body').addClass('waiting')
+          dataPromise.done(function(tracks){
+            $('body').removeClass('waiting')
+            process(tracks);
+          });
+        }
+      }).bind("typeahead:selected", function(event, track){
+          addToQueue(track)
+        })
+    };
+
+    this.setupInitialTypeAhead = function() {
       $('.search-field').typeahead(
       {
         hint: false,
@@ -127,7 +188,7 @@ $( document ).ready(function(){
             $('body').removeClass('waiting')
             process(tracks);
           });
-        },
+        }
       }).bind("typeahead:selected", function(event, track, name){
           _this.currentSongUri = track.uri
           _this.loadSongFromURL()
@@ -135,10 +196,16 @@ $( document ).ready(function(){
     };
   }
 
+  var addToQueue = function(track){
+      console.log(track)
+      $("ol#sc-tracklist").append("<li><a href='" + track.uri + "'>" + track.title + "</a></li>")
+  }
+
   pController = new Player.Controller;
   pController.bindListeners();
-  pController.setupTypeAhead();
-});
+  pController.setupInitialTypeAhead();
+  pController.setupQueueTypeAhead();
+})
 
 // D3 OBJECT --------------------------------------
 var guestAnimation = function() {
@@ -169,3 +236,20 @@ var guestAnimation = function() {
     d3.event.preventDefault();
   }
 }
+
+$(document).on('click','#sc-tracklist li a', function(event) {
+  event.preventDefault();
+  var $track = $(this),
+      $player = _this.widget,
+      url = $track.attr('href');
+
+  $player.load(url)
+  _this.currentSongUri = url
+  socket.emit('hostPickedSong', {song: _this.currentSongUri});
+  setTimeout(function(){
+    _this.widget.getPosition(function(position){
+    socket.emit('hostClickedPlay',
+    {timestamp: Date.now(), songProgress: position});
+    })
+  }, 100);
+});
