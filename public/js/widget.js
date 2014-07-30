@@ -112,36 +112,30 @@ Player.Controller = function() {
   }
 
   // This is Val's job.
-  this.setupTypeAhead = function() {
-    $('.search-field').typeahead(
-    {
-      hint: false,
-      highlight: true,
-      minLength: 1 },
-    {
-      name: 'tracks',
-      displayKey: 'title',
-      source: function (query, process) {
-        var fetch = function(query) {
-          var fetchTracks = new $.Deferred();
-          SC.get('/tracks', {q:query}, function(tracks) {
-            fetchTracks.resolve(tracks)
-          })
-          return fetchTracks.promise();
-        }
-        var dataPromise = fetch(query);
-        $('body').addClass('waiting')
-        dataPromise.done(function(tracks){
-          $('body').removeClass('waiting')
-          process(tracks);
-        });
-      },
-    }).bind("typeahead:selected", function(event, track, name){
-        _this.currentSongUri = track.uri
-        _this.loadSongFromURL()
-      })
-  };
-}
+    this.fetchTracks = function(query) {
+      var promise = new $.Deferred();
+      PlayerView.indicateWaiting() // indicate waiting
+      SC.get('/tracks', {q:query}, function(tracks) { promise.resolve(tracks) })
+      return promise.promise();
+    }
+
+    this.setupTypeAhead = function() {
+      $('.search-field').typeahead({hint: false, highlight: true, minLength: 1 },
+      {
+        name: 'tracks',
+        displayKey: 'title',
+        source: function (query, process) {
+          _this.fetchTracks(query).done(function(tracks){
+            PlayerView.doneWaiting()
+            process(tracks);
+          });
+        },
+      }).bind("typeahead:selected", function(event, track, name){
+          _this.currentSongUri = track.uri
+          _this.loadSongFromURL()
+        })
+    };
+    }
 
 PlayerView = {}
 PlayerView.showPlay= function(){
@@ -168,6 +162,14 @@ PlayerView.showWidget = function(){
 
 PlayerView.showTrackTitle = function(title){
   $('#player').append("<div class = 'title'>" + title + "</div>");
+}
+
+PlayerView.indicateWaiting = function(){
+  $('body').addClass('waiting');
+}
+
+PlayerView.doneWaiting = function(){
+  $('body').removeClass('waiting');
 }
 
 

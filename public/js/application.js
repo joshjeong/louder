@@ -1,17 +1,12 @@
 $(document).ready(function(){
   View.hideAll()
-  Socket.bindListeners()
+  var connection = new Connection()
+  connection.bindListeners()
 
 })
 
-
 timestampData = {}
 var serverBaseUrl = document.domain;
-socket = io.connect(serverBaseUrl);
-// We'll save our session ID in a variable for later
-var sessionId = '';
-var songTime = 0
-var currentSong = ""
 
 function Client(){
   this.sessionId = ''
@@ -24,25 +19,27 @@ Client.prototype = {
   }
 }
 
-Socket = {}
-
-Socket.bindListeners = function(){
-  socket.on('connect', Socket.emitNewUser)
-  socket.on('newConnection', Socket.newConnection )
-  socket.on('hostSentTimestamps', Socket.readyToConnect)
-  socket.on('songReadyForGuests', Socket.guestReadySong)
-  socket.on('error', Socket.errorMessage)
-  $(document).on("newSong", Socket.emitCurrentSong)
-  $(document).on("newGuest", Socket.emitGuestConnect)
-  $(document).on("sendHostClickedPlay", Socket.emitHostClickedPlay)
+function Connection(){
+  this.socket = io.connect(serverBaseUrl);
 }
 
-Socket.emitNewUser = function(){
-  sessionId = socket.io.engine.id;
-  socket.emit('newUser', {id: sessionId, name: $('#name').val(), song: "", timestamp: 0, currentProgress: 0, playing: false});
+Connection.prototype.bindListeners = function(){
+  this.socket.on('connect', this.emitNewUser.bind(this))
+  this.socket.on('newConnection', this.newConnection.bind(this) )
+  this.socket.on('hostSentTimestamps', this.readyToConnect.bind(this))
+  this.socket.on('songReadyForGuests', this.guestReadySong.bind(this))
+  this.socket.on('error', this.errorMessage.bind(this))
+  $(document).on("newSong", this.emitCurrentSong.bind(this))
+  $(document).on("newGuest", this.emitGuestConnect.bind(this))
+  $(document).on("sendHostClickedPlay", this.emitHostClickedPlay.bind(this))
 }
 
-Socket.newConnection = function(data){
+Connection.prototype.emitNewUser = function(){
+  sessionId = this.socket.io.engine.id;
+  this.socket.emit('newUser', {id: sessionId, name: $('#name').val(), song: "", timestamp: 0, currentProgress: 0, playing: false});
+}
+
+Connection.prototype.newConnection = function(data){
   if (Helper.isHost(data)) {
     View.hideAll()
     View.showPlayer()
@@ -52,11 +49,11 @@ Socket.newConnection = function(data){
   }
 }
 
-Socket.guestReadySong = function(data){
+Connection.prototype.guestReadySong = function(data){
   globalCurrentSongUrl = data.participants[0].song
 }
 
-Socket.readyToConnect = function(data){
+Connection.prototype.readyToConnect = function(data){
   timestampData = data.participants[0]
   if (sessionId != data.participants[0].id) {
     $('#connect-button').show()
@@ -64,24 +61,24 @@ Socket.readyToConnect = function(data){
   }
 }
 
-Socket.errorMessage = function(reason){
+Connection.prototype.errorMessage = function(reason){
     console.log('unable to connect to server sry bro', reason);
 }
 
-Socket.emitCurrentSong = function(event, data){
-  socket.emit('hostPickedSong', {song: data});
+Connection.prototype.emitCurrentSong = function(event, data){
+  this.socket.emit('hostPickedSong', {song: data});
 }
 
-Socket.emitGuestConnect = function(){
-  socket.emit('userClickedConnect', {id: socket.io.engine.id, playing: true});
+Connection.prototype.emitGuestConnect = function(){
+  this.socket.emit('userClickedConnect', {id: this.socket.io.engine.id, playing: true});
 }
 
-Socket.emitHostClickedPlay = function(event, timestamp, songProgress){
-  socket.emit('hostClickedPlay', {timestamp: timestamp, songProgress: songProgress});
+Connection.prototype.emitHostClickedPlay = function(event, timestamp, songProgress){
+  this.socket.emit('hostClickedPlay', {timestamp: timestamp, songProgress: songProgress});
 }
 
 
-// SocketStore
+// ConnectionStore
 Helper = {}
 //change to client soon
 Helper.isHost = function(data){
@@ -93,7 +90,6 @@ Helper.isHostPlaying = function(data){
 
 Helper.setHostInfo = function(data){
   globalCurrentSongUrl = data.participants[0].song
-  // $(document).trigger('newSong',data.participants[0].song)
   timestampData.timestamp = data.participants[0].timestamp
   timestampData.songProgress = data.participants[0].songProgress
 }
