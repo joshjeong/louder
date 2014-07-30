@@ -49,6 +49,7 @@ io.on("connection", function(socket){
 
   socket.on("hostPickedSong", function(data) {
     participants[0].song = data.song
+    console.log("dat from song emission" ,data)
     io.sockets.emit('songReadyForGuests', {participants: participants})
   })
 
