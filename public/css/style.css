@@ -45,11 +45,15 @@ table {
   border-collapse: collapse;
   border-spacing: 0; }
 
-@media only screen and (max-width: 660px) {
+@media only screen and (max-width: 760px) {
   body {
-    width: 100%; }
+    background: #1b212f url("../img/louder_logo.png");
+    background-size: 100px;
+    width: 100%;
+    background-size: 299px;
+    background-position: center 10%; }
     body .wrapper {
-      margin-top: 60%; }
+      margin-top: 15rem; }
       body .wrapper #player {
         width: 95%;
         margin: 0 auto;
@@ -58,14 +62,21 @@ table {
           font-size: 0.9rem; }
           body .wrapper #player .search-field .tt-suggestion {
             font-size: 0.2rem; } }
-@media only screen and (min-width: 661px) {
+@media only screen and (min-width: 761px) {
   body {
-    width: 50%; }
+    background: #1b212f url("../img/louder_logo.png");
+    background-size: 100px;
+    width: 100%;
+    background-size: 600px;
+    background-position: 30% -5%;
+    max-width: 1026px; }
     body .wrapper #player {
-      width: 40%;
       min-width: 400px;
+      width: 55%;
+      max-width: 40rem;
       position: absolute;
-      top: 30%; }
+      top: 20rem;
+      left: 40%; }
       body .wrapper #player .search-field {
         font-size: 1.3rem; }
         body .wrapper #player .search-field .tt-suggestion {
@@ -81,15 +92,12 @@ innerdiv accents: 333E54;
 standouts: D05158;
 */
 body {
+  background-repeat: no-repeat;
   font-family: 'Montserrat', sans-serif;
   font-size: 1em;
   line-height: 1.5em;
   margin: 0 auto;
-  overflow-y: hidden;
-  background: #1b212f url("../img/louder_logo.png");
-  background-position: center 30px;
-  background-size: 30%;
-  background-repeat: no-repeat; }
+  overflow: hidden; }
   body.waiting {
     cursor: wait; }
   body .wrapper #player {
@@ -97,6 +105,19 @@ body {
     margin: 0 auto;
     background-color: #333E54;
     border-radius: 15px; }
+    body .wrapper #player #sc-widget {
+      width: 4rem;
+      height: 5.5rem; }
+    body .wrapper #player #widget {
+      width: 100%;
+      text-align: center; }
+    body .wrapper #player .waveform {
+      top: 0;
+      left: 0;
+      width: 100%; }
+    body .wrapper #player .title {
+      color: white;
+      text-align: center; }
     body .wrapper #player #soundCloudURL {
       padding: 2rem; }
       body .wrapper #player #soundCloudURL .twitter-typeahead {

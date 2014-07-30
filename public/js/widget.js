@@ -53,7 +53,7 @@ $( document ).ready(function(){
     }
 
     this.changePlayerHeight = function() {
-      $('#player').animate({height: "19rem"}, 1000)
+      $('#player').animate({height: "20rem"}, 1000)
     }
 
     this.playTrack = function() {
@@ -81,11 +81,11 @@ $( document ).ready(function(){
       _this.widget = SC.Widget(document.getElementById('sc-widget'));
       songInfo = _this.currentSongUri + ".json?client_id=" + CLIENT_ID
       SC.get(songInfo, function(track) {
-        debugger
         // songWaveform = track.waveform_url;
-        $('#player').append("<h3>" + track.title + "</h3>")
-      });
-      }
+        $('#player').append("<img src = '" + track.waveform_url + "' class = 'waveform'/>")
+        $('#player').append("<div class = 'title'>" + track.title + "</div>");
+        });
+    }
 
     this.bindHostWidgetListeners = function(){
       _this.widget.bind(SC.Widget.Events.READY, function(){
