@@ -1,10 +1,61 @@
+/* http://meyerweb.com/eric/tools/css/reset/
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline; }
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block; }
+
+body {
+  line-height: 0; }
+
+ol, ul {
+  list-style: none; }
+
+blockquote, q {
+  quotes: none; }
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none; }
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
 body {
   /*padding: 3em;*/
   font-family: 'Montserrat', sans-serif;
   font-size: 1em;
   background-color: #1B212F;
   line-height: 1.5em;
-}
+  width: 50%;
+  margin: 0 auto; }
+  body.waiting {
+    cursor: wait; }
+
 /*Color Scheme colors:
 writing: D8D8D8;
 background: 1B212F;
@@ -12,25 +63,10 @@ innerdiv backgrounds: 222939;
 innerdiv accents: 333E54;
 standouts: D05158;
 */
-textarea {
-  resize: none;
-}
-svg {
-  z-index: -1;
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-h1 {
-  text-align: center;
-}
 
-.inlineBlock {
- display: inline-block;
-}
 
-.topAligned {
- vertical-align: top;
+#widget {
+  /*display: none;*/
 }
 
 .screens {
@@ -38,36 +74,7 @@ h1 {
   margin: 0 auto;
 }
 
-#sc-widget {
-  display: none;
-}
-
-#player {
-  margin: auto;
-  margin-top: 5rem;
-  height: 300px;
-  width: 400px;
-  background-color: #333E54;
-  border-radius: 15px;
-  display: none;
-}
-
-#buttons {
-  text-align: center;
-  position: relative;
-  color: #D8D8D8;
-}
-
-#messageForm, .chat {
-  display: none;
-  opacity: 0.1;
-}
-
-#pause-button {
-  display: none;
-}
-
-#connect-button {
+.screens #connect-button {
   display: block;
   display: none;
   width: 40%;
@@ -78,10 +85,8 @@ h1 {
   margin: 0 auto;
   border-radius: 10px;
   z-index: 1;
-  margin-top: 3rem;
-}
-
-#wait-screen {
+  margin-top: 3rem; }
+.screens #wait-screen {
   font-family: 'Montserrat', sans-serif;
   font-weight: 400;
   font-size: 3em;
@@ -91,11 +96,8 @@ h1 {
   height: 0px;
   left: 0px;
   width: 100%;
-  top: 100px;
-}
-
-#guest-playing {
-  color: #fff;
+  top: 100px; }
+.screens #guest-playing {
   display: none;
   width: 50%;
   padding: 3rem;
@@ -105,63 +107,74 @@ h1 {
   margin: 0 auto;
   border-radius: 10px;
   z-index: 1;
-  margin-top: 3rem;
-}
+  margin-top: 3rem; }
 
-#soundCloudURL {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 2rem;
-}
+#player {
+  margin: auto;
+  margin-top: 5rem;
+  height: 9rem;
+  width: 30rem;
+  background-color: #333E54;
+  border-radius: 15px;
+  display: none; }
+  #player #soundCloudURL {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 2rem; }
+    #player #soundCloudURL .twitter-typeahead {
+      width: 100%; }
+    #player #soundCloudURL .tt-dataset-tracks {
+      color: #333E54; }
+    #player #soundCloudURL .tt-suggestion {
+      border: 1px solid white;
+      height: 2rem;
+      padding: 1rem;
+      font-color: #D05158;
+      background-color: #D8D8D8; }
+    #player #soundCloudURL .tt-dropdown-menu {
+      border: 1px solid white;
+      height: 20rem;
+      overflow: scroll; }
+    #player #soundCloudURL .input-field {
+      margin: auto;
+      padding: 1rem;
+      font-size: 1.3rem;
+      width: 90%; }
+      #player #soundCloudURL .input-field:focus {
+        outline: 0; }
+    #player #soundCloudURL .submit-button {
+      padding: 5px 15px;
+      background: #D8D8D8;
+      width: 100%;
+      height: 3rem;
+      font-size: 1.3rem;
+      color: gray;
+      border: 0 none;
+      cursor: pointer;
+      -webkit-border-radius: 5px;
+      border-radius: 5px; }
+  #player #buttons {
+    display: none;
+    text-align: center;
+    position: relative;
+    color: #D8D8D8; }
+    #player #buttons #pause-button {
+      display: none; }
 
-#soundCloudURL input {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.chat {
+#d3 svg {
   z-index: -1;
-}
-
-rect {
   position: absolute;
-  top: 0
-  left: 0;
-  fill: none;
-  pointer-events: all;
-  z-index: 100
-}
-
-circle {
-  fill: none;
-  stroke-width: 2.5px;
-  z-index: 100
-}
-
-.margin1{
-  margin-top: 1rem;
-}
-
-.input-field{
-  padding: 1rem;
-  font-size: 1.3rem;
-  width: 90%;
-}
-
-.waiting {
-  cursor: wait;
-}
-
-.submit-button{
-  padding:5px 15px;
-  background:#D8D8D8;
-  width: 100%;
-  height: 3rem;
-  font-size: 1.3rem;
-  color: gray;
-  border:0 none;
-  cursor:pointer;
-  -webkit-border-radius: 5px;
-  border-radius: 5px;
+  top: 0;
+  left: 0; }
+  #d3 svg rect {
+    position: absolute;
+    top: 0;
+    left: 0;
+    fill: none;
+    pointer-events: all;
+    z-index: 100; }
+  #d3 svg circle {
+    fill: none;
+    stroke-width: 2.5px;
+    z-index: 100; }
