@@ -1,8 +1,5 @@
 socket = {};
 timestampData = {}
-$(document).on('ready', init);
-
-  function init() {
 
   var serverBaseUrl = document.domain;
 
@@ -180,4 +177,3 @@ $('#outgoingMessage').on('keydown', outgoingMessageKeyDown);
 $('#outgoingMessage').on('keyup', outgoingMessageKeyUp);
 $('#name').on('focusout', nameFocusOut);
 $('#send').on('click', sendMessage);
-}
