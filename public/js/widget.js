@@ -88,6 +88,13 @@ Player.Controller = function() {
   }
 
   //SC Player
+  this.bindGuestWidgetListeners = function(){
+    _this.widget.bind(SC.Widget.Events.READY, function(){
+      _this.bindGuestPlay();
+    });
+  }
+
+  //SC Player
   this.bindGuestPlay = function(){
     _this.widget.bind(SC.Widget.Events.PLAY, function() {
       _this.widget.seekTo(timestampData.songProgress + (new Date().getTime() - timestampData.timestamp)+1900);
@@ -126,7 +133,7 @@ Player.Controller = function() {
           $('.loader').show()
         })
     };
-  }
+    }
 
 PlayerView = {}
 PlayerView.showPlay= function(){
@@ -154,9 +161,6 @@ PlayerView.showWidget = function(){
   $("#widget").fadeIn(4000);
 }
 
-// PlayerView.showTrackTitle = function(title){
-//   $('.player').append("<div class = 'title'>" + title + "</div>");
-// }
 
 PlayerView.indicateWaiting = function(){
   $('body').addClass('waiting');
