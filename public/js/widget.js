@@ -56,22 +56,11 @@ Player.Controller = function() {
     PlayerView.showPlay();
   }
 
-  //SC widget
-  this.SCshowTrackTitle = function(){
-    var songInfo = _this.currentSongUri + ".json?client_id=" + CLIENT_ID;
-
-    SC.get(songInfo, function(track) {
-      console.log(track)
-      PlayerView.showTrackTitle(track.title);
-    });
-  }
-
   this.createWidget = function(){
     PlayerView.showWidget();
     //managed in SC Player
     _this.widget = SC.Widget(document.getElementById('sc-widget'));
     //SCPlayer
-    _this.SCshowTrackTitle()
   }
 
   //SC Player
@@ -133,9 +122,11 @@ Player.Controller = function() {
       }).bind("typeahead:selected", function(event, track, name){
           _this.currentSongUri = track.uri
           _this.loadSongFromURL()
+          $(this).val('')
+          $('.loader').show()
         })
     };
-    }
+  }
 
 PlayerView = {}
 PlayerView.showPlay= function(){
@@ -155,14 +146,17 @@ PlayerView.showPause = function(){
 
 PlayerView.showWidget = function(){
   var widgetFirstHalf = "<iframe id='sc-widget' src='http://w.soundcloud.com/player/?url=";
-  var widgetSecondHalf = "&client_id=" + CLIENT_ID + "'></iframe>";
-  $('#button').show();
-  $("div#widget").html(widgetFirstHalf + _this.currentSongUri + widgetSecondHalf);
+  var widgetSecondHalf = "&client_id=" + CLIENT_ID + "&auto_play=false&buying=false&liking=false&" +
+  "download=false&sharing=false&show_artwork=false&show_comments=false&show_playcount=false&show_user"
+  + "=false&hide_related=false&visual=false'></iframe>";
+  $("div#widget").html(widgetFirstHalf + _this.currentSongUri + widgetSecondHalf)
+  $('.loader').fadeOut(1000);
+  $("#widget").fadeIn(4000);
 }
 
-PlayerView.showTrackTitle = function(title){
-  $('#player').append("<div class = 'title'>" + title + "</div>");
-}
+// PlayerView.showTrackTitle = function(title){
+//   $('.player').append("<div class = 'title'>" + title + "</div>");
+// }
 
 PlayerView.indicateWaiting = function(){
   $('body').addClass('waiting');
