@@ -73,9 +73,14 @@ $( document ).ready(function(){
     }
 
     this.createWidget = function(){
+      <a href="https://soundcloud.com/zedsdead/zeds-dead-twin-shadow-lost-you-feat-dangelo-lacy" class="sc-player">
+
+
       // //create widget by inserting it into the widget div. You will not see the widget as it is hidden.
       widgetFirstHalf = "<iframe id='sc-widget' src='http://w.soundcloud.com/player/?url="
       widgetSecondHalf = "&client_id=" + CLIENT_ID + "'></iframe>"
+
+
       $('#button').show();
       $("div#widget").html(widgetFirstHalf + _this.currentSongUri + widgetSecondHalf)
       // //set widget variable to the widget
