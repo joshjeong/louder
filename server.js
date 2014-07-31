@@ -65,6 +65,10 @@ io.on("connection", function(socket){
     _.findWhere(participants, {id: data.id}).playing = true
   })
 
+  socket.on('resetEveryone', function(){
+    io.sockets.emit('makeEveryoneReset', {participants: participants})
+  })
+
   // When a client/user disconnects, delete from participants[] & notify clients
   socket.on("disconnect", function() {
     participants = _.without(participants,_.findWhere(participants, {id: socket.id}));

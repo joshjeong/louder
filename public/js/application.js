@@ -26,12 +26,27 @@ function Connection(){
 Connection.prototype.bindListeners = function(){
   this.socket.on('connect', this.emitNewUser.bind(this))
   this.socket.on('newConnection', this.newConnection.bind(this) )
+  this.socket.on('makeEveryoneReset', this.reset)
   this.socket.on('hostSentTimestamps', this.readyToConnect.bind(this))
   this.socket.on('songReadyForGuests', this.guestReadySong.bind(this))
   this.socket.on('error', this.errorMessage.bind(this))
   $(document).on("newSong", this.emitCurrentSong.bind(this))
   $(document).on("newGuest", this.emitGuestConnect.bind(this))
   $(document).on("sendHostClickedPlay", this.emitHostClickedPlay.bind(this))
+  $(document).bind('onPlayerPlay.scPlayer', function(event){
+    _this.bindHostPlay();
+  });
+}
+
+Connection.prototype.reset = function(participants) {
+  console.log('everyone resetszzz', Date.now())
+  setTimeout(function(){
+    audioEngine.seek(1)
+  }, 5000)
+  audioEngine.stop()
+  console.log('stop')
+  console.log(audioEngine.currentTime)
+  audioEngine.seek(1)
 }
 
 Connection.prototype.emitNewUser = function(){
@@ -71,12 +86,13 @@ Connection.prototype.emitCurrentSong = function(event, data){
 
 Connection.prototype.emitGuestConnect = function(){
   this.socket.emit('userClickedConnect', {id: this.socket.io.engine.id, playing: true});
+  this.socket.emit('resetEveryone');
 }
 
 Connection.prototype.emitHostClickedPlay = function(event, timestamp, songProgress){
+  console.log(songProgress)
   this.socket.emit('hostClickedPlay', {timestamp: timestamp, songProgress: songProgress});
 }
-
 
 // ConnectionStore
 Helper = {}

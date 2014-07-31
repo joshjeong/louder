@@ -27,7 +27,6 @@ Player.Controller = function() {
     // _this.currentSongUri = song.uri;
     _this.createWidget();
     $(document).trigger("newSong", [_this.currentSongUri])
-    _this.bindHostWidgetListeners();
   }
 
   this.bufferGuestTrack = function() {
@@ -35,15 +34,17 @@ Player.Controller = function() {
     PlayerView.showPlay();
     _this.currentSongUri = globalCurrentSongUrl;
     _this.createWidget();
-    _this.bindGuestWidgetListeners();
+    setTimeout(function() {
+      $('.sc-play').click();
+      console.log("TRIGGEREDEDEDE")
+    },5000)
+    _this.bindGuestPlay();
   }
 
   this.sendHostTimestamps = function(){
     //SC player
-    _this.widget.getPosition(function(position){
-      $(document).trigger("sendHostClickedPlay",
-       [Date.now(), position])
-    });
+    var position = audioEngine.getPosition();
+      $(document).trigger("sendHostClickedPlay", [Date.now(), position])
   }
 
   //SC Player
@@ -70,49 +71,49 @@ Player.Controller = function() {
 
   this.createWidget = function(){
     PlayerView.showWidget();
-    //managed in SC Player
-    // _this.widget = SC.Widget(document.getElementById('sc-widget'));
-    //SCPlayer
     $('.sc-player').remove();
     var track = "<a href='"+_this.currentSongUri+"' id='widdget' class='sc-player'></a>"
     $('.wrapper').append(track)
     var node = document.getElementById('widdget')
-    $.scPlayer(undefined, node )
-    // _this.SCshowTrackTitle()
+    _this.widget = $.scPlayer(undefined, node)
   }
 
   //SC Player
-  this.bindHostWidgetListeners = function(){
-    // _this.widget.bind(SC.Widget.Events.READY, function(){
-    //   _this.bindHostPlay();
-    // });
-  }
+  // this.bindHostWidgetListeners = function(){
+  //   // _this.widget.bind(SC.Widget.Events.READY, function(){
+  //     console.log('bindHostWidgetListeners')
+  //     _this.bindHostPlay();
+  //   // });
+  // }
+
 
   //SC Player
   this.bindHostPlay = function(){
     // _this.widget.bind(SC.Widget.Events.PLAY, function(){
-    //   setTimeout(function(){
-    //     _this.sendHostTimestamps();
+      console.log('bindHostPlay')
+      setTimeout(function(){
+        _this.sendHostTimestamps();
     //     _this.widget.unbind(SC.Widget.Events.PLAY_PROGRESS);
-    //   }, 100);
+      }, 100);
     // });
   }
 
   //SC Player
-  this.bindGuestWidgetListeners = function(){
-    // _this.widget.bind(SC.Widget.Events.READY, function(){
-    //   _this.bindGuestPlay();
-    // });
-  }
+  // this.bindGuestWidgetListeners = function(){
+  //   // _this.widget.bind(SC.Widget.Events.READY, function(){
+  //     _this.bindGuestPlay();
+  //   // });
+  // }
 
   //SC Player
   this.bindGuestPlay = function(){
-    // _this.widget.bind(SC.Widget.Events.PLAY, function() {
-    //   _this.widget.seekTo(timestampData.songProgress + (new Date().getTime() - timestampData.timestamp)+1900);
-    //   _this.widget.pause();
+    // audioEngine.seek(1);
+    // // _this.widget.bind(SC.Widget.Events.PLAY, function() {
+    //   audioEngine.seek(timestampData.songProgress + (new Date().getTime() - timestampData.timestamp)+1900, _this.currentSongUri);
+    //   audioEngine.pause();
     //   setTimeout(function(){
-    //     _this.widget.play();
-    //     _this.widget.seekTo(timestampData.songProgress + (new Date().getTime() - timestampData.timestamp));
+    //     audioEngine.play();
+    //     audioEngine.seek(timestampData.songProgress + (new Date().getTime() - timestampData.timestamp));
     //   }, 2000);
     //   _this.widget.unbind(SC.Widget.Events.PLAY);
     // });

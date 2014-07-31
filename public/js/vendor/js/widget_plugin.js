@@ -9,7 +9,10 @@
 *   <a href="http://soundcloud.com/matas/hobnotropic" class="sc-player">My new dub track</a>
 *   The link will be automatically replaced by the HTML based player
 */
+
+
 (function($) {
+
   // Convert milliseconds into Hours (h), Minutes (m), and Seconds (s)
   var timecode = function(ms) {
     var hms = function(ms) {
@@ -69,7 +72,7 @@
       };
 
   // TODO Expose the audio engine, so it can be unit-tested
-  var audioEngine = function() {
+  audioEngine = function() {
     var html5AudioAvailable = function() {
         var state = false;
         try{
@@ -127,11 +130,10 @@
       player.addEventListener('timeupdate', onTimeUpdate, false);
       player.addEventListener('progress', onProgress, false);
 
-
       return {
         load: function(track, apiKey) {
           player.pause();
-          player.src = track.stream_url + (/\?/.test(track.stream_url) ? '&' : '?') + 'consumer_key=' + apiKey;
+          player.src = track.stream_url + (/\?/.test(track.stream_url) ? '&' : '?') + 'client_id=' + apiKey;
           player.load();
           player.play();
         },
@@ -147,9 +149,9 @@
             player.pause();
           }
         },
-        seek: function(relative){
-          player.currentTime = player.duration * relative;
-          player.play();
+        seek: function(relative, uri){
+            player.currentTime = relative;
+            audioEngine.play();
         },
         getDuration: function() {
           return player.duration * 1000;
