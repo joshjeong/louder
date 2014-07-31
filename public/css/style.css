@@ -109,21 +109,22 @@ table {
             font-size: 0.2rem; } }
 @media only screen and (min-width: 761px) {
   body {
-    background: #1B212F;
+    background: #1b212f url("../img/2loud.png");
     background-size: 100px;
     width: 100%;
     background-size: 500px;
-    background-position: 30% -5%;
+    background-position: center -5%;
     max-width: 1026px; }
     body .wrapper #player {
-      min-width: 400px;
-      width: 55%;
-      max-width: 40rem;
       position: absolute;
-      top: 16rem;
-      left: 40%; }
+      left: 23%;
+      width: 54%;
+      min-width: 400px;
+      position: absolute;
+      top: 16rem; }
       body .wrapper #player .search-field {
-        font-size: 1.3rem; }
+        font-size: 1.3rem;
+        position: relative; }
         body .wrapper #player .search-field .tt-suggestion {
           font-size: 0.2rem; } }
 * {
@@ -148,9 +149,8 @@ body {
   body .wrapper #player {
     display: block;
     margin: 0 auto;
-    background-color: #333E54;
-    border-radius: 15px;
-    height: 7.5rem; }
+    background-color: rgba(51, 62, 84, 0.36);
+    border-radius: 0; }
     body .wrapper #player #sc-widget {
       width: 4rem;
       height: 5.5rem; }
@@ -175,31 +175,41 @@ body {
       position: relative;
       color: white;
       text-align: center; }
-    body .wrapper #player #soundCloudURL {
-      padding: 2rem; }
-      body .wrapper #player #soundCloudURL .twitter-typeahead {
-        width: 100%; }
-        body .wrapper #player #soundCloudURL .twitter-typeahead .tt-hint {
-          color: #D8D8D8; }
-      body .wrapper #player #soundCloudURL .tt-dropdown-menu {
-        border: 1px solid white;
-        max-height: 15rem;
-        overflow-y: auto; }
-        body .wrapper #player #soundCloudURL .tt-dropdown-menu .tt-dataset-tracks {
-          color: #333E54; }
-        body .wrapper #player #soundCloudURL .tt-dropdown-menu .tt-suggestion {
-          border: 1px solid white;
-          line-height: 1.3rem;
-          padding: 1rem;
-          font-color: #D05158;
-          background-color: #D8D8D8; }
-          body .wrapper #player #soundCloudURL .tt-dropdown-menu .tt-suggestion:hover {
-            background-color: #BFBFBF;
-            cursor: pointer; }
+    body .wrapper #player #soundCloudURL .twitter-typeahead {
+      width: 100%;
+      min-width: 100%; }
+      body .wrapper #player #soundCloudURL .twitter-typeahead .tt-hint {
+        color: #D8D8D8; }
+    body .wrapper #player #soundCloudURL .tt-dropdown-menu {
+      width: 100%;
+      border: 0;
+      margin-top: 2px;
+      max-height: 15rem;
+      overflow-y: auto; }
+      body .wrapper #player #soundCloudURL .tt-dropdown-menu .tt-dataset-tracks {
+        color: #333E54; }
+      body .wrapper #player #soundCloudURL .tt-dropdown-menu .tt-suggestion {
+        border: none;
+        line-height: 1.3rem;
+        padding: 1rem;
+        font-color: #D05158;
+        background-color: transparent;
+        width: 100%;
+        color: white; }
+        body .wrapper #player #soundCloudURL .tt-dropdown-menu .tt-suggestion:hover {
+          background-color: rgba(51, 62, 84, 0.36);
+          cursor: pointer; }
     body .wrapper #player .search-field {
       margin: auto;
+      width: 100%;
+      vertical-align: top;
+      background: transparent;
+      border: none;
+      color: white;
+      cursor: text;
+      line-height: 2rem;
       padding: 1rem;
-      width: 100%; }
+      border-radius: 0; }
       body .wrapper #player .search-field:focus {
         outline: 0; }
     body .wrapper #player.show-widget {
@@ -301,3 +311,12 @@ li:nth-child(2) {
 
 li:nth-child(3) {
   -webkit-animation: loadbars 0.6s ease-in-out infinite -0.4s; }
+
+::-webkit-scrollbar {
+  background: rgba(51, 62, 84, 0.36); }
+
+::-webkit-scrollbar-track {
+  color: white; }
+
+::-webkit-scrollbar-thumb {
+  background: white; }

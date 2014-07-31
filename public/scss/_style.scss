@@ -51,22 +51,24 @@
 
 @media only screen and (min-width: 761px) {
   body {
-    background: #1B212F;
+    background: #1B212F url("../img/2loud.png");
     background-size: 100px;
     width: 100%;
     background-size: 500px;
-    background-position: 30% -5%;
+    background-position: center -5%;
     max-width: 1026px;
     .wrapper {
       #player {
+        position: absolute;
+        left: 23%;
+        width: 54%;
         min-width: 400px;
-        width: 55%;
-        max-width: 40rem;
         position: absolute;
         top: 16rem;
-        left: 40%;
         .search-field {
           font-size: 1.3rem;
+          position: relative;
+
             .tt-suggestion {
               font-size: 0.2rem;
             }
@@ -100,9 +102,8 @@ body{
     #player {
       display: block;
       margin: 0 auto;
-      background-color: #333E54;
-      border-radius: 15px;
-      height: 7.5rem;
+      background-color: rgba(51, 62, 84, 0.36);
+      border-radius: 0;
       #sc-widget {
         width: 4rem;
         height: 5.5rem;
@@ -134,28 +135,32 @@ body{
         text-align: center
       }
       #soundCloudURL {
-        padding: 2rem;
         .twitter-typeahead {
           width: 100%;
+          min-width: 100%;
           .tt-hint {
             color: #D8D8D8;
           }
         }
         .tt-dropdown-menu {
-          border: 1px solid white;
+          width: 100%;
+          border: 0;
+          margin-top:  2px;
           max-height: 15rem;
           overflow-y:auto;
             .tt-dataset-tracks{
               color: #333E54;
             }
             .tt-suggestion {
-              border: 1px solid white;
+              border: none;
               line-height: 1.3rem;
               padding: 1rem;
               font-color: #D05158;
-              background-color:#D8D8D8;
+              background-color:transparent;
+              width: 100%;
+              color: white;
               &:hover {
-                background-color:#BFBFBF;
+                background-color: rgba(51, 62, 84, 0.36);
                 cursor: pointer;
               }
             }
@@ -163,8 +168,15 @@ body{
         }
       .search-field {
         margin: auto;
-        padding: 1rem;
         width: 100%;
+        vertical-align: top;
+        background: transparent;
+        border: none;
+        color: white;
+        cursor: text;
+        line-height: 2rem;
+        padding: 1rem;
+        border-radius: 0;
         &:focus {
           outline:0;
         }
