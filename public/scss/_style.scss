@@ -119,10 +119,12 @@ body{
         }
       #sc-widget {
         width: 95%;
+        height: 100%;
       }
       #widget {
         margin-top: 10px;
         display: none;
+        height: 450px;
         width: 100%;
         text-align: center;
       }

@@ -158,10 +158,12 @@ body {
     body .wrapper #player .loader {
       display: none; }
     body .wrapper #player #sc-widget {
-      width: 95%; }
+      width: 95%;
+      height: 100%; }
     body .wrapper #player #widget {
       margin-top: 10px;
       display: none;
+      height: 450px;
       width: 100%;
       text-align: center; }
     body .wrapper #player .waveform {
