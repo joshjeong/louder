@@ -43,9 +43,11 @@ Connection.prototype.newConnection = function(data){
   if (Helper.isHost(data)) {
     View.hideAll()
     View.showPlayer()
+    View.addLogo();
   } else {
     View.hideAll()
     View.changeView(data)
+    View.removeLogo()
   }
 }
 
@@ -109,6 +111,14 @@ View.changeView = function(data){
   }
 }
 
+View.addLogo = function() {
+  $('body').addClass('bg')
+}
+
+View.removeLogo = function() {
+  $('body').removeClass('bg')
+}
+
 View.showPlayer = function(){
   if(!$('#player').is(":visible")) {
     $('#player').show()
@@ -118,7 +128,6 @@ View.showPlayer = function(){
 View.showWaitScreen= function(){
   if(!$('#wait-screen').is(":visible")) {
     $('#wait-screen').show()
-    View.waitTextAnimator()
   }
 }
 
@@ -126,14 +135,5 @@ View.hideAll= function(){
   $('#connect-button').hide()
   $('#wait-screen').hide()
   $('#guest-playing').hide()
-  $('#player').hide()
 }
 
-View.waitTextAnimator = function(){
-  setInterval(function(){
-  $('#wait-screen').find('h3').css( "margin-top", function( index ) {
-    return (Math.floor(Math.random()*300));})
-  $('#wait-screen').find('h3').css( "margin-left", function( index ) {
-    return (Math.floor(Math.random()*250));})
-  }, 2000)
-}

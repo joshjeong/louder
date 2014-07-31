@@ -2,6 +2,7 @@
    v2.0 | 20110126
    License: none (public domain)
 */
+@import url(http://fonts.googleapis.com/css?family=Frijole);
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -45,9 +46,53 @@ table {
   border-collapse: collapse;
   border-spacing: 0; }
 
+.logo {
+  font-family: Frijole;
+  font-size: 30px;
+  display: inline-block;
+  color: white;
+  -webkit-animation-name: logo-shake;
+  -webkit-animation-duration: 0.8s;
+  -webkit-transform-origin: 50% 50%;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-timing-function: linear; }
+
+@-webkit-keyframes logo-shake {
+  0% {
+    -webkit-transform: translate(2px, 1px) rotate(0deg); }
+
+  10% {
+    -webkit-transform: translate(-1px, -2px) rotate(-1deg); }
+
+  20% {
+    -webkit-transform: translate(-3px, 0px) rotate(1deg); }
+
+  30% {
+    -webkit-transform: translate(0px, 2px) rotate(0deg); }
+
+  40% {
+    -webkit-transform: translate(1px, -1px) rotate(1deg); }
+
+  50% {
+    -webkit-transform: translate(-1px, 2px) rotate(-1deg); }
+
+  60% {
+    -webkit-transform: translate(-3px, 1px) rotate(0deg); }
+
+  70% {
+    -webkit-transform: translate(2px, 1px) rotate(-1deg); }
+
+  80% {
+    -webkit-transform: translate(-1px, -1px) rotate(1deg); }
+
+  90% {
+    -webkit-transform: translate(2px, 2px) rotate(0deg); }
+
+  100% {
+    -webkit-transform: translate(1px, -2px) rotate(-1deg); } }
 @media only screen and (max-width: 760px) {
   body {
-    background: #1b212f url("../img/louder_logo.png");
+    background: #1B212F;
     background-size: 100px;
     width: 100%;
     background-size: 299px;
@@ -64,21 +109,19 @@ table {
             font-size: 0.2rem; } }
 @media only screen and (min-width: 761px) {
   body {
-    background: #1b212f url("../img/louder_logo.png");
-    background-size: 100px;
+    background: #1B212F;
     width: 100%;
-    background-size: 500px;
-    background-position: 30% -5%;
     max-width: 1026px; }
     body .wrapper #player {
-      min-width: 400px;
-      width: 55%;
-      max-width: 40rem;
       position: absolute;
-      top: 16rem;
-      left: 40%; }
+      left: 23%;
+      width: 54%;
+      min-width: 400px;
+      position: absolute;
+      top: 16rem; }
       body .wrapper #player .search-field {
-        font-size: 1.3rem; }
+        font-size: 1.3rem;
+        position: relative; }
         body .wrapper #player .search-field .tt-suggestion {
           font-size: 0.2rem; } }
 * {
@@ -100,24 +143,25 @@ body {
   overflow: hidden; }
   body.waiting {
     cursor: wait; }
+  body.bg {
+    background: #1b212f url("../img/2loud.png");
+    background-repeat: no-repeat;
+    background-size: 500px;
+    background-position: center -25%; }
+    body.bg .wrapper #player #soundCloudURL {
+      display: block; }
   body .wrapper #player {
     display: block;
     margin: 0 auto;
-    background-color: #333E54;
-    border-radius: 15px; }
+    background-color: rgba(51, 62, 84, 0.36);
+    border-radius: 0; }
+    body .wrapper #player .loader {
+      display: none; }
     body .wrapper #player #sc-widget {
-      width: 4rem;
-      height: 5.5rem; }
-    body .wrapper #player #button {
-      display: none;
-      width: 100%;
-      position: absolute;
-      text-align: center;
-      left: 0; }
-      body .wrapper #player #button #play-button {
-        width: 78px;
-        height: 88px; }
+      width: 95%; }
     body .wrapper #player #widget {
+      margin-top: 10px;
+      display: none;
       width: 100%;
       text-align: center; }
     body .wrapper #player .waveform {
@@ -130,47 +174,67 @@ body {
       color: white;
       text-align: center; }
     body .wrapper #player #soundCloudURL {
-      padding: 2rem; }
+      display: none; }
       body .wrapper #player #soundCloudURL .twitter-typeahead {
-        width: 100%; }
+        width: 100%;
+        min-width: 100%; }
         body .wrapper #player #soundCloudURL .twitter-typeahead .tt-hint {
           color: #D8D8D8; }
       body .wrapper #player #soundCloudURL .tt-dropdown-menu {
-        border: 1px solid white;
+        width: 100%;
+        border: 0;
+        margin-top: 2px;
         max-height: 15rem;
         overflow-y: auto; }
         body .wrapper #player #soundCloudURL .tt-dropdown-menu .tt-dataset-tracks {
           color: #333E54; }
         body .wrapper #player #soundCloudURL .tt-dropdown-menu .tt-suggestion {
-          border: 1px solid white;
+          border: none;
           line-height: 1.3rem;
           padding: 1rem;
           font-color: #D05158;
-          background-color: #D8D8D8; }
+          background-color: #1B212F;
+          width: 100%;
+          color: white; }
           body .wrapper #player #soundCloudURL .tt-dropdown-menu .tt-suggestion:hover {
-            background-color: #BFBFBF;
+            background-color: #232B3B;
             cursor: pointer; }
     body .wrapper #player .search-field {
       margin: auto;
+      width: 100%;
+      vertical-align: top;
+      background: transparent;
+      border: none;
+      color: white;
+      cursor: text;
+      line-height: 2rem;
       padding: 1rem;
-      width: 100%; }
+      border-radius: 0; }
       body .wrapper #player .search-field:focus {
         outline: 0; }
+    body .wrapper #player.show-widget {
+      -webkit-transition: all 1s;
+      height: 15rem; }
   body .screens {
     width: 100%;
-    margin: 0 auto; }
+    margin: 0 auto;
+    text-align: center; }
     body .screens #connect-button {
-      display: block;
-      display: none;
       width: 40%;
-      padding: 3rem;
-      text-align: center;
-      background-color: #333E54;
-      color: #D8D8D8;
       margin: 0 auto;
+      margin-top: 25%;
+      padding: 1rem;
+      text-align: center;
+      background-color: rgba(38, 38, 39, 0.79);
+      color: #D8D8D8;
       border-radius: 10px;
       z-index: 1;
-      margin-top: 3rem; }
+      font-size: 3rem;
+      color: wheat;
+      cursor: pointer; }
+      body .screens #connect-button h3 {
+        text-align: center;
+        color: wheat; }
     body .screens #wait-screen {
       font-family: 'Montserrat', sans-serif;
       font-weight: 400;
@@ -181,7 +245,9 @@ body {
       height: 0px;
       left: 0px;
       width: 100%;
-      top: 100px; }
+      top: 71px; }
+      body .screens #wait-screen h3 {
+        text-align: center; }
     body .screens #guest-playing {
       display: none;
       width: 50%;
@@ -209,3 +275,53 @@ body {
       fill: none;
       stroke-width: 2.5px;
       z-index: 100; }
+
+.loader {
+  position: fixed;
+  z-index: 3;
+  margin: 0 auto;
+  left: 0;
+  right: 0;
+  top: 42%;
+  margin-top: -30px;
+  width: 60px;
+  height: 60px;
+  list-style: none; }
+
+@-webkit-keyframes 'loadbars' {
+  0% {
+    height: 10px;
+    margin-top: 25px; }
+
+  50% {
+    height: 50px;
+    margin-top: 0px; }
+
+  100% {
+    height: 10px;
+    margin-top: 25px; } }
+li {
+  background-color: white;
+  width: 10px;
+  height: 10px;
+  float: right;
+  margin-right: 5px;
+  -webkit-filter: blur(3px); }
+
+li:first-child {
+  -webkit-animation: loadbars 0.6s cubic-bezier(0.645, 0.045, 0.355, 1) infinite 0s; }
+
+li:nth-child(2) {
+  -webkit-animation: loadbars 0.6s ease-in-out infinite -0.2s; }
+
+li:nth-child(3) {
+  -webkit-animation: loadbars 0.6s ease-in-out infinite -0.4s; }
+
+::-webkit-scrollbar {
+  background: rgba(51, 62, 84, 0.36); }
+
+::-webkit-scrollbar-track {
+  color: white; }
+
+::-webkit-scrollbar-thumb {
+  background: white; }
