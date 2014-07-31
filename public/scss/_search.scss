@@ -1,0 +1,72 @@
+    #player {
+      display: block;
+      margin: 0 auto;
+      background-color: #333E54;
+      border-radius: 15px;
+      height: 7.5rem;
+        -webkit-animation-name: logo-shake;
+  -webkit-animation-duration: 0.8s;
+  -webkit-transform-origin:50% 50%;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-timing-function: linear;
+      #sc-widget {
+        width: 4rem;
+        height: 5.5rem;
+      }
+      #button {
+        display: none;
+        width: 100%;
+        position: absolute;
+        text-align: center;
+        left: 0;
+        #play-button {
+          width: 78px;
+          height: 88px;
+        }
+      }
+      #widget {
+        width: 100%;
+        text-align: center;
+      }
+      #soundCloudURL {
+        padding: 2rem;
+        .twitter-typeahead {
+          width: 100%;
+          .tt-hint {
+            color: #D8D8D8;
+          }
+        }
+        .tt-dropdown-menu {
+          width:100%;
+          border: 1px solid white;
+          max-height: 15rem;
+          overflow-y:auto;
+            .tt-dataset-tracks{
+              color: #333E54;
+            }
+            .tt-suggestion {
+              border: 1px solid white;
+              line-height: 1.3rem;
+              padding: 1rem;
+              font-color: #D05158;
+              background-color:#D8D8D8;
+              &:hover {
+                background-color:#BFBFBF;
+                cursor: pointer;
+              }
+            }
+          }
+        }
+      .search-field {
+        margin: auto;
+        padding: 1rem;
+        width: 100%;
+        &:focus {
+          outline:0;
+        }
+      }
+      &.show-widget {
+        -webkit-transition: all 1s;
+        height: 15rem;
+      }
+    }

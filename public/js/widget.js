@@ -1,6 +1,6 @@
 timestampData = {}
 globalCurrentSongUrl = ""
-
+CLIENT_ID = "d8eb7a8be0cc38d451a51d4d223ee84b"
 Player = {}
 Player.Controller = function() {
   this.widget = {}
@@ -11,18 +11,20 @@ Player.Controller = function() {
     $("#connect-button").on('click', this.bufferGuestTrack);
     $('#play-button').on('click', this.playTrack);
     $('#pause-button').on('click', this.pauseTrack);
-    $('#soundCloudURL').on('submit', this.loadSongFromURL);
+    $('#soundCloudURL').on('submit', this.injectWidget);
   }
 
-  this.loadSongFromURL = function() {
-    var trackUrl = _this.currentSongUri
-    PlayerView.changePlayerHeight();
-    var soundCloudGetRoute = 'http://api.soundcloud.com/resolve.json?url=' + trackUrl + '&client_id=' + CLIENT_ID
-    $.get(soundCloudGetRoute, this.injectWidget)
-  }
+  // this.loadSongFromURL = function() {
+  //   // var trackUrl = _this.currentSongUri
+  //   // PlayerView.changePlayerHeight();
+  //   // var soundCloudGetRoute = 'http://api.soundcloud.com/resolve.json?url=' + trackUrl + '&client_id=' + CLIENT_ID
+  //   this.injectWidget()
+  //   // $.get(soundCloudGetRoute, this.injectWidget)
+  // }
 
-  this.injectWidget = function (song) {
-    _this.currentSongUri = song.uri;
+  this.injectWidget = function () {
+
+    // _this.currentSongUri = song.uri;
     _this.createWidget();
     $(document).trigger("newSong", [_this.currentSongUri])
     _this.bindHostWidgetListeners();
@@ -69,46 +71,51 @@ Player.Controller = function() {
   this.createWidget = function(){
     PlayerView.showWidget();
     //managed in SC Player
-    _this.widget = SC.Widget(document.getElementById('sc-widget'));
+    // _this.widget = SC.Widget(document.getElementById('sc-widget'));
     //SCPlayer
-    _this.SCshowTrackTitle()
+    $('.sc-player').remove();
+    var track = "<a href='"+_this.currentSongUri+"' id='widdget' class='sc-player'></a>"
+    $('.wrapper').append(track)
+    var node = document.getElementById('widdget')
+    $.scPlayer(undefined, node )
+    // _this.SCshowTrackTitle()
   }
 
   //SC Player
   this.bindHostWidgetListeners = function(){
-    _this.widget.bind(SC.Widget.Events.READY, function(){
-      _this.bindHostPlay();
-    });
+    // _this.widget.bind(SC.Widget.Events.READY, function(){
+    //   _this.bindHostPlay();
+    // });
   }
 
   //SC Player
   this.bindHostPlay = function(){
-    _this.widget.bind(SC.Widget.Events.PLAY, function(){
-      setTimeout(function(){
-        _this.sendHostTimestamps();
-        _this.widget.unbind(SC.Widget.Events.PLAY_PROGRESS);
-      }, 100);
-    });
+    // _this.widget.bind(SC.Widget.Events.PLAY, function(){
+    //   setTimeout(function(){
+    //     _this.sendHostTimestamps();
+    //     _this.widget.unbind(SC.Widget.Events.PLAY_PROGRESS);
+    //   }, 100);
+    // });
   }
 
   //SC Player
   this.bindGuestWidgetListeners = function(){
-    _this.widget.bind(SC.Widget.Events.READY, function(){
-      _this.bindGuestPlay();
-    });
+    // _this.widget.bind(SC.Widget.Events.READY, function(){
+    //   _this.bindGuestPlay();
+    // });
   }
 
   //SC Player
   this.bindGuestPlay = function(){
-    _this.widget.bind(SC.Widget.Events.PLAY, function() {
-      _this.widget.seekTo(timestampData.songProgress + (new Date().getTime() - timestampData.timestamp)+1900);
-      _this.widget.pause();
-      setTimeout(function(){
-        _this.widget.play();
-        _this.widget.seekTo(timestampData.songProgress + (new Date().getTime() - timestampData.timestamp));
-      }, 2000);
-      _this.widget.unbind(SC.Widget.Events.PLAY);
-    });
+    // _this.widget.bind(SC.Widget.Events.PLAY, function() {
+    //   _this.widget.seekTo(timestampData.songProgress + (new Date().getTime() - timestampData.timestamp)+1900);
+    //   _this.widget.pause();
+    //   setTimeout(function(){
+    //     _this.widget.play();
+    //     _this.widget.seekTo(timestampData.songProgress + (new Date().getTime() - timestampData.timestamp));
+    //   }, 2000);
+    //   _this.widget.unbind(SC.Widget.Events.PLAY);
+    // });
   }
 
   // This is Val's job.
@@ -132,7 +139,7 @@ Player.Controller = function() {
         },
       }).bind("typeahead:selected", function(event, track, name){
           _this.currentSongUri = track.uri
-          _this.loadSongFromURL()
+          _this.injectWidget()
         })
     };
     }
@@ -154,10 +161,11 @@ PlayerView.showPause = function(){
 }
 
 PlayerView.showWidget = function(){
-  var widgetFirstHalf = "<iframe id='sc-widget' src='http://w.soundcloud.com/player/?url=";
-  var widgetSecondHalf = "&client_id=" + CLIENT_ID + "'></iframe>";
+  // var widgetFirstHalf = "<iframe id='sc-widget' src='http://w.soundcloud.com/player/?url=";
+  // var widgetSecondHalf = "&client_id=" + CLIENT_ID + "'></iframe>";
+
   $('#button').show();
-  $("div#widget").html(widgetFirstHalf + _this.currentSongUri + widgetSecondHalf);
+  // $("div#widget").html(widgetFirstHalf + _this.currentSongUri + widgetSecondHalf);
 }
 
 PlayerView.showTrackTitle = function(title){
