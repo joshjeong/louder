@@ -27,7 +27,7 @@
 
 @media only screen and (max-width : 760px) {
   body {
-    background: #1B212F url("../img/louder_logo.png");
+    background: #1B212F;
     background-size: 100px;
     width: 100%;
     background-size: 299px;
@@ -51,11 +51,8 @@
 
 @media only screen and (min-width: 761px) {
   body {
-    background: #1B212F url("../img/2loud.png");
-    background-size: 100px;
+    background: #1B212F;
     width: 100%;
-    background-size: 500px;
-    background-position: center -5%;
     max-width: 1026px;
     .wrapper {
       #player {
@@ -98,6 +95,12 @@ body{
   &.waiting {
     cursor: wait;
   }
+  &.bg {
+    background: #1B212F url("../img/2loud.png");
+    background-repeat: no-repeat;
+    background-size: 500px;
+    background-position: center -25%;
+  }
  .wrapper {
     #player {
       display: block;
@@ -114,10 +117,6 @@ body{
         position: absolute;
         text-align: center;
         left: 0;
-        #play-button {
-          width: 78px;
-          height: 88px;
-        }
       }
       #widget {
         width: 100%;
@@ -190,18 +189,24 @@ body{
   .screens {
     width: 100%;
     margin: 0 auto;
+    text-align: center;
     #connect-button {
-      display: block;
-      display: none;
       width: 40%;
-      padding: 3rem;
-      text-align: center;
-      background-color: #333E54;
-      color: #D8D8D8;
       margin: 0 auto;
+      margin-top: 25%;
+      padding: 1rem;
+      text-align: center;
+      background-color: rgba(38, 38, 39, 0.79);
+      color: #D8D8D8;
       border-radius: 10px;
       z-index: 1;
-      margin-top: 3rem;
+      font-size: 3rem;
+      color: wheat;
+      cursor: pointer;
+      h3 {
+        text-align: center;
+        color: wheat;
+      }
     }
     #wait-screen {
       font-family: 'Montserrat', sans-serif;

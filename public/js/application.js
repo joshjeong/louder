@@ -23,6 +23,7 @@ function newConnection(data) {
       $('#connect-button').hide()
       $('#wait-screen').hide()
       $('#guest-playing').hide()
+      $('body').addClass('bg')
     }
     // if client is a guest, check these conditions
     if (sessionId != data.participants[0].id) {
@@ -41,6 +42,7 @@ function newConnection(data) {
         // debugger
       $('#connect-button').hide()
       $('#wait-screen').show()
+      $('body').removeClass('bg')
       // setInterval(function(){
       //   $('#wait-screen').find('h3').css( "margin-top", function( index ) {
       //   return (Math.floor(Math.random()*300));})
