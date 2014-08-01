@@ -65,7 +65,6 @@
         .search-field {
           font-size: 1.3rem;
           position: relative;
-
             .tt-suggestion {
               font-size: 0.2rem;
             }
@@ -91,7 +90,6 @@ body{
   font-size: 1em;
   line-height: 1.5em;
   margin: 0 auto;
-  overflow: hidden;
   &.waiting {
     cursor: wait;
   }

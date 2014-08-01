@@ -97,12 +97,11 @@ Player.Controller = function() {
   //SC Player
   this.bindGuestPlay = function(){
     _this.widget.bind(SC.Widget.Events.PLAY, function() {
-      _this.widget.seekTo(timestampData.songProgress + (new Date().getTime() - timestampData.timestamp)+1900);
       _this.widget.pause();
       setTimeout(function(){
-        _this.widget.play();
-        _this.widget.seekTo(timestampData.songProgress + (new Date().getTime() - timestampData.timestamp));
-      }, 2000);
+      _this.widget.seekTo(timestampData.songProgress + (new Date().getTime() - timestampData.timestamp));
+      _this.widget.play();
+      }, 5000);
       _this.widget.unbind(SC.Widget.Events.PLAY);
     });
   }
@@ -160,7 +159,7 @@ PlayerView.showWidget = function(){
   }
   else {
     var widgetFirstHalf = "<iframe id='sc-widget' src='http://w.soundcloud.com/player/?url=";
-    var widgetSecondHalf = "&client_id=" + CLIENT_ID + "&amp;auto_play=false&amp;buying=false&amp;" +
+    var widgetSecondHalf = "&client_id=cb9becb59cf3652d68a2142bf9ac316e&amp;auto_play=false&amp;buying=false&amp;" +
     "liking=false&amp;download=false&amp;sharing=false&amp;show_artwork=false&amp;show_comments=" +
     "false&amp;show_playcount=false&amp;show_user=false&amp;hide_related=false&amp;visual=true&amp"
     + ";start_track=0&amp;callback=true'></iframe>";
