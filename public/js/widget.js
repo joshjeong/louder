@@ -152,10 +152,19 @@ PlayerView.showPause = function(){
 }
 
 PlayerView.showWidget = function(){
-  var widgetFirstHalf = "<iframe id='sc-widget' src='http://w.soundcloud.com/player/?url=";
-  var widgetSecondHalf = "&client_id=" + CLIENT_ID + "&auto_play=false&buying=false&liking=false&" +
-  "download=false&sharing=false&show_artwork=false&show_comments=false&show_playcount=false&show_user"
-  + "=false&hide_related=false&visual=false'></iframe>";
+  if ($('body').hasClass('bg')) {
+    var widgetFirstHalf = "<iframe id='sc-widget' src='http://w.soundcloud.com/player/?url=";
+    var widgetSecondHalf = "&client_id=" + CLIENT_ID + "&auto_play=false&buying=false&liking=false&" +
+    "download=false&sharing=false&show_artwork=false&show_comments=false&show_playcount=false&show_user"
+    + "=false&hide_related=false&visual=false'></iframe>";
+  }
+  else {
+    var widgetFirstHalf = "<iframe id='sc-widget' src='http://w.soundcloud.com/player/?url=";
+    var widgetSecondHalf = "&client_id=" + CLIENT_ID + "&amp;auto_play=false&amp;buying=false&amp;" +
+    "liking=false&amp;download=false&amp;sharing=false&amp;show_artwork=false&amp;show_comments=" +
+    "false&amp;show_playcount=false&amp;show_user=false&amp;hide_related=false&amp;visual=true&amp"
+    + ";start_track=0&amp;callback=true'></iframe>";
+  }
   $("div#widget").html(widgetFirstHalf + _this.currentSongUri + widgetSecondHalf)
   $('.loader').fadeOut(1000);
   $("#widget").fadeIn(4000);

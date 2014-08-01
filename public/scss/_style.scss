@@ -102,6 +102,9 @@ body{
     background-position: center -25%;
     .wrapper {
       #player {
+        #widget  {
+          height: auto;
+        }
         #soundCloudURL {
           display: block;
         }
@@ -119,8 +122,10 @@ body{
         }
       #sc-widget {
         width: 95%;
+        height: 100%;
       }
       #widget {
+        height: 450px;
         margin-top: 10px;
         display: none;
         width: 100%;

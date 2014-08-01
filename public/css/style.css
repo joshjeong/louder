@@ -148,6 +148,8 @@ body {
     background-repeat: no-repeat;
     background-size: 500px;
     background-position: center -25%; }
+    body.bg .wrapper #player #widget {
+      height: auto; }
     body.bg .wrapper #player #soundCloudURL {
       display: block; }
   body .wrapper #player {
@@ -158,8 +160,10 @@ body {
     body .wrapper #player .loader {
       display: none; }
     body .wrapper #player #sc-widget {
-      width: 95%; }
+      width: 95%;
+      height: 100%; }
     body .wrapper #player #widget {
+      height: 450px;
       margin-top: 10px;
       display: none;
       width: 100%;
