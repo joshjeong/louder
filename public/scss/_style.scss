@@ -111,6 +111,12 @@ body{
   }
  .wrapper {
     #player {
+      #calibrate{
+        position: absolute;
+        color: white;
+        margin-top: -1.1rem;
+      }
+      text-align: right;
       display: block;
       margin: 0 auto;
       background-color: rgba(51, 62, 84, 0.36);

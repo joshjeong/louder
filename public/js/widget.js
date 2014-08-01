@@ -12,7 +12,18 @@ Player.Controller = function() {
     $('#play-button').on('click', this.playTrack);
     $('#pause-button').on('click', this.pauseTrack);
     $('#soundCloudURL').on('submit', this.loadSongFromURL);
+    $('#calibrate').on('click', this.getCurrentPosition)
   }
+
+  this.getCurrentPosition = function() {
+    _this.widget.getPosition(function(position){
+      _this.widget.seekTo(timestampData.songProgress + (new Date().getTime() - timestampData.timestamp))
+    });
+  }
+
+  // this.calibrateSong = function() {
+  //   _this.widget.seekTo(Date.now()- 500)
+  // }
 
   this.loadSongFromURL = function() {
     var trackUrl = _this.currentSongUri
@@ -49,6 +60,7 @@ Player.Controller = function() {
     _this.widget.play();
     PlayerView.showPause();
   }
+
 
   //SC Player
   this.pauseTrack = function() {
@@ -99,7 +111,7 @@ Player.Controller = function() {
     _this.widget.bind(SC.Widget.Events.PLAY, function() {
       _this.widget.pause();
       setTimeout(function(){
-      _this.widget.seekTo(timestampData.songProgress + (new Date().getTime() - timestampData.timestamp));
+      _this.widget.seekTo(timestampData.songProgress + 1000+ (new Date().getTime() - timestampData.timestamp));
       _this.widget.play();
       }, 5000);
       _this.widget.unbind(SC.Widget.Events.PLAY);
